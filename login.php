@@ -108,7 +108,7 @@ $conn->close();
                 // Show alert if registration is closed
                 document.getElementById("registrationMessage").innerHTML = `
                     <div class="alert alert-danger" role="alert">
-                        Pendaftaran sudah ditutup!
+                        Pendaftaran sudah ditutup! silahkan hubungi pihak tk
                     </div>`;
             <?php else: ?>
                 // Redirect to the register page if registration is open

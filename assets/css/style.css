@@ -1,0 +1,173 @@
+  body {
+    font-family: 'Poppins';
+    background-color: #fff;
+    color: #2f4f1f;
+    display: flex;
+    flex-direction: column;
+  }
+  .navbar {
+    background-color: #2f4f1f;
+  }
+  .navbar-brand, .nav-link, .btn-masuk {
+    color: #fff !important;
+    font-weight: 600;
+  }
+  .btn-masuk {
+    background-color: #fbbf24;
+    border: none;
+    border-radius: 20px;
+    padding: 6px 20px;
+    transition: background-color 0.3s ease;
+  }
+  .btn-masuk:hover {
+    background-color: #d19a1a;
+    color: #fff !important;
+  }
+  .btn-daftar {
+    background-color: #fbbf24;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 25px;
+    font-weight: 600;
+    color: #2f4f1f;
+    transition: background-color 0.3s ease;
+  }
+  .btn-daftar:hover {
+    background-color: #d19a1a;
+    color: #fff;
+  }
+  h1, h2, h3 {
+    font-weight: 700;
+  }
+  .keunggulan-icon {
+    font-size: 40px;
+    color: #2f4f1f;
+    margin-bottom: 12px;
+  }
+  .keunggulan-item {
+    text-align: center;
+    padding: 20px;
+  }
+  .mini-galeri img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    background-color: #ddd;
+    border-radius: 8px;
+  }
+  .caption {
+    text-align: center;
+    margin-top: 6px;
+    color: #2f4f1f;
+    font-weight: 500;
+  }
+  footer {
+    background-color: #2f4f1f;
+    color: #fff;
+    padding: 15px 0;
+    text-align: center;
+    font-size: 14px;
+  }
+  .map-container iframe {
+    width: 100%;
+    height: 60vh;
+    border: 0;
+    border-radius: 8px;
+  }
+
+  .profile-text {
+    white-space: pre-line;
+  }
+  .section-title {
+    font-weight: 700;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+  .vision-mission {
+    background-color: #d9d9d9;
+    padding: 1rem 2rem;
+    border-radius: 5px;
+    margin-bottom: 2rem;
+  }
+  .vision-mission strong {
+    color: #2f6f2f;
+  }
+  .teacher-photo, .facility-photo {
+    background-color: #c4c4c4;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    display: block;
+    margin: 0 auto 0.5rem auto;
+  }
+  .facility-photo {
+    width: 100%;
+    height: 150px;
+    border-radius: 5px;
+  }
+  footer {
+    background-color: #2f6f2f;
+    color: #fff;
+    text-align: center;
+    padding: 1rem 0;
+    margin-top: 3rem;
+  }
+
+  .gallery-img {
+    background-color: #ccc;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #555;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+.caption {
+    color: #2e7d32; /* hijau */
+    text-align: center;
+    margin-top: 0.5rem;
+}
+footer {
+    background-color: #2e7d32;
+    color: white;
+    padding: 1rem 0;
+    text-align: center;
+    margin-top: 2rem;
+}
+html {
+  height: 100%;
+  margin: 0;
+}
+main {
+  flex: 1;
+}
+.section-box {
+  background-color: #f2f2f2;
+  padding: 30px;
+  border-radius: 8px;
+}
+
+.section-title {
+  font-weight: 600;
+  color: #388e3c;
+}
+.contact-box {
+  border: 1px solid #ccc;
+  padding: 30px 20px;
+  border-radius: 8px;
+  text-align: center;
+  height: 100%;
+}
+
+.contact-box h6 {
+  font-weight: 600;
+  color: #2e7d32;
+  margin-top: 15px;
+}
+
+.contact-box p {
+  color: #2e7d32;
+  font-weight: 500;
+  margin-bottom: 0;
+}

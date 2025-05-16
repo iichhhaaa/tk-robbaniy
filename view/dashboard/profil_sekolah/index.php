@@ -34,7 +34,7 @@ $conn->close();
     <!-- Custom fonts for this template -->
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
-        href="../https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 
     <!-- Custom styles for this template -->
@@ -111,13 +111,13 @@ $conn->close();
                                 <tbody>
                                     <?php
                                     include '../../../koneksi.php';
-                                    $sql = "SELECT * FROM profil_sekolah";
-                                    $result = $conn->query($sql);
+                                    $sql_profil = "SELECT * FROM profil_sekolah";
+                                    $result_profil = $conn->query($sql_profil);
                                     $no = 1;                               
 
-                                    if ($result->num_rows > 0) {
+                                    if ($result_profil->num_rows > 0) {
                                         // Ambil data dan tampilkan
-                                    while ($row = $result->fetch_assoc()) {
+                                    while ($profil = $result_profil->fetch_assoc()) {
                                         echo "<tr>";
                                         echo "<td>" . $no++ . "</td>";
                                         echo "<td>" . $row["deskripsi"] . "</td>";
@@ -142,11 +142,8 @@ $conn->close();
                                         echo "</tr>";
                                     }
                                     } else {
-                                        echo "<tr><td colspan='7'>Data tidak ditemukan</td></tr>";
+                                        echo "<tr><td colspan='9'>Data tidak ditemukan</td></tr>";
                                     }
-
-                                    // Menutup koneksi
-                                    $conn->close();
                                     ?>
                                 </tbody>
                             </table>

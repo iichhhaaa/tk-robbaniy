@@ -1,3 +1,4 @@
+
 <!-- Sidebar -->
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
@@ -11,6 +12,7 @@
 
     <!-- Divider -->
     <hr class="sidebar-divider my-0">
+
     <?php if ($_SESSION['role'] === 'admin') { ?>
         <!-- Nav Item - Dashboard -->
         <li class="nav-item">
@@ -119,7 +121,7 @@
             </a>
         </li>
     <?php } else if ($_SESSION['role'] === 'capen') { ?>
-                <!-- Divider -->
+        <!-- Divider -->
         <hr class="sidebar-divider my-0">
         <!-- Nav Item - Dashboard -->
         <li class="nav-item">
@@ -128,7 +130,8 @@
                 <span>Dashboard</span>
             </a>
         </li>
-                        <!-- Divider -->
+
+        <!-- Divider -->
         <hr class="sidebar-divider my-0">
         <!-- Nav Item - pendaftaran -->
         <li class="nav-item">
@@ -160,3 +163,14 @@
 
 </ul>
 <!-- End of Sidebar -->
+ 
+
+<!-- jQuery and Bootstrap JS for Toggler
+<script src="../vendor/jquery/jquery.min.js"></script>
+<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Toggle Sidebar for responsive view
+    $('#sidebarToggle').on('click', function () {
+        $('#accordionSidebar').toggleClass('toggled');
+    }); -->
+</script>

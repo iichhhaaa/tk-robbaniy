@@ -37,11 +37,16 @@ $conn->close();
         </div>
         <div class="col-md-8">
             <?php 
+            if (isset($profil["syarat_pendaftaran"]) && !empty($profil["syarat_pendaftaran"])) {
             // Mengambil data syarat_pendaftaran dari database
             $syarat_array = explode("\n", $info["syarat_pendaftaran"]); // Memecah data menjadi array berdasarkan baris baru
             foreach($syarat_array as $item) {
                 echo "<li>" . trim($item) . "</li>"; // Menampilkan setiap item sebagai list
-            }
+            } 
+          } else {
+            // Jika tidak ada data misi, tampilkan pesan kosong
+            echo "";
+          }
             ?>
         </ol>
         </div>
@@ -54,11 +59,15 @@ $conn->close();
           </div>
           <div class="col-md-8">
                   <?php 
+                  if (isset($profil["biaya_ppdb"]) && !empty($profil["biaya_ppdb"])) {
                   // Mengambil data biaya_ppdb dari database
                   $biaya_array = explode("\n", $info["biaya_ppdb"]); // Memecah data menjadi array berdasarkan baris baru
                   foreach($biaya_array as $item) {
                       echo "<li>" . trim($item) . "</li>"; // Menampilkan setiap item sebagai list
-                  }
+                  } } else {
+            // Jika tidak ada data misi, tampilkan pesan kosong
+            echo "";
+          }
                   ?>
               </ul>
           </div>

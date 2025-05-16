@@ -54,7 +54,7 @@ $conn->close();
 
                     <?php
                     if (isset($_GET['status']) && $_GET['status'] == 'success') {
-                        echo "<div class='alert alert-success' role='alert'>Data berhasil dibuat!</div>";
+                        echo "<div class='alert alert-success' role='alert'>Data berhasil ditambah!</div>";
                     }
                     ?>
 

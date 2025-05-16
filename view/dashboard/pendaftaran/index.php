@@ -35,7 +35,7 @@ $conn->close();
     <meta name="author" content="">
     <title>SB Admin 2 - Tables</title>
 
-     <!-- Custom fonts for this template -->
+    <!-- Custom fonts for this template -->
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
@@ -150,6 +150,7 @@ $conn->close();
                                                         <ul class='dropdown-menu' aria-labelledby='dropdownMenuButton'>
                                                             <li><a class='dropdown-item' href='view.php?id=" . $pendaftaran["id"] . "'>View</a></li>
                                                             <li><a class='dropdown-item' href='update.php?id=" . $pendaftaran["id"] . "'>Edit</a></li>
+                                                            <li><a class='dropdown-item' href='bukti-pendaftaran.php?id=" . $pendaftaran["id"] . "'>Export</a></li>
                                                             <li><a class='dropdown-item text-danger' href='delete.php?id=" . $pendaftaran["id"] . "' onclick='confirmDelete(" . $pendaftaran["id"] . ")'>Hapus</a></li>
                                                         </ul>
                                                     </div>
@@ -167,7 +168,13 @@ $conn->close();
                             </div>
                         </div>
                     </div>
+                    <a href="export.php" class="btn btn-success mb-3">
+                        <i class="fas fa-file-export"></i> Export to CSV
+                    </a>
 
+                    <a href="export-excel.php" class="btn btn-success mb-3">
+                        <i class="fas fa-file-export"></i> Export to Excel
+                    </a>
                 </div>
             </div>
 
@@ -217,31 +224,31 @@ $conn->close();
     </script>
 
     <script>
-    $(document).ready(function() {
-        // Send updated status using AJAX when the dropdown value changes
-        $('.status-dropdown').change(function() {
-            var new_status = $(this).val(); // Get the new status value
-            var pendaftaran_id = $(this).data('id'); // Get the pendaftaran id
+        $(document).ready(function() {
+            // Send updated status using AJAX when the dropdown value changes
+            $('.status-dropdown').change(function() {
+                var new_status = $(this).val(); // Get the new status value
+                var pendaftaran_id = $(this).data('id'); // Get the pendaftaran id
 
-            // Make AJAX request to update status in the database
-            $.ajax({
-                url: 'update-status.php', // PHP file to handle status update
-                type: 'POST',
-                data: {
-                    pendaftaran_id: pendaftaran_id,
-                    pendaftaran_status: new_status
-                },
-                success: function(response) {
-                    // Success: Optionally update the status column or show a message
-                    alert('Status berhasil diperbarui!');
-                },
-                error: function() {
-                    alert('Terjadi kesalahan saat memperbarui status.');
-                }
+                // Make AJAX request to update status in the database
+                $.ajax({
+                    url: 'update-status.php', // PHP file to handle status update
+                    type: 'POST',
+                    data: {
+                        pendaftaran_id: pendaftaran_id,
+                        pendaftaran_status: new_status
+                    },
+                    success: function(response) {
+                        // Success: Optionally update the status column or show a message
+                        alert('Status berhasil diperbarui!');
+                    },
+                    error: function() {
+                        alert('Terjadi kesalahan saat memperbarui status.');
+                    }
+                });
             });
         });
-    });
-</script>
+    </script>
 
 
     <!-- Bootstrap core JavaScript-->

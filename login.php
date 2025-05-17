@@ -39,7 +39,7 @@ $conn->close();
                 <div class="card o-hidden border-0 shadow-lg my-5">
                     <div class="card-body p-0">
                         <div class="row">
-                            <img src="assets/login.jpg" class="col-lg-6 d-none d-lg-block bg-login-image" alt="Image description">
+                            <img src="assets/login.svg" class="col-lg-6 d-none d-lg-block bg-login-image" alt="Image description">
                             <div class="col-lg-6">
                                 <div class="p-5">
                                     <div class="text-center">
@@ -65,7 +65,7 @@ $conn->close();
                                             <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Kata Sandi" name="password" required>
                                         </div>
                                         <!-- Button with new background color -->
-                                        <button type="submit" class="btn btn-user btn-block" style="background-color: #fbbf24; border-color: #fbbf24;">
+                                        <button type="submit" class="btn btn-user btn-block text-white" style="background-color: #fbbf24; border-color: #fbbf24;">
                                             Masuk
                                         </button>
                                     </form>

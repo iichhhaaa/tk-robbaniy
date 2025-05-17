@@ -1,4 +1,3 @@
-
 <!-- Sidebar -->
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
@@ -111,15 +110,28 @@
         </li>
 
         <!-- Divider -->
-        <hr class="sidebar-divider">
+        <hr class="sidebar-divider my-0">
 
         <!-- Nav Item - Users -->
         <li class="nav-item">
             <a class="nav-link" href="../users/index.php">
                 <i class="fas fa-fw fa-users"></i> <!-- Icon for Users -->
-                <span>Users</span>
+                <span>Pengguna</span>
             </a>
         </li>
+
+
+        <!-- Divider -->
+        <hr class="sidebar-divider my-0">
+
+        <!-- Nav Item - Keluar -->
+        <li class="nav-item">
+            <a class="nav-link" href="../inc/logout.php">
+                <i class="fas fa-fw fa-sign-out-alt"></i> <!-- Icon for Logout -->
+                <span>Keluar</span>
+            </a>
+        </li>
+
     <?php } else if ($_SESSION['role'] === 'capen') { ?>
         <!-- Divider -->
         <hr class="sidebar-divider my-0">
@@ -145,7 +157,7 @@
 
         <!-- Nav Item - Keluar -->
         <li class="nav-item">
-            <a class="nav-link" href="logout.php">
+            <a class="nav-link" href="../inc/logout.php">
                 <i class="fas fa-fw fa-sign-out-alt"></i> <!-- Icon for Logout -->
                 <span>Keluar</span>
             </a>
@@ -163,7 +175,7 @@
 
 </ul>
 <!-- End of Sidebar -->
- 
+
 
 <!-- jQuery and Bootstrap JS for Toggler
 <script src="../vendor/jquery/jquery.min.js"></script>

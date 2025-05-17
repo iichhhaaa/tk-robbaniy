@@ -4,7 +4,7 @@ session_start();
 // Check if the user is logged in
 if (!isset($_SESSION['nama'])) {
     // If not logged in, redirect to login page
-    header('Location: login.php');
+    header('Location: ../../../login.php');
     exit();
 }
 
@@ -103,7 +103,7 @@ $conn->close();
                                             <th>Nama Murid</th>
                                             <th>Nama Ayah</th>
                                             <th>Nama Ibu</th>
-                                            <th>Action</th> <!-- Action column -->
+                                            <th>Tindakan</th> <!-- Action column -->
                                         </tr>
                                     </thead>
 
@@ -143,7 +143,7 @@ $conn->close();
                                                             Aksi
                                                         </button>
                                                         <ul class='dropdown-menu' aria-labelledby='dropdownMenuButton'>
-                                                            <li><a class='dropdown-item' href='bukti.php?id=" . $row["id"] . "'>Export</a></li>
+                                                            <li><a class='dropdown-item' href='bukti.php?id=" . $row["id"] . "'>Ekspor</a></li>
                                                             <li><a class='dropdown-item' href='update.php?id=" . $row["id"] . "'>Ubah</a></li>
                                                             <li><a class='dropdown-item text-danger' href='delete.php?id=" . $row["id"] . "' onclick='confirmDelete(" . $row["id"] . ")'>Hapus</a></li>
                                                         </ul>

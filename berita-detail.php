@@ -47,7 +47,7 @@ $conn->close();
       <div class="col-md-8">
         <h2 class="fw-bold"><?php echo $row_berita['judul']; ?></h2>
 
-        <img src="storage/berita/<?php echo $row_berita['foto']; ?>" alt="Berita" class="img-fluid rounded my-4" style="height: 300px; width: 100%; object-fit: cover;">
+        <img src="storage/berita/<?php echo $row_berita['foto']; ?>" alt="Berita" class="img-fluid rounded my-4" style="height: 450px; width: 100%; object-fit: cover;">
         <p class="text-muted"><?php echo $row_berita['created_at']; ?></p>
         <p style="text-align: justify;">
             <?php echo $row_berita['content']; ?>

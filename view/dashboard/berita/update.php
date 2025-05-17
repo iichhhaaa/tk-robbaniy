@@ -4,7 +4,7 @@ session_start();
 // Check if the user is logged in
 if (!isset($_SESSION['nama'])) {
     // If not logged in, redirect to login page
-    header('Location: login.php');
+    header('Location: ../../../login.php');
     exit();
 }
 
@@ -95,7 +95,7 @@ if (isset($_GET['id'])) {
                     <?php
                     if (isset($_GET['status']) && $_GET['status'] == 'success') {
                         echo "<div class='alert alert-success' role='alert'>
-                                Data berhasil diubah!
+                                Data berhasil diperbarui!
                               </div>";
                     }
                     ?>

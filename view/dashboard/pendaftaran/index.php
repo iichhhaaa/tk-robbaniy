@@ -4,7 +4,7 @@ session_start();
 // Check if the user is logged in
 if (!isset($_SESSION['nama'])) {
     // If not logged in, redirect to login page
-    header('Location: login.php');
+    header('Location: ../../../login.php');
     exit();
 }
 
@@ -171,11 +171,11 @@ $conn->close();
                         </div>
                     </div>
                     <a href="export.php" class="btn btn-success mb-3">
-                        <i class="fas fa-file-export"></i> Export to CSV
+                        <i class="fas fa-file-export"></i> Ekspor ke CSV
                     </a>
 
                     <a href="export-excel.php" class="btn btn-success mb-3">
-                        <i class="fas fa-file-export"></i> Export to Excel
+                        <i class="fas fa-file-export"></i> Ekspor ke Excel
                     </a>
                 </div>
             </div>

@@ -33,7 +33,7 @@ include 'koneksi.php'; // Ensure the database connection is correct
                     <div class="card-body p-0">
                         <!-- Nested Row within Card Body -->
                         <div class="row">
-                            <img src="assets/login.jpg" class="col-lg-6 d-none d-lg-block bg-login-image" alt="Image description">
+                            <img src="assets/login.svg" class="col-lg-6 d-none d-lg-block bg-login-image" alt="Image description">
                             <div class="col-lg-6">
                                 <div class="p-5">
                                     <div class="text-center">
@@ -76,7 +76,7 @@ include 'koneksi.php'; // Ensure the database connection is correct
                                                 <input type="password" class="form-control form-control-user" id="confirm_password" placeholder="Ulangi Kata Sandi" name="confirm_password" required>
                                             </div>
 
-                                            <button type="submit" class="btn btn-user btn-block" style="background-color: #fbbf24; border-color: #fbbf24;">
+                                            <button type="submit" class="btn btn-user btn-block text-white" style="background-color: #fbbf24; border-color: #fbbf24;">
                                                 Daftar Akun
                                             </button>
                                         </form>

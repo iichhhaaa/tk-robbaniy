@@ -4,10 +4,9 @@ session_start();
 // Check if the user is logged in
 if (!isset($_SESSION['nama'])) {
     // If not logged in, redirect to login page
-    header('Location: login.php');
+    header('Location: ../../../login.php');
     exit();
 }
-
 // Get the user's name from the session
 $nama = $_SESSION['nama'];
 
@@ -112,7 +111,6 @@ $conn->close();
                                         while ($fasilitas = $result_fasilitas->fetch_assoc()) {
                                             echo "<tr>";
                                             echo "<td>" . $no++ . "</td>";
-                                            echo "<td>" . $row["id"] . "</td>";
                                             echo "<td>" . $row["nama"] . "</td>";
                                             // Menampilkan foto (jika ada)
                                             echo "<td><img src='../../../storage/fasilitas/" . $row["foto"] . "' width='100'></td>";
@@ -131,7 +129,7 @@ $conn->close();
                                             echo "</tr>";
                                         }
                                     } else {
-                                        echo "<tr><td colspan='4'>Data tidak ditemukan</td></tr>";
+                                        echo "<tr><td colspan='4'>Data fasilitas tidak ditemukan</td></tr>";
                                     }
                                     ?>
                                 </tbody>

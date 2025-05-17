@@ -4,7 +4,7 @@ session_start();
 // Check if the user is logged in
 if (!isset($_SESSION['nama'])) {
     // If not logged in, redirect to login page
-    header('Location: login.php');
+    header('Location: ../../../login.php');
     exit();
 }
 
@@ -65,7 +65,7 @@ $conn->close();
                 <?php if ($result->num_rows == 0) {?>
                     <!-- Create Button -->
                     <a href="create.php" class="btn btn-primary mb-3">
-                        <i class="fas fa-plus"></i> Tambah Profil
+                        <i class="fas fa-plus"></i> Tambah Data Profil
                     </a>
                 <?php } ?>
 
@@ -120,13 +120,13 @@ $conn->close();
                                     while ($profil = $result_profil->fetch_assoc()) {
                                         echo "<tr>";
                                         echo "<td>" . $no++ . "</td>";
-                                        echo "<td>" . $row["deskripsi"] . "</td>";
-                                        echo "<td>" . $row["visi"] . "</td>";
-                                        echo "<td>" . $row["misi"] . "</td>";
-                                        echo "<td>" . $row["alamat"] . "</td>";
-                                        echo "<td>" . $row["email"] . "</td>";
-                                        echo "<td>" . $row["no_telepon"] . "</td>";
-                                        echo "<td><img src='../../../storage/profil_sekolah/" . $row['foto'] . "' width='100'></td>";
+                                        echo "<td>" . $profil["deskripsi"] . "</td>";
+                                        echo "<td>" . $profil["visi"] . "</td>";
+                                        echo "<td>" . $profil["misi"] . "</td>";
+                                        echo "<td>" . $profil["alamat"] . "</td>";
+                                        echo "<td>" . $profil["email"] . "</td>";
+                                        echo "<td>" . $profil["no_telepon"] . "</td>";
+                                        echo "<td><img src='../../../storage/profil_sekolah/" . $profil['foto'] . "' width='100'></td>";
                                         // Kolom action dengan tombol edit dan delete
                                         echo "<td>
                                                 <div class='dropdown'>
@@ -134,15 +134,15 @@ $conn->close();
                                                         Aksi
                                                     </button>
                                                     <ul class='dropdown-menu' aria-labelledby='dropdownMenuButton'>
-                                                        <li><a class='dropdown-item' href='update.php?id=" . $row["id"] . "'>Ubah</a></li>
-                                                        <li><a class='dropdown-item text-danger' href='delete.php?id=" . $row["id"] . "' onclick='confirmDelete(" . $row["id"] . ")'>Hapus</a></li>
+                                                        <li><a class='dropdown-item' href='update.php?id=" . $profil["id"] . "'>Ubah</a></li>
+                                                        <li><a class='dropdown-item text-danger' href='delete.php?id=" . $profil["id"] . "' onclick='confirmDelete(" . $profil["id"] . ")'>Hapus</a></li>
                                                     </ul>
                                                 </div>
                                             </td>";
                                         echo "</tr>";
                                     }
                                     } else {
-                                        echo "<tr><td colspan='9'>Data tidak ditemukan</td></tr>";
+                                        echo "<tr><td colspan='9'>Data profil tidak ditemukan</td></tr>";
                                     }
                                     ?>
                                 </tbody>

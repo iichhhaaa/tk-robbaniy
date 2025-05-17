@@ -1,9 +1,12 @@
-  body {
+  html, body {
     font-family: 'Poppins';
     background-color: #fff;
     color: #2f4f1f;
     display: flex;
     flex-direction: column;
+      
+    margin: 0;
+    padding: 0;
   }
   .navbar {
     background-color: #2f4f1f;

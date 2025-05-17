@@ -4,7 +4,7 @@ session_start();
 // Check if the user is logged in
 if (!isset($_SESSION['nama'])) {
     // If not logged in, redirect to login page
-    header('Location: login.php');
+    header('Location: ../../../login.php');
     exit();
 }
 
@@ -83,17 +83,17 @@ $conn->close();
                         <div class="card-body">
                             <form action="create-store.php" method="POST" enctype="multipart/form-data">
                                 <div class="mb-3">
-                                    <label for="judul" class="form-label">Title</label>
+                                    <label for="judul" class="form-label">Judul</label>
                                     <input type="text" class="form-control" id="judul" name="judul" required>
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="deskripsi" class="form-label">Description</label>
+                                    <label for="deskripsi" class="form-label">Deskripsi</label>
                                     <textarea class="form-control" id="deskripsi" name="deskripsi" rows="3" required></textarea>
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="foto" class="form-label">Photo</label>
+                                    <label for="foto" class="form-label">Foto</label>
                                     <input type="file" class="form-control" id="foto" name="foto" required>
                                 </div>
 

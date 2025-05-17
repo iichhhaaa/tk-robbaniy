@@ -4,7 +4,7 @@ session_start();
 // Check if the user is logged in
 if (!isset($_SESSION['nama'])) {
     // If not logged in, redirect to login page
-    header('Location: login.php');
+    header('Location: ../../../login.php');
     exit();
 }
 
@@ -66,7 +66,7 @@ $conn->close();
 
                     <!-- Create Button -->
                     <a href="create.php" class="btn btn-primary mb-3">
-                        <i class="fas fa-plus"></i> Tambah Keungulan
+                        <i class="fas fa-plus"></i> Tambah Data Galeri
                     </a>
 
                     <!-- Success/Error Message -->

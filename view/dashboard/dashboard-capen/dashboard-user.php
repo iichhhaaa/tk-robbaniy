@@ -4,14 +4,21 @@ session_start();
 // Check if the user is logged in
 if (!isset($_SESSION['nama'])) {
     // If not logged in, redirect to login page
-    header('Location: login.php');
+    header('Location: ../../../login.php');
     exit();
 }
 
 include '../../../koneksi.php';
 
-$sql = "SELECT * FROM pendaftaran";
-$result = $conn->query($sql);
+// Ambil user_id dari sesi
+$user_id = $_SESSION['user_id'];
+
+// Query untuk mengambil data pendaftaran yang relevan dengan pengguna yang login
+$sql = "SELECT * FROM pendaftaran WHERE user_id = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $user_id);  // Mengikat user_id sebagai parameter
+$stmt->execute();
+$result = $stmt->get_result();
 $row = $result->fetch_assoc();
 
 $setting = "SELECT value FROM settings WHERE key_name = 'pendaftaran_status'";
@@ -63,30 +70,35 @@ $nama = $_SESSION['nama'];
                                     </div>                       
                             </div>
                             
-                            <div class="card shadow mb-4">
-                                    <div class="card-body">
-                                        <h4 class="card-title">Langkah-langkah Pengisian Form Berkas</h4>
-                                        <p>Untuk melanjutkan proses pendaftaran, Anda perlu mengisi form berkas berikut:</p>
-                                        <ol>
-                                            <li><strong>Form Berkas KK (Kartu Keluarga):</strong> Silakan unduh dan lengkapi form berkas KK Anda.</li>
-                                            <li><strong>Form Berkas Akte Kelahiran:</strong> Silakan unduh dan lengkapi form berkas Akte Kelahiran Anda.</li>
-                                            <li><strong>Form Berkas KTP:</strong> Silakan unduh dan lengkapi form berkas KTP Anda.</li>
-                                        </ol>
-                                        <p>Setelah Anda mengisi semua form berkas di atas, gabungkan ketiganya dalam satu PDF untuk melanjutkan pendaftaran.</p>
-                                        <p>Jika Anda telah selesai, silakan kirimkan berkas tersebut sesuai petunjuk yang akan diberikan pada tahap berikutnya.</p>
-                                    </div>                       
-                            </div>
-                            
-                        </div>
-                    </div>
+<div class="card shadow mb-4">
+    <div class="card-body">
+        <h4 class="card-title">Langkah-langkah Pendaftaran</h4>
+        <p>Untuk melanjutkan proses pendaftaran, Anda perlu mengikuti langkah-langkah berikut:</p>
+        <ol>
+            <li><strong>Siapkan Berkas yang Diperlukan:</strong> Pastikan Anda telah menyiapkan dan menggabungkan berkas-berkas berikut dalam satu file PDF:
+                <ul>
+                    <li><strong>KK (Kartu Keluarga)</strong></li>
+                    <li><strong>Akte Kelahiran</strong></li>
+                    <li><strong>KTP</strong></li>
+                </ul>
+            </li>
+            <li><strong>Gabungkan Semua Berkas dalam Satu PDF:</strong> Pastikan Anda menggabungkan berkas-berkas KK, Akte Kelahiran, dan KTP dalam satu file PDF untuk melanjutkan pendaftaran.</li>
+            <li><strong>Klik pada Bagian Pendaftaran:</strong> Setelah semua berkas siap, klik bagian <strong>"Pendaftaran"</strong> untuk memulai pengisian formulir pendaftaran.</li>
+            <li><strong>Isi Formulir Pendaftaran:</strong> Setelah Anda mengklik bagian pendaftaran, lengkapi formulir yang tersedia dengan informasi yang benar dan lengkap.</li>
+            <li><strong>Kirimkan Berkas yang Sudah Digabung:</strong> Setelah mengisi formulir, kirimkan file PDF yang berisi gabungan berkas KK, Akte Kelahiran, dan KTP sesuai petunjuk yang tersedia.</li>
+        </ol>
+        <p>Setelah mengisi formulir dan mengirimkan berkas, tunggu pengumuman status kelulusan Anda yang akan diperbarui setelah proses verifikasi selesai.</p>
+    </div>
+</div>
 
-                    <div class="row mt-4">
-                        <div class="col-12">
-                            <div class="alert alert-info" role="alert">
-                                Pastikan semua berkas telah digabungkan menjadi satu file PDF sebelum melanjutkan.
-                            </div>
-                        </div>
-                    </div>
+<!-- <div class="row mt-4">
+    <div class="col-12">
+        <div class="alert alert-info" role="alert">
+            Pastikan semua berkas telah digabungkan menjadi satu file PDF sebelum melanjutkan.
+        </div>
+    </div>
+</div> -->
+
                 </div>
                 <!-- /.container-fluid -->
             </div>

@@ -4,7 +4,7 @@ session_start();
 // Check if the user is logged in
 if (!isset($_SESSION['nama'])) {
     // If not logged in, redirect to login page
-    header('Location: login.php');
+    header('Location: ../../../login.php');
     exit();
 }
 
@@ -12,10 +12,8 @@ if (!isset($_SESSION['nama'])) {
 $nama = $_SESSION['nama'];
 include '../../../koneksi.php';
 // Menjalankan query untuk mengambil satu data dari tabel profil_sekolah
-$sql = "SELECT * FROM info_pendaftaran";
+$sql = "SELECT * FROM info_pendaftaran Limit 1";
 $result = $conn->query($sql);
-
-$row = $result->fetch_assoc();
 
 $conn->close();
 ?>
@@ -64,10 +62,12 @@ $conn->close();
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
+                <?php if ($result->num_rows == 0) {?>
                     <!-- Create Button -->
                     <a href="create.php" class="btn btn-primary mb-3">
                         <i class="fas fa-plus"></i> Tambah Data Info Pendafatran
                     </a>
+                    <?php } ?>
 
                     <!-- Success/Error Message -->
                     <?php

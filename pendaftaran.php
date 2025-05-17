@@ -37,7 +37,7 @@ $conn->close();
         </div>
         <div class="col-md-8">
             <?php 
-            if (isset($profil["syarat_pendaftaran"]) && !empty($profil["syarat_pendaftaran"])) {
+            if (isset($info["syarat_pendaftaran"]) && !empty($info["syarat_pendaftaran"])) {
             // Mengambil data syarat_pendaftaran dari database
             $syarat_array = explode("\n", $info["syarat_pendaftaran"]); // Memecah data menjadi array berdasarkan baris baru
             foreach($syarat_array as $item) {
@@ -59,7 +59,7 @@ $conn->close();
           </div>
           <div class="col-md-8">
                   <?php 
-                  if (isset($profil["biaya_ppdb"]) && !empty($profil["biaya_ppdb"])) {
+                  if (isset($info["biaya_ppdb"]) && !empty($info["biaya_ppdb"])) {
                   // Mengambil data biaya_ppdb dari database
                   $biaya_array = explode("\n", $info["biaya_ppdb"]); // Memecah data menjadi array berdasarkan baris baru
                   foreach($biaya_array as $item) {

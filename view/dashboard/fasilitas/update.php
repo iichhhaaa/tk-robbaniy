@@ -4,7 +4,7 @@ session_start();
 // Check if the user is logged in
 if (!isset($_SESSION['nama'])) {
     // If not logged in, redirect to login page
-    header('Location: login.php');
+    header('Location: ../../../login.php');
     exit();
 }
 
@@ -77,7 +77,7 @@ if (isset($_GET['id'])) {
                     <!-- Display success message if the data is updated successfully -->
                     <?php
                     if (isset($_GET['status']) && $_GET['status'] == 'success') {
-                        echo "<div class='alert alert-success' role='alert'>Data berhasil diupdate!</div>";
+                        echo "<div class='alert alert-success' role='alert'>Data berhasil diperbarui!</div>";
                     }
                     ?>
 
@@ -97,7 +97,7 @@ if (isset($_GET['id'])) {
                                     <p>Foto Saat Ini: <img src="../../../storage/fasilitas/<?php echo $foto_fasilitas; ?>" width="100"></p>
                                 </div>
 
-                                <button type="submit" class="btn btn-primary">Update</button>
+                                <button type="submit" class="btn btn-primary">Kirim</button>
                             </form>
                         </div>
                     </div>

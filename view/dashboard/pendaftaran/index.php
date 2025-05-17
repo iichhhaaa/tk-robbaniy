@@ -28,25 +28,24 @@ $conn->close();
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title>SB Admin 2 - Tables</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>SB Admin 2 - Toggle Switch Example</title>
 
     <!-- Custom fonts for this template -->
-    <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css" />
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+        rel="stylesheet" />
 
     <!-- Custom styles for this template -->
-    <link href="../css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="../css/sb-admin-2.min.css" rel="stylesheet" />
 
     <!-- Custom styles for this page -->
-    <link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-
+    <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
 </head>
 
 <body id="page-top">
@@ -75,19 +74,22 @@ $conn->close();
                     }
                     ?>
 
-                    <form id="pendaftaran-form" class="container-fluid">
+                    <form id="pendaftaran-form">
                         <div class="row">
                             <div class="col-12">
-                                <label for="pendaftaran_status" class="form-label align-items-center">
-                                    Pendaftaran:
-                                    <div class="form-check form-switch ms-3">
-                                        <input class="form-check-input" type="checkbox" id="pendaftaran_status" role="switch"
+                                <div class="form-group">
+                                    <label for="pendaftaran_status" class="form-label">
+                                        Pendaftaran:
+                                    </label>
+                                    <!-- Toggle switch -->
+                                    <div class="custom-control custom-switch">
+                                        <input type="checkbox" class="custom-control-input" id="pendaftaran_status"
                                             <?php echo ($status == 'open') ? 'checked' : ''; ?>>
-                                        <label class="form-check-label" for="pendaftaran_status">
+                                        <label class="custom-control-label" for="pendaftaran_status">
                                             <?php echo ($status == 'open') ? 'Buka' : 'Tutup'; ?>
                                         </label>
                                     </div>
-                                </label>
+                                </div>
                             </div>
                         </div>
                     </form>
@@ -158,7 +160,7 @@ $conn->close();
                                                 echo "</tr>";
                                             }
                                         } else {
-                                            echo "<tr><td colspan='6'>Data pendaftaran tidak ditemukan.</td></tr>";
+                                            echo "<tr><td colspan='7'>Data pendaftaran tidak ditemukan.</td></tr>";
                                         }
 
                                         $conn->close();
@@ -194,64 +196,8 @@ $conn->close();
         <i class="fas fa-angle-up"></i>
     </a>
 
-    <script>
-        $(document).ready(function() {
-            // Send updated status using AJAX when the switch value changes
-            $('#pendaftaran_status').change(function() {
-                var new_status = $(this).prop('checked') ? 'open' : 'closed'; // Get the switch status
-
-                // Make AJAX request to update status in the database
-                $.ajax({
-                    url: 'update-status.php', // PHP file to handle status update
-                    type: 'POST',
-                    data: {
-                        pendaftaran_status: new_status
-                    },
-                    success: function(response) {
-                        window.location.href = "?status=success"; // Redirect with success parameter
-                    },
-                    error: function() {
-                        alert('Terjadi kesalahan saat memperbarui status.');
-                    }
-                });
-            });
-
-            // Hide the success alert after 5 seconds
-            setTimeout(function() {
-                $('#success-alert').fadeOut('slow');
-            }, 5000); // 5000 ms = 5 seconds
-        });
-    </script>
-
-    <script>
-        $(document).ready(function() {
-            // Send updated status using AJAX when the dropdown value changes
-            $('.status-dropdown').change(function() {
-                var new_status = $(this).val(); // Get the new status value
-                var pendaftaran_id = $(this).data('id'); // Get the pendaftaran id
-
-                // Make AJAX request to update status in the database
-                $.ajax({
-                    url: 'update-status.php', // PHP file to handle status update
-                    type: 'POST',
-                    data: {
-                        pendaftaran_id: pendaftaran_id,
-                        pendaftaran_status: new_status
-                    },
-                    success: function(response) {
-                        // Success: Optionally update the status column or show a message
-                        alert('Status berhasil diperbarui!');
-                    },
-                    error: function() {
-                        alert('Terjadi kesalahan saat memperbarui status.');
-                    }
-                });
-            });
-        });
-    </script>
-
-
-    <!-- Bootstrap core JavaScript-->
+   --
+       <!-- Bootstrap core JavaScript-->
     <script src="../vendor/jquery/jquery.min.js"></script>
     <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
@@ -269,6 +215,63 @@ $conn->close();
     <script src="../js/demo/datatables-demo.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom scripts -->
+    <script>
+        $(document).ready(function () {
+            // Send updated status using AJAX when the switch value changes
+            $('#pendaftaran_status').change(function () {
+                var new_status = $(this).prop('checked') ? 'open' : 'closed'; // Get the switch status
+
+                // Make AJAX request to update status in the database
+                $.ajax({
+                    url: 'update-status.php', // PHP file to handle status update
+                    type: 'POST',
+                    data: {
+                        pendaftaran_status: new_status
+                    },
+                    success: function (response) {
+                        window.location.href = "?status=success"; // Redirect with success parameter
+                    },
+                    error: function () {
+                        alert('Terjadi kesalahan saat memperbarui status.');
+                    }
+                });
+            });
+
+            // Send updated status using AJAX when the dropdown value changes
+            $('.status-dropdown').change(function () {
+                var new_status = $(this).val(); // Get the new status value
+                var pendaftaran_id = $(this).data('id'); // Get the pendaftaran id
+
+                // Make AJAX request to update status in the database
+                $.ajax({
+                    url: 'update-status.php', // PHP file to handle status update
+                    type: 'POST',
+                    data: {
+                        pendaftaran_id: pendaftaran_id,
+                        pendaftaran_status: new_status
+                    },
+                    success: function (response) {
+                        // Success: Optionally update the status column or show a message
+                       window.location.href = "?status=success";
+                    },
+                    error: function () {
+                        alert('Terjadi kesalahan saat memperbarui status.');
+                    }
+                });
+            });
+
+            // Initialize DataTables
+            $('#dataTable').DataTable();
+
+            // Hide the success alert after 5 seconds
+            setTimeout(function () {
+                $('#success-alert').fadeOut('slow');
+            }, 5000); // 5000 ms = 5 seconds
+        });
+    </script>
+
 </body>
 
 </html>

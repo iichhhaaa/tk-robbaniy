@@ -1,31 +1,8 @@
 <?php
+require_once('../vendor/tecnickcom/tcpdf/tcpdf.php');
 session_start();
 
-// Check if the user is logged in
-if (!isset($_SESSION['nama'])) {
-    // If not logged in, redirect to login page
-    header('Location: login.php');
-    exit();
-}
-
-// Get the user's name from the session
-$nama = $_SESSION['nama'];
-include '../../../koneksi.php';
-// Menjalankan query untuk mengambil satu data dari tabel profil_sekolah
-$sql = "SELECT * FROM pendaftaran";
-$result = $conn->query($sql);
-$row = $result->fetch_assoc();
-
-$setting = "SELECT value FROM settings WHERE key_name = 'pendaftaran_status'";
-$result_setting = $conn->query($setting);
-$row_setting = $result_setting->fetch_assoc();
-$status = $row_setting['value'];
-
-
-require_once('../vendor/tecnickcom/tcpdf/tcpdf.php');
-
-
-// Cek login (sesuaikan dengan sistem Anda)
+// Cek login
 if (!isset($_SESSION['nama'])) {
     header('Location: login.php');
     exit();
@@ -33,13 +10,13 @@ if (!isset($_SESSION['nama'])) {
 
 include '../../../koneksi.php';  // Koneksi ke database
 
-// Ambil id pendaftaran dari parameter (misal GET atau POST)
+// Ambil id pendaftaran dari parameter
 $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 if ($id <= 0) {
     die('ID pendaftaran tidak valid.');
 }
 
-// Query data pendaftaran beserta data murid, ibu, ayah
+// Query data pendaftaran
 $sql = "SELECT 
             p.kode_pendaftaran, p.berkas,
             m.nama AS nama_murid, m.nik AS nik_murid, m.tempat_lahir AS tempat_lahir_murid, m.tanggal_lahir AS tanggal_lahir_murid, m.jenis_kelamin AS jenis_kelamin_murid, m.alamat AS alamat_murid,
@@ -64,6 +41,12 @@ if ($stmt = $conn->prepare($sql)) {
     die('Query error: ' . $conn->error);
 }
 
+// Fungsi bantu untuk merapikan format kolom (label dan nilai)
+function addRow($pdf, $label, $value) {
+    $pdf->Cell(55, 8, $label, 0, 0);  // Kolom label
+    $pdf->Cell(0, 8, ': ' . $value, 0, 1); // Kolom nilai
+}
+
 // Inisialisasi TCPDF
 $pdf = new TCPDF();
 $pdf->SetCreator(PDF_CREATOR);
@@ -72,45 +55,59 @@ $pdf->SetTitle('Bukti Pendaftaran');
 $pdf->SetSubject('Bukti Pendaftaran TK');
 $pdf->SetKeywords('TK, Pendaftaran, Bukti');
 
-$pdf->SetMargins(15, 15, 15);
-$pdf->SetHeaderData('', 0, 'TK ISLAM ROBBANIY', 'Jl. Margonda Raya Gg. Mawar No. 35, Kemiri Muka, Beji, Depok 16423 | 0217758103 | tkrobbaniy@yahoo.com', [0,0,0], [0,0,0]); // Black color
-$pdf->setHeaderFont(['helvetica', '', 12]);
-$pdf->setFooterFont(['helvetica', '', 10]);
+// Nonaktifkan header dan footer bawaan
+$pdf->setPrintHeader(false);
+$pdf->setPrintFooter(false);
+
+// Atur margin dan buat halaman baru
+$pdf->SetMargins(20, 10, 20);
 $pdf->AddPage();
 
-// Set font for the text
-$pdf->SetFont('helvetica', 'B', 16);
-$pdf->Ln(20); // Space after header
+// ===== HEADER =====
+$pdf->SetFont('helvetica', 'B', 14);
+$pdf->Cell(0, 7, 'TK ISLAM ROBBANIY', 0, 1, 'C');
 
-// Title of the document (Centered)
-$pdf->Cell(0, 10, 'BUKTI PENDATARAN', 0, 1, 'C');
+$pdf->SetFont('helvetica', '', 11);
+$pdf->Cell(0, 6, 'Jl. Margonda Raya Gg. Mawar No. 35, Kemiri Muka, Beji, Depok 16423', 0, 1, 'C');
+$pdf->Cell(0, 6, 'Telepon: 0217758103 | Email: tkrobbaniy@yahoo.com', 0, 1, 'C');
 
-// Set normal font for content
+// Garis horizontal
+$pdf->Ln(3);
+$y = $pdf->GetY();
+$pdf->Line(20, $y, $pdf->getPageWidth() - 20, $y);
+$pdf->Ln(5);
+
+// ===== JUDUL =====
+$pdf->SetFont('helvetica', 'B', 13);
+$pdf->Cell(0, 10, 'BUKTI PENDAFTARAN', 0, 1, 'C');
+$pdf->Ln(5);
+
+// ===== DATA MURID =====
 $pdf->SetFont('helvetica', '', 12);
+addRow($pdf, 'No Pendaftaran', $data['kode_pendaftaran']);
+addRow($pdf, 'Nama', $data['nama_murid']);
+addRow($pdf, 'NIK', $data['nik_murid']);
+addRow($pdf, 'Tempat, Tanggal Lahir', $data['tempat_lahir_murid'] . ', ' . date('d-m-Y', strtotime($data['tanggal_lahir_murid'])));
+addRow($pdf, 'Jenis Kelamin', $data['jenis_kelamin_murid']);
+
+// Untuk alamat gunakan MultiCell agar teks panjang tetap rapi
+$pdf->Cell(55, 8, 'Alamat', 0, 0);
+$pdf->MultiCell(0, 8, ': ' . $data['alamat_murid'], 0, 'L', 0, 1);
+
 $pdf->Ln(10);
 
-// Pendaftaran Data
-$pdf->Cell(0, 10, 'NO PENDATARAN : ' . $data['kode_pendaftaran'], 0, 1);
-$pdf->Cell(0, 10, 'NAMA : ' . $data['nama_murid'], 0, 1);
-$pdf->Cell(0, 10, 'NIK : ' . $data['nik_murid'], 0, 1);
-$pdf->Cell(0, 10, 'TEMPAT, TANGGAL LAHIR : ' . $data['tempat_lahir_murid'] . ', ' . $data['tanggal_lahir_murid'], 0, 1);
-$pdf->Cell(0, 10, 'JENIS KELAMIN : ' . $data['jenis_kelamin_murid'], 0, 1);
-$pdf->Cell(0, 10, 'ALAMAT : ' . $data['alamat_murid'], 0, 1);
-$pdf->Ln(10);
-
-// Parents Data Section
+// ===== DATA ORANG TUA =====
 $pdf->SetFont('helvetica', 'B', 12);
-$pdf->Cell(0, 10, 'DATA ORANG TUA', 0, 1);
+$pdf->Cell(0, 8, 'DATA ORANG TUA', 0, 1);
+
 $pdf->SetFont('helvetica', '', 12);
+addRow($pdf, 'Nama Ibu', $data['nama_ibu']);
+addRow($pdf, 'Telepon Ibu', $data['telepon_ibu']);
+addRow($pdf, 'Nama Ayah', $data['nama_ayah']);
+addRow($pdf, 'Telepon Ayah', $data['telepon_ayah']);
 
-$pdf->Cell(0, 10, 'NAMA IBU : ' . $data['nama_ibu'], 0, 1);
-$pdf->Cell(0, 10, 'TELEPON IBU : ' . $data['telepon_ibu'], 0, 1);
-$pdf->Cell(0, 10, 'NAMA AYAH : ' . $data['nama_ayah'], 0, 1);
-$pdf->Cell(0, 10, 'TELEPON AYAH : ' . $data['telepon_ayah'], 0, 1);
+$pdf->Ln(15);
 
-$pdf->Ln(20);
-$pdf->Cell(0, 10, 'Terima kasih telah melakukan pendaftaran di TK ISLAM ROBBANIY.', 0, 1);
-
-// Output the PDF
+// Output PDF ke browser
 $pdf->Output('bukti_pendaftaran.pdf', 'I');
 ?>

@@ -38,14 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // Jika role adalah admin, redirect ke halaman dashboard admin
                 header("Location: view/dashboard/dashboard/index.php");
             } else {
-                $row_settings = $result_settings->fetch_assoc();
-                if($row_settings['value'] == 'open') {
-                // Jika role bukan admin, redirect ke halaman dashboard user biasa
                 header("Location: view/dashboard/dashboard-capen/dashboard-user.php");
-                } else {
-                    $_SESSION['msg_pendaftaran'] = "Pendaftaran sudah ditutup!";
-                    header("Location: login.php?err=tutup");
-                }
             }
             exit();
         } else {

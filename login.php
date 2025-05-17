@@ -59,7 +59,7 @@ $conn->close();
 
                                     <form class="user" method="POST" action="login-check.php">
                                         <div class="form-group">
-                                            <input type="text" class="form-control form-control-user" id="exampleInputusername" aria-describedby="usernameHelp" placeholder="Masukkan username" name="username" required>
+                                            <input type="text" class="form-control form-control-user" id="exampleInputusername" aria-describedby="usernameHelp" placeholder="Nama Pengguna" name="username" required>
                                         </div>
                                         <div class="form-group">
                                             <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Kata Sandi" name="password" required>

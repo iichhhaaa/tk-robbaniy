@@ -61,7 +61,7 @@ include 'koneksi.php'; // Ensure the database connection is correct
                                         <!-- Registration Form -->
                                         <form method="POST" action="register-store.php" class="user">
                                             <div class="form-group">
-                                                <input type="text" class="form-control form-control-user" id="username" name="username" placeholder="Username" required>
+                                                <input type="text" class="form-control form-control-user" id="username" name="username" placeholder="Nama Pengguna" required>
                                             </div>
                                             <div class="form-group">
                                                 <input type="text" class="form-control form-control-user" id="nama" name="nama" placeholder="Nama Lengkap" required>

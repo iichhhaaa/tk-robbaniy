@@ -152,6 +152,17 @@
                 <span>Pendaftaran</span>
             </a>
         </li>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider my-0">
+        <!-- Nav Item - status -->
+        <li class="nav-item">
+            <a class="nav-link" href="../dashboard-capen/status.php">
+                <i class="fas fa-fw fa-users"></i> <!-- Icon for Users -->
+                <span>Status</span>
+            </a>
+        </li>
+
         <!-- Divider -->
         <hr class="sidebar-divider my-0">
 

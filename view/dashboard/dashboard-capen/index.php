@@ -136,19 +136,25 @@ $conn->close();
                                                 echo "<td>" . $row["nama_ayah"] . "</td>";
                                                 echo "<td>" . $row["nama_ibu"] . "</td>";
 
-                                                // Action column with buttons for Edit and Export
                                                 echo "<td>
-                                                        <div class='dropdown'>
-                                                        <button class='btn btn-secondary btn-sm dropdown-toggle' type='button' id='dropdownMenuButton' data-bs-toggle='dropdown' aria-expanded='false'>
-                                                            Aksi
-                                                        </button>
-                                                        <ul class='dropdown-menu' aria-labelledby='dropdownMenuButton'>
-                                                            <li><a class='dropdown-item' href='bukti.php?id=" . $row["id"] . "'>Ekspor</a></li>
-                                                            <li><a class='dropdown-item' href='update.php?id=" . $row["id"] . "'>Ubah</a></li>
-                                                            <li><a class='dropdown-item text-danger' href='delete.php?id=" . $row["id"] . "' onclick='confirmDelete(" . $row["id"] . ")'>Hapus</a></li>
-                                                        </ul>
-                                                    </div>
-                                                    </td>";
+                <div class='dropdown'>
+                    <button class='btn btn-secondary btn-sm dropdown-toggle' type='button' id='dropdownMenuButton' data-bs-toggle='dropdown' aria-expanded='false'>
+                        Aksi
+                    </button>
+                    <ul class='dropdown-menu' aria-labelledby='dropdownMenuButton'>";
+
+                                                if ($status == 'open') {
+                                                    echo "<li><a class='dropdown-item' href='bukti.php?id=" . $row["id"] . "'>Ekspor</a></li>";
+                                                    echo "<li><a class='dropdown-item' href='update.php?id=" . $row["id"] . "'>Ubah</a></li>";
+                                                    echo "<li><a class='dropdown-item text-danger' href='delete.php?id=" . $row["id"] . "' onclick='return confirm(\"Yakin ingin menghapus data ini?\")'>Hapus</a></li>";
+                                                } elseif ($status == 'closed') {
+                                                    echo "<li><a class='dropdown-item' href='bukti.php?id=" . $row["id"] . "'>Ekspor</a></li>";
+                                                }
+
+                                                echo "      
+                                                </ul>
+                                            </div>
+                </td>";
                                                 echo "</tr>";
                                             }
                                         } else {
@@ -213,4 +219,3 @@ $conn->close();
 </body>
 
 </html>
-

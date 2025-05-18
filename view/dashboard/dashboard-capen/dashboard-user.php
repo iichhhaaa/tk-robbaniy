@@ -10,8 +10,7 @@ if (!isset($_SESSION['nama'])) {
 
 include '../../../koneksi.php';
 
-// Ambil user_id dari sesi
-$user_id = $_SESSION['user_id'];
+$user_id = $_SESSION['id'];
 
 // Query untuk mengambil data pendaftaran yang relevan dengan pengguna yang login
 $sql = "SELECT * FROM pendaftaran WHERE user_id = ?";
@@ -61,37 +60,28 @@ $nama = $_SESSION['nama'];
                 <div class="container-fluid">
                     <h1 class="h3 mb-4 text-gray-800">Selamat Datang, <?php echo $nama; ?>!</h1>
 
-                    <div class="row mt-4">
-                        <!-- Content for user to follow steps -->
-                        <div class="col-12">
                             <div class="card shadow mb-4">
-                                    <div class="card-body">
-                                        Status: <?php echo $row["status"] ?>
-                                    </div>                       
+                                <div class="card-body">
+                                    <h4 class="card-title">Langkah-langkah Pendaftaran</h4>
+                                    <p>Untuk melanjutkan proses pendaftaran, Anda perlu mengikuti langkah-langkah berikut:</p>
+                                    <ol>
+                                        <li><strong>Siapkan Berkas yang Diperlukan:</strong> Pastikan Anda telah menyiapkan dan menggabungkan berkas-berkas berikut dalam satu file PDF:
+                                            <ul>
+                                                <li><strong>KK (Kartu Keluarga)</strong></li>
+                                                <li><strong>Akte Kelahiran</strong></li>
+                                                <li><strong>KTP</strong></li>
+                                            </ul>
+                                        </li>
+                                        <li><strong>Gabungkan Semua Berkas dalam Satu PDF:</strong> Pastikan Anda menggabungkan berkas-berkas KK, Akte Kelahiran, dan KTP dalam satu file PDF untuk melanjutkan pendaftaran.</li>
+                                        <li><strong>Klik pada Bagian Pendaftaran:</strong> Setelah semua berkas siap, klik bagian <strong>"Pendaftaran"</strong> untuk memulai pengisian formulir pendaftaran.</li>
+                                        <li><strong>Isi Formulir Pendaftaran:</strong> Setelah Anda mengklik bagian pendaftaran, lengkapi formulir yang tersedia dengan informasi yang benar dan lengkap.</li>
+                                        <li><strong>Kirimkan Berkas yang Sudah Digabung:</strong> Setelah mengisi formulir, kirimkan file PDF yang berisi gabungan berkas KK, Akte Kelahiran, dan KTP sesuai petunjuk yang tersedia.</li>
+                                    </ol>
+                                    <p>Setelah mengisi formulir dan mengirimkan berkas, tunggu pengumuman status kelulusan Anda yang akan diperbarui setelah proses verifikasi selesai.</p>
+                                </div>
                             </div>
-                            
-<div class="card shadow mb-4">
-    <div class="card-body">
-        <h4 class="card-title">Langkah-langkah Pendaftaran</h4>
-        <p>Untuk melanjutkan proses pendaftaran, Anda perlu mengikuti langkah-langkah berikut:</p>
-        <ol>
-            <li><strong>Siapkan Berkas yang Diperlukan:</strong> Pastikan Anda telah menyiapkan dan menggabungkan berkas-berkas berikut dalam satu file PDF:
-                <ul>
-                    <li><strong>KK (Kartu Keluarga)</strong></li>
-                    <li><strong>Akte Kelahiran</strong></li>
-                    <li><strong>KTP</strong></li>
-                </ul>
-            </li>
-            <li><strong>Gabungkan Semua Berkas dalam Satu PDF:</strong> Pastikan Anda menggabungkan berkas-berkas KK, Akte Kelahiran, dan KTP dalam satu file PDF untuk melanjutkan pendaftaran.</li>
-            <li><strong>Klik pada Bagian Pendaftaran:</strong> Setelah semua berkas siap, klik bagian <strong>"Pendaftaran"</strong> untuk memulai pengisian formulir pendaftaran.</li>
-            <li><strong>Isi Formulir Pendaftaran:</strong> Setelah Anda mengklik bagian pendaftaran, lengkapi formulir yang tersedia dengan informasi yang benar dan lengkap.</li>
-            <li><strong>Kirimkan Berkas yang Sudah Digabung:</strong> Setelah mengisi formulir, kirimkan file PDF yang berisi gabungan berkas KK, Akte Kelahiran, dan KTP sesuai petunjuk yang tersedia.</li>
-        </ol>
-        <p>Setelah mengisi formulir dan mengirimkan berkas, tunggu pengumuman status kelulusan Anda yang akan diperbarui setelah proses verifikasi selesai.</p>
-    </div>
-</div>
 
-<!-- <div class="row mt-4">
+                            <!-- <div class="row mt-4">
     <div class="col-12">
         <div class="alert alert-info" role="alert">
             Pastikan semua berkas telah digabungkan menjadi satu file PDF sebelum melanjutkan.
@@ -99,30 +89,30 @@ $nama = $_SESSION['nama'];
     </div>
 </div> -->
 
+                        </div>
+                        <!-- /.container-fluid -->
+                    </div>
+                    <!-- End of Main Content -->
+
                 </div>
-                <!-- /.container-fluid -->
+                <!-- End of Content Wrapper -->
             </div>
-            <!-- End of Main Content -->
+            <!-- End of Page Wrapper -->
 
-        </div>
-        <!-- End of Content Wrapper -->
-    </div>
-    <!-- End of Page Wrapper -->
+            <!-- Scroll to Top Button-->
+            <a class="scroll-to-top rounded" href="#page-top">
+                <i class="fas fa-angle-up"></i>
+            </a>
 
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
+            <!-- Bootstrap core JavaScript-->
+            <script src="../vendor/jquery/jquery.min.js"></script>
+            <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="../vendor/jquery/jquery.min.js"></script>
-    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+            <!-- Core plugin JavaScript-->
+            <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
 
-    <!-- Core plugin JavaScript-->
-    <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="../js/sb-admin-2.min.js"></script>
+            <!-- Custom scripts for all pages-->
+            <script src="../js/sb-admin-2.min.js"></script>
 
 </body>
 

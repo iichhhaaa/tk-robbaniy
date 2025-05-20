@@ -14,6 +14,12 @@ if (!isset($_SESSION['nama'])) {
     exit();
 }
 
+if ($_SESSION['role'] !== 'admin') {
+    // If not logged in or role is not admin, redirect to dashboard
+    header('Location: ../dashboard-capen/index.php');
+    exit();
+}
+
 // Include database connection
 include '../../../koneksi.php';
 

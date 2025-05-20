@@ -7,6 +7,12 @@ if (!isset($_SESSION['nama'])) {
     header('Location: ../../../login.php');
     exit();
 }
+
+if ($_SESSION['role'] !== 'admin') {
+    // If not logged in or role is not admin, redirect to dashboard
+    header('Location: ../dashboard-capen/index.php');
+    exit();
+}
 // Get the user's name from the session
 $nama = $_SESSION['nama'];
 

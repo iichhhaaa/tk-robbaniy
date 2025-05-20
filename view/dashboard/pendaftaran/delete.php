@@ -1,74 +1,89 @@
 <?php
 session_start();
 
-// Check if the user is logged in
+// Cek apakah user sudah login
 if (!isset($_SESSION['nama'])) {
-    // If not logged in, redirect to login page
+    // Jika belum login, redirect ke halaman login
     header('Location: ../../../login.php');
     exit();
 }
 
 $nama = $_SESSION['nama'];
-include '../../../koneksi.php'; // Include the database connection file
+include '../../../koneksi.php'; // Sertakan file koneksi database
 
-// Check if 'id' is passed in the URL
+// Cek apakah 'id' ada di URL
 if (isset($_GET['id'])) {
-    $id = $_GET['id']; // Get the 'id' parameter from the URL
+    $id = $_GET['id']; // Ambil parameter 'id' dari URL
 
-    // Query to fetch the existing data from the database based on the 'id'
+    // Query untuk mengambil data berdasarkan 'id'
     $sql = "SELECT * FROM pendaftaran WHERE id = ?";
     if ($stmt = $conn->prepare($sql)) {
-        // Bind the 'id' parameter
+        // Bind parameter 'id'
         $stmt->bind_param("i", $id);
         $stmt->execute();
         $result = $stmt->get_result();
 
-        // Check if record is found
+        // Cek apakah record ditemukan
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
             $kode_pendaftaran = $row['kode_pendaftaran'];
-            $berkas = $row['berkas']; // Get the file path (berkas)
+            $berkas = $row['berkas']; // Ambil path berkas
         } else {
-            // Redirect to the index page if the record is not found
+            // Redirect ke halaman index jika record tidak ditemukan
             header("Location: index.php");
             exit();
         }
 
         $stmt->close();
+    } else {
+        // Jika query gagal, redirect ke halaman index
+        header("Location: index.php?status=error_query");
+        exit();
     }
 } else {
-    // If 'id' is not passed, redirect to the index page
+    // Jika 'id' tidak ada, redirect ke halaman index
     header("Location: index.php");
     exit();
 }
 
-// Handle the deletion of the file (if exists)
+// Hapus berkas yang terkait (jika ada)
 if ($berkas) {
     $file_path = "../../../storage/berkas/" . $berkas;
     if (file_exists($file_path)) {
-        unlink($file_path); // Delete the file from the server
+        // Hapus file dari server
+        if (!unlink($file_path)) {
+            // Jika gagal menghapus file, beri pesan error
+            header("Location: index.php?status=error_delete_file");
+            exit();
+        }
     }
 }
 
-// Delete the record from the database
+// Hapus record dari database
 $sql_delete = "DELETE FROM pendaftaran WHERE id = ?";
 if ($stmt_delete = $conn->prepare($sql_delete)) {
-    // Bind the 'id' parameter for deletion
+    // Bind parameter 'id' untuk penghapusan
     $stmt_delete->bind_param("i", $id);
 
-    // Execute the query
+    // Eksekusi query
     if ($stmt_delete->execute()) {
-        // Redirect with a success message
+        // Redirect ke halaman index dengan status sukses
         header("Location: index.php?status=success");
         exit();
     } else {
+        // Jika query penghapusan gagal, beri pesan error
         echo "Error: " . $stmt_delete->error;
+        exit();
     }
 
-    // Close the statement
+    // Tutup statement
     $stmt_delete->close();
+} else {
+    // Jika query penghapusan gagal, beri pesan error
+    echo "Error: " . $conn->error;
+    exit();
 }
 
-// Close the database connection
+// Tutup koneksi database
 $conn->close();
 ?>

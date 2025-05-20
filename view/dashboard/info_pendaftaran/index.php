@@ -8,6 +8,12 @@ if (!isset($_SESSION['nama'])) {
     exit();
 }
 
+if ($_SESSION['role'] !== 'admin') {
+    // If not logged in or role is not admin, redirect to dashboard
+    header('Location: ../dashboard-capen/index.php');
+    exit();
+}
+
 // Get the user's name from the session
 $nama = $_SESSION['nama'];
 include '../../../koneksi.php';
@@ -34,7 +40,7 @@ $conn->close();
     <!-- Custom fonts for this template -->
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
-        href="../https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 
     <!-- Custom styles for this template -->

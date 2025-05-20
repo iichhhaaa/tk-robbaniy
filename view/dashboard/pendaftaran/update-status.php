@@ -8,6 +8,12 @@ if (!isset($_SESSION['nama'])) {
     exit();
 }
 
+if ($_SESSION['role'] !== 'admin') {
+    // If not logged in or role is not admin, redirect to dashboard
+    header('Location: ../dashboard-capen/index.php');
+    exit();
+}
+
 // Check if the POST data is set
 if (isset($_POST['pendaftaran_status'])) {
     // Get the new status (either 'open' or 'closed')

@@ -10,6 +10,7 @@
       aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon" style="color:#fff;"></span>
     </button>
+    
     <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
       <ul class="navbar-nav align-items-center">
         <li class="nav-item"><a class="nav-link" href="beranda.php">Beranda</a></li>
@@ -19,9 +20,17 @@
         <li class="nav-item"><a class="nav-link" href="pendaftaran.php">Pendaftaran</a></li>
         <li class="nav-item"><a class="nav-link" href="kontak.php">Kontak</a></li>
         <li class="nav-item">
-          <?php session_start(); ?>
-          <?php if (isset($_SESSION['nama'])): ?>
-            <a class="nav-link">
+          <?php 
+            session_start(); 
+            if (isset($_SESSION['nama']) && isset($_SESSION['role'])): 
+              $dashboardPath = '';
+              if ($_SESSION['role'] === 'admin') {
+                $dashboardPath = 'view/dashboard/dashboard/index.php';
+              } elseif ($_SESSION['role'] === 'capen') {
+                $dashboardPath = 'view/dashboard/dashboard-capen/index.php';
+              }
+          ?>
+            <a class="nav-link" href="<?php echo $dashboardPath; ?>">
               <button class="btn btn-masuk"><?php echo $_SESSION['nama']; ?></button>
             </a>
           <?php else: ?>
@@ -30,8 +39,6 @@
             </a>
           <?php endif; ?>
         </li>
-
-
       </ul>
     </div>
   </div>

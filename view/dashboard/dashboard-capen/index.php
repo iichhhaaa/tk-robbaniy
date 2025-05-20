@@ -16,6 +16,9 @@ $result_setting = $conn->query($setting);
 $row_setting = $result_setting->fetch_assoc();
 $status = $row_setting['value'];
 
+$message_status = isset($_GET['status']) ? $_GET['status'] : null;
+
+
 $conn->close();
 ?>
 <!DOCTYPE html>
@@ -58,30 +61,28 @@ $conn->close();
                 <!-- Topbar -->
                 <?php include '../inc/dashboard-header.php'; ?>
 
+
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
+
 
                     <!-- Page Heading -->
                     <h1 class="h3 mb-4 text-gray-800">Pendaftaran Murid</h1>
 
                     <!-- Success/Error Message -->
-                    <?php
-                    if (isset($_GET['status'])) {
-                        $status = $_GET['status'];
 
-                        // If update was successful, show success message
-                        if ($status == 'success') {
-                            echo "<div class='alert alert-success' role='alert'>
-                                    Data berhasil diproses!
-                                </div>";
-                        } elseif ($status == 'error') {
-                            // If update failed, show error message
-                            echo "<div class='alert alert-danger' role='alert'>
-                                    Terjadi kesalahan saat memproses data.
-                                </div>";
+                    <?php
+                    if ($message_status) {
+                        if ($message_status === 'success') {
+                            echo "<div class='alert alert-success' role='alert'>Data berhasil diproses!</div>";
+                        } elseif ($message_status === 'error') {
+                            echo "<div class='alert alert-danger' role='alert'>Terjadi kesalahan saat memproses data.</div>";
                         }
                     }
                     ?>
+
+
+
 
                     <?php if ($status == 'open') { ?>
 

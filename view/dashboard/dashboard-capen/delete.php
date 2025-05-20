@@ -20,7 +20,12 @@ if (isset($_GET['id'])) {
     if ($stmt = $conn->prepare($sql)) {
         // Bind the 'id' parameter
         $stmt->bind_param("i", $id);
-        $stmt->execute();
+        if (!$stmt->execute()) {
+            echo "Error executing query: " . $stmt->error;
+            $stmt->close();
+            $conn->close();
+            exit();
+        }
         $result = $stmt->get_result();
 
         // Check if record is found
@@ -28,13 +33,22 @@ if (isset($_GET['id'])) {
             $row = $result->fetch_assoc();
             $kode_pendaftaran = $row['kode_pendaftaran'];
             $berkas = $row['berkas']; // Get the file path (berkas)
+            $murid_id = $row['murid_id'];
+            $ayah_id = $row['ayah_id'];
+            $ibu_id = $row['ibu_id'];
         } else {
             // Redirect to the index page if the record is not found
+            $stmt->close();
+            $conn->close();
             header("Location: index.php");
             exit();
         }
 
         $stmt->close();
+    } else {
+        echo "Error preparing statement: " . $conn->error;
+        $conn->close();
+        exit();
     }
 } else {
     // If 'id' is not passed, redirect to the index page
@@ -42,31 +56,79 @@ if (isset($_GET['id'])) {
     exit();
 }
 
-// Handle the deletion of the file (if exists)
-if ($berkas) {
-    $file_path = "../../../storage/berkas/" . $berkas;
-    if (file_exists($file_path)) {
-        unlink($file_path); // Delete the file from the server
-    }
-}
+// Begin transaction to ensure all deletions succeed or fail together
+$conn->begin_transaction();
 
-// Delete the record from the database
-$sql_delete = "DELETE FROM pendaftaran WHERE id = ?";
-if ($stmt_delete = $conn->prepare($sql_delete)) {
-    // Bind the 'id' parameter for deletion
-    $stmt_delete->bind_param("i", $id);
-
-    // Execute the query
-    if ($stmt_delete->execute()) {
-        // Redirect with a success message
-        header("Location: index.php?status=success");
-        exit();
+try {
+    // Delete related murid record
+    $sql_delete_murid = "DELETE FROM murid WHERE id = ?";
+    if ($stmt_murid = $conn->prepare($sql_delete_murid)) {
+        $stmt_murid->bind_param("i", $murid_id);
+        if (!$stmt_murid->execute()) {
+            throw new Exception("Error deleting murid: " . $stmt_murid->error);
+        }
+        $stmt_murid->close();
     } else {
-        echo "Error: " . $stmt_delete->error;
+        throw new Exception("Error preparing murid delete statement: " . $conn->error);
     }
 
-    // Close the statement
-    $stmt_delete->close();
+    // Delete related ayah record
+    $sql_delete_ayah = "DELETE FROM ayah WHERE id = ?";
+    if ($stmt_ayah = $conn->prepare($sql_delete_ayah)) {
+        $stmt_ayah->bind_param("i", $ayah_id);
+        if (!$stmt_ayah->execute()) {
+            throw new Exception("Error deleting ayah: " . $stmt_ayah->error);
+        }
+        $stmt_ayah->close();
+    } else {
+        throw new Exception("Error preparing ayah delete statement: " . $conn->error);
+    }
+
+    // Delete related ibu record
+    $sql_delete_ibu = "DELETE FROM ibu WHERE id = ?";
+    if ($stmt_ibu = $conn->prepare($sql_delete_ibu)) {
+        $stmt_ibu->bind_param("i", $ibu_id);
+        if (!$stmt_ibu->execute()) {
+            throw new Exception("Error deleting ibu: " . $stmt_ibu->error);
+        }
+        $stmt_ibu->close();
+    } else {
+        throw new Exception("Error preparing ibu delete statement: " . $conn->error);
+    }
+
+    // Handle the deletion of the file (if exists)
+    if ($berkas) {
+        $file_path = "../../../storage/berkas/" . $berkas;
+        if (file_exists($file_path)) {
+            if (!unlink($file_path)) {
+                throw new Exception("Failed to delete file: " . $file_path);
+            }
+        }
+    }
+
+    // Delete the pendaftaran record last
+    $sql_delete_pendaftaran = "DELETE FROM pendaftaran WHERE id = ?";
+    if ($stmt_pendaftaran = $conn->prepare($sql_delete_pendaftaran)) {
+        $stmt_pendaftaran->bind_param("i", $id);
+        if (!$stmt_pendaftaran->execute()) {
+            throw new Exception("Error deleting pendaftaran: " . $stmt_pendaftaran->error);
+        }
+        $stmt_pendaftaran->close();
+    } else {
+        throw new Exception("Error preparing pendaftaran delete statement: " . $conn->error);
+    }
+
+    // Commit transaction
+    $conn->commit();
+
+    // Redirect with a success message
+    header("Location: index.php?status=success");
+    exit();
+
+} catch (Exception $e) {
+    // Rollback transaction on error
+    $conn->rollback();
+    echo "Transaction failed: " . $e->getMessage();
 }
 
 // Close the database connection

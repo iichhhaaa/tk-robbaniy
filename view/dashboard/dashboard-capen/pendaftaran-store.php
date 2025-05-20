@@ -1,8 +1,16 @@
 <?php
 session_start();
 
+// Check if the user is logged in
 if (!isset($_SESSION['nama'])) {
-    header('Location: login.php');
+    // If not logged in, redirect to login page
+    header('Location: ../../../login.php');
+    exit();
+}
+
+if ($_SESSION['role'] !== 'admin') {
+    // If not logged in or role is not admin, redirect to dashboard
+    header('Location: ../dashboard-capen/index.php');
     exit();
 }
 

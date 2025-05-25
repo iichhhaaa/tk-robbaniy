@@ -144,13 +144,15 @@ $conn->close();
                     </button>
                     <ul class='dropdown-menu' aria-labelledby='dropdownMenuButton'>";
 
+                                                // Ekspor bisa selalu ditampilkan
+                                                echo "<li><a class='dropdown-item' href='bukti.php?id=" . $row["id"] . "'>Ekspor</a></li>";
+
+                                                // Edit dan Hapus hanya jika status open
                                                 if ($status == 'open') {
-                                                    echo "<li><a class='dropdown-item' href='bukti.php?id=" . $row["id"] . "'>Ekspor</a></li>";
                                                     echo "<li><a class='dropdown-item' href='update.php?id=" . $row["id"] . "'>Ubah</a></li>";
                                                     echo "<li><a class='dropdown-item text-danger' href='delete.php?id=" . $row["id"] . "' onclick='return confirm(\"Yakin ingin menghapus data ini?\")'>Hapus</a></li>";
-                                                } elseif ($status == 'closed') {
-                                                    echo "<li><a class='dropdown-item' href='bukti.php?id=" . $row["id"] . "'>Ekspor</a></li>";
                                                 }
+
 
                                                 echo "      
                                                 </ul>

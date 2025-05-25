@@ -16,27 +16,27 @@ if ($result_settings && $result_settings->num_rows > 0) {
 if ($status_pendaftaran == 'closed') {
     $_SESSION['msg_pendaftaran'] = "Pendaftaran sudah ditutup!";
     header("Location: register.php"); // Redirect ke halaman register.php
-    exit(); // Hentikan eksekusi lebih lanjut
+    exit();
 }
 
 // Jika form di-submit
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Collect form data
-    $nama = $_POST['nama'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    $username = $_POST['username'];
-    $confirm_password = $_POST['confirm_password'];
+    // Ambil data form
+    $nama = $_POST['nama'] ?? '';
+    $email = $_POST['email'] ?? '';
+    $password = $_POST['password'] ?? '';
+    $username = $_POST['username'] ?? '';
+    $confirm_password = $_POST['confirm_password'] ?? '';
 
-    // Validate form data
+    // Validasi input
     $errors = [];
 
     if (empty($nama)) {
-        $errors[] = "Nama wajib Diisi.";
+        $errors[] = "Nama wajib diisi.";
     }
 
     if (empty($username)) {
-        $errors[] = "Username wajib Diisi.";
+        $errors[] = "Username wajib diisi.";
     }
 
     if (empty($email)) {
@@ -46,20 +46,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     if (empty($password)) {
-        $errors[] = "Kata Sandi wajib diisi";
+        $errors[] = "Kata sandi wajib diisi.";
     }
 
     if ($password !== $confirm_password) {
         $errors[] = "Kata sandi tidak cocok.";
     }
 
-    // If there are no validation errors
+    // Jika tidak ada error validasi
     if (empty($errors)) {
-        // Hash the password for security
+        // Hash password
         $hashed_password = password_hash($password, PASSWORD_BCRYPT);
         $role = 'capen';
 
-        // Check if email or username already exists
+        // Cek email atau username sudah ada?
         $check_email_query = "SELECT * FROM users WHERE email = ? OR username = ?";
         $stmt = $conn->prepare($check_email_query);
         $stmt->bind_param("ss", $email, $username);
@@ -67,35 +67,31 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $result = $stmt->get_result();
 
         if ($result->num_rows > 0) {
-            // Email or username already exists
             $errors[] = "Email atau username ini sudah terdaftar.";
         } else {
-            // Insert the new user into the database
+            // Insert user baru
             $insert_query = "INSERT INTO users (username, password, role, nama, email) VALUES (?, ?, ?, ?, ?)";
             $stmt = $conn->prepare($insert_query);
             $stmt->bind_param("sssss", $username, $hashed_password, $role, $nama, $email);
 
             if ($stmt->execute()) {
-                // Registration successful, redirect to login page
                 $_SESSION['message'] = "Daftar Akun Berhasil. Silahkan Login!";
                 header("Location: register.php");
                 exit();
             } else {
-                // Error inserting user into database
                 $errors[] = "Terjadi kesalahan saat mendaftar. Silakan coba lagi.";
             }
         }
     }
-}
-?>
 
-<!-- Display errors if any -->
-<?php if (!empty($errors)): ?>
-    <div class="alert alert-danger">
-        <ul>
-            <?php foreach ($errors as $error): ?>
-                <li><?php echo $error; ?></li>
-            <?php endforeach; ?>
-        </ul>
-    </div>
-<?php endif; ?>
+    // Jika ada error, simpan ke session dan redirect ke register.php
+    if (!empty($errors)) {
+        $_SESSION['errors'] = $errors;
+        header("Location: register.php");
+        exit();
+    }
+} else {
+    // Jika akses langsung tanpa POST
+    header("Location: register.php");
+    exit();
+}

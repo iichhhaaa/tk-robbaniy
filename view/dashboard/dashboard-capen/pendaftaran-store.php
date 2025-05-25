@@ -8,7 +8,8 @@ if (!isset($_SESSION['nama'])) {
     exit();
 }
 
-if ($_SESSION['role'] !== 'admin') {
+
+if ($_SESSION['role'] !== 'capen') {
     // If not logged in or role is not admin, redirect to dashboard
     header('Location: ../dashboard-capen/index.php');
     exit();

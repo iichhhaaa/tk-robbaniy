@@ -57,7 +57,7 @@ if (isset($_GET['id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Edit Data Fasilitas</title>
+    <title>Ubah Data Guru</title>
 
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -75,7 +75,7 @@ if (isset($_GET['id'])) {
                 <?php include '../inc/dashboard-header.php'; ?>
 
                 <div class="container-fluid">
-                    <h1 class="h3 mb-2 text-gray-800">Edit Data Fasilitas</h1>
+                    <h1 class="h3 mb-2 text-gray-800">Ubah Data Fasilitas</h1>
 
                     <a href="index.php" class="btn btn-primary mb-3">
                         <i class="fas fa-arrow-left"></i> Kembali

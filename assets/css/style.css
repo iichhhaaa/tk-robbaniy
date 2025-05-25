@@ -78,9 +78,10 @@
     border-radius: 8px;
   }
 
-  .profile-text {
+ .profile-text {
     white-space: pre-line;
-  }
+  } 
+
   .section-title {
     font-weight: 700;
     margin-top: 2rem;
@@ -174,3 +175,4 @@ main {
   font-weight: 500;
   margin-bottom: 0;
 }
+

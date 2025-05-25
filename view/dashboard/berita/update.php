@@ -120,7 +120,7 @@ if (isset($_GET['id'])) {
 
                                 <div class="mb-3">
                                     <label for="content" class="form-label">Konten</label>
-                                    <textarea class="form-control" id="content" name="content" rows="3" required><?php echo $content; ?></textarea>
+                                    <textarea class="form-control" id="content" name="content" rows="10" required><?php echo $content; ?></textarea>
                                 </div>
 
                                 <div class="mb-3">

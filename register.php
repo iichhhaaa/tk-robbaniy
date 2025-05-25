@@ -1,7 +1,6 @@
 <?php
 session_start();
-include 'koneksi.php'; // Ensure the database connection is correct
-
+include 'koneksi.php'; // Pastikan koneksi ke database sudah benar
 ?>
 
 <!DOCTYPE html>
@@ -11,15 +10,12 @@ include 'koneksi.php'; // Ensure the database connection is correct
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>Register</title>
+    <title>Daftar Akun - TK Islam Robbaniy</title>
 
     <!-- Custom fonts for this template-->
     <link href="https://cdn.jsdelivr.net/npm/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="view/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900" rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="view/dashboard/css/sb-admin-2.min.css" rel="stylesheet">
@@ -39,26 +35,38 @@ include 'koneksi.php'; // Ensure the database connection is correct
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Buat Akun!</h1>
 
-                                        <!-- Display success message if any -->
+                                        <!-- Pesan sukses -->
+                                        <?php if (isset($_SESSION['message'])): ?>
+                                            <div id="successMessage" class="alert alert-success" role="alert">
+                                                <?php
+                                                echo htmlspecialchars($_SESSION['message']);
+                                                unset($_SESSION['message']);
+                                                ?>
+                                            </div>
+                                        <?php endif; ?>
+
+                                        <!-- Pesan pendaftaran tutup -->
+                                        <?php if (isset($_SESSION['msg_pendaftaran'])): ?>
+                                            <div id="registrationStatusMessage" class="alert alert-danger" role="alert">
+                                                <?php
+                                                echo htmlspecialchars($_SESSION['msg_pendaftaran']);
+                                                unset($_SESSION['msg_pendaftaran']);
+                                                ?>
+                                            </div>
+                                        <?php endif; ?>
+
+                                        <!-- Pesan error validasi -->
                                         <?php
-                                        if (isset($_SESSION['message'])) {
-                                            echo "<div class='alert alert-success' role='alert'>
-                                            {$_SESSION['message']}
-                                        </div>";
-                                            unset($_SESSION['message']); // Unset the message after displaying it
+                                        if (isset($_SESSION['errors']) && count($_SESSION['errors']) > 0) {
+                                            $errors = $_SESSION['errors'];
+                                            echo '<div id="errorMessage" class="alert alert-danger" role="alert">';
+                                            echo implode('<br>', array_map('htmlspecialchars', $errors));
+                                            echo '</div>';
+                                            unset($_SESSION['errors']);
                                         }
                                         ?>
 
-                                        <!-- Display message for closed registration -->
-                                        <?php if (isset($_SESSION['msg_pendaftaran'])): ?>
-                                            <div class="alert alert-danger" role="alert">
-                                                <?php echo $_SESSION['msg_pendaftaran']; ?>
-                                            </div>
-                                            <?php unset($_SESSION['msg_pendaftaran']); // Remove the message after displaying it 
-                                            ?>
-                                        <?php endif; ?>
-
-                                        <!-- Registration Form -->
+                                        <!-- Form Registrasi -->
                                         <form method="POST" action="register-store.php" class="user">
                                             <div class="form-group">
                                                 <input type="text" class="form-control form-control-user" id="username" name="username" placeholder="Nama Pengguna" required>
@@ -103,6 +111,24 @@ include 'koneksi.php'; // Ensure the database connection is correct
             <!-- Custom scripts for all pages-->
             <script src="view/js/sb-admin-2.min.js"></script>
 
+            <script>
+                // Fungsi untuk menghilangkan pesan setelah 5 detik
+                window.onload = function() {
+                    const errorMsg = document.getElementById('errorMessage');
+                    const successMsg = document.getElementById('successMessage');
+                    const regStatusMsg = document.getElementById('registrationStatusMessage');
+
+                    [errorMsg, successMsg, regStatusMsg].forEach(msg => {
+                        if (msg) {
+                            setTimeout(() => {
+                                msg.style.transition = "opacity 0.5s ease";
+                                msg.style.opacity = 0;
+                                setTimeout(() => msg.remove(), 500);
+                            }, 5000);
+                        }
+                    });
+                };
+            </script>
 </body>
 
 </html>

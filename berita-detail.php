@@ -49,7 +49,7 @@ $conn->close();
 
         <img src="storage/berita/<?php echo $row_berita['foto']; ?>" alt="Berita" class="img-fluid rounded my-4" style="height: 450px; width: 100%; object-fit: cover;">
         <p class="text-muted"><?php echo $row_berita['created_at']; ?></p>
-        <p style="text-align: justify;">
+        <p class="profile-text text-justify">
             <?php echo $row_berita['content']; ?>
         </p>
       </div>

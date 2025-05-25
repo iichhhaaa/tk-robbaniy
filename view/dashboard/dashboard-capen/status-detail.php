@@ -40,16 +40,20 @@ $status = $data['status'];
 $penjelasan = "";
 if ($status === "Lolos") {
     $penjelasan = "
+    <p><strong>Selamat, Anda dinyatakan <span class='text-success'>Lolos</span>!</strong></p>
+    <p>Silakan lakukan pembayaran administrasi ke rekening berikut:</p>
     <ul>
-        <li><strong>Langkah 1:</strong> Silakan datang ke sekolah untuk melakukan verifikasi berkas asli.</li>
-        <li><strong>Langkah 2:</strong> Lakukan pembayaran administrasi sesuai ketentuan sekolah.</li>
-        <li><strong>Langkah 3:</strong> Ambil jadwal orientasi siswa baru (MOS) di bagian informasi sekolah.</li>
-        <li><strong>Langkah 4:</strong> Mengikuti kegiatan orientasi sesuai jadwal yang ditentukan.</li>
-    </ul>";
+        <li><strong>Bank:</strong> BCA</li>
+        <li><strong>No. Rekening:</strong> 8682078255</li>
+        <li><strong>Atas Nama:</strong> Tetik</li>
+    </ul>
+    <p>Setelah melakukan pembayaran, kirimkan bukti transfer ke WhatsApp: <strong>0812-9678-1234</strong>.</p>
+    <p>Jika pembayaran telah dikonfirmasi, Anda akan segera diundang ke grup informasi siswa baru.</p>
+";
 } elseif ($status === "Tidak Lolos") {
-    $penjelasan = "<p>Maaf, pendaftaran Anda tidak diterima. Silakan menghubungi pihak sekolah untuk informasi lebih lanjut.</p>";
+    $penjelasan = "<p>Mohon maaf, Anda <span class='text-danger'>Tidak Lolos</span> . Namun jangan menyerah, tetap semangat dan coba lagi di kesempatan berikutnya!</p>";
 } else {
-    $penjelasan = "<p>Status pendaftaran Anda masih dalam proses. Mohon tunggu informasi selanjutnya.</p>";
+    $penjelasan = "<p>Hasil pendaftaran Anda masih dalam proses. Mohon dicek saat pengumuman hasil</p>";
 }
 
 $nama = $_SESSION['nama'];
@@ -105,8 +109,16 @@ $nama = $_SESSION['nama'];
                             <p><strong>Nama Murid:</strong> <?php echo htmlspecialchars($data['nama_murid']); ?></p>
                             <p><strong>Nama Ayah:</strong> <?php echo htmlspecialchars($data['nama_ayah']); ?></p>
                             <p><strong>Nama Ibu:</strong> <?php echo htmlspecialchars($data['nama_ibu']); ?></p>
-                            <p><strong>Status Pendaftaran:</strong> 
-                                <span class="badge badge-<?php echo ($status === "Diterima") ? 'success' : (($status === "Ditolak") ? 'danger' : 'warning'); ?>">
+                            <p><strong>Status Pendaftaran:</strong>
+                                <span class="badge badge-<?php
+                                                            if ($status === "Lolos") {
+                                                                echo "success";  // hijau
+                                                            } elseif ($status === "Tidak Lolos") {
+                                                                echo "danger";   // merah
+                                                            } elseif ($status === "Sedang Verifikasi") {
+                                                                echo "warning";  // kuning
+                                                            }
+                                                            ?>">
                                     <?php echo htmlspecialchars($status); ?>
                                 </span>
                             </p>

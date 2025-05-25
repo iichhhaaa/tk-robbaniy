@@ -66,19 +66,18 @@ $nama = $_SESSION['nama'];
                                     <h4 class="card-title">Langkah-langkah Pendaftaran</h4>
                                     <p>Untuk melanjutkan proses pendaftaran, Anda perlu mengikuti langkah-langkah berikut:</p>
                                     <ol>
-                                        <li><strong>Siapkan Berkas yang Diperlukan:</strong> Pastikan Anda telah menyiapkan dan menggabungkan berkas-berkas berikut dalam satu file PDF:
+                                        <li>Siapkan berkas yang diperlukan
                                             <ul>
-                                                <li><strong>KK (Kartu Keluarga)</strong></li>
-                                                <li><strong>Akte Kelahiran</strong></li>
-                                                <li><strong>KTP</strong></li>
+                                                <li>KK (Kartu Keluarga)</li>
+                                                <li>Akte Kelahiran</li>
+                                                <li>KTP</li>
                                             </ul>
                                         </li>
-                                        <li><strong>Gabungkan Semua Berkas dalam Satu PDF:</strong> Pastikan Anda menggabungkan berkas-berkas KK, Akte Kelahiran, dan KTP dalam satu file PDF untuk melanjutkan pendaftaran.</li>
-                                        <li><strong>Klik pada Bagian Pendaftaran:</strong> Setelah semua berkas siap, klik bagian <strong>"Pendaftaran"</strong> untuk memulai pengisian formulir pendaftaran.</li>
-                                        <li><strong>Isi Formulir Pendaftaran:</strong> Setelah Anda mengklik bagian pendaftaran, lengkapi formulir yang tersedia dengan informasi yang benar dan lengkap.</li>
-                                        <li><strong>Kirimkan Berkas yang Sudah Digabung:</strong> Setelah mengisi formulir, kirimkan file PDF yang berisi gabungan berkas KK, Akte Kelahiran, dan KTP sesuai petunjuk yang tersedia.</li>
+                                        <li>Gabungkan semua berkas - berkas KK, Akte Kelahiran, dan KTP dalam satu PDF</li>
+                                        <li>Setelah semua berkas siap, klik bagian <strong>"Pendaftaran"</strong> untuk memulai pengisian formulir pendaftaran.</li>
+                                        <li>Setelah Anda mengklik bagian pendaftaran, lengkapi formulir yang tersedia dengan informasi yang benar dan lengkap.</li>
                                     </ol>
-                                    <p>Setelah mengisi formulir dan mengirimkan berkas, tunggu pengumuman status kelulusan Anda yang akan diperbarui setelah proses verifikasi selesai.</p>
+                                    <p>Setelah mengisi formulir dan mengirimkan berkas, tunggu pengumuman hasil Anda pada bagian <strong>"Status"</strong> akan diperbarui setelah proses verifikasi selesai.</p>
                                 </div>
                             </div>
 

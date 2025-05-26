@@ -87,7 +87,7 @@ $conn->close();
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Detail Pendaftaran Murid</title>
+    <title>Data Pendaftaran</title>
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -104,10 +104,15 @@ $conn->close();
                 <?php include '../inc/dashboard-header.php' ?>
 
                 <div class="container-fluid">
-                    <h1 class="h3 mb-4 text-gray-800">Detail Pendaftaran Murid</h1>
+                    <h1 class="h3 mb-4 text-gray-800">Informasi Data Pendaftaran</h1>
+
+
 
                     <div class="card shadow mb-4">
                         <div class="card-body">
+                            <a href="index.php" class="btn btn-primary mb-0">
+                                <i class="fas fa-arrow-left"></i> Kembali
+                            </a>
                             <h5 class="mt-4">Data Pendaftaran</h5>
                             <table class="table table-bordered" style="table-layout: fixed;">
                                 <tr>
@@ -239,9 +244,18 @@ $conn->close();
                         </div>
                     </div>
 
-                    <a href="index.php" class="btn btn-secondary">Kembali ke Daftar Pendaftaran</a>
+                    <a href="index.php" class="btn btn-secondary">Kembali</a>
                 </div>
             </div>
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>&copy; <?= date('Y'); ?> TK Islam Robbaniy</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
         </div>
     </div>
 

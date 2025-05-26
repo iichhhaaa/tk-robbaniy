@@ -90,7 +90,7 @@ include 'koneksi.php'; // Pastikan koneksi ke database sudah benar
                                         </form>
                                         <hr>
                                         <div class="text-center">
-                                            <a class="small" href="login.php">Sudah punya akun? Login!</a>
+                                            <a class="small" href="login.php">Sudah punya akun? Masuk!</a>
                                         </div>
                                     </div>
                                 </div>

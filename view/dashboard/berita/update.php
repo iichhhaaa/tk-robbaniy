@@ -59,11 +59,11 @@ if (isset($_GET['id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Edit berita</title>
+    <title>Ubah Data Berita</title>
 
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    
+
     <!-- Custom fonts for this template -->
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
@@ -90,12 +90,12 @@ if (isset($_GET['id'])) {
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-                    <h1 class="h3 mb-2 text-gray-800">Edit Data berita</h1>
-                
-                <!-- Create Button -->
-                <a href="index.php" class="btn btn-primary mb-3">
-                    <i class="fas fa-arrow-left"></i> Kembali
-                </a>
+                    <h1 class="h3 mb-2 text-gray-800">Ubah Data berita</h1>
+
+                    <!-- Create Button -->
+                    <a href="index.php" class="btn btn-primary mb-3">
+                        <i class="fas fa-arrow-left"></i> Kembali
+                    </a>
 
                     <!-- Display success message if the data is updated successfully -->
                     <?php
@@ -142,7 +142,15 @@ if (isset($_GET['id'])) {
 
                 </div>
             </div>
-
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>&copy; <?= date('Y'); ?> TK Islam Robbaniy</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
         </div>
 
     </div>

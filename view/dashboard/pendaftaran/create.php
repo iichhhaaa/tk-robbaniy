@@ -25,7 +25,7 @@ $nama = $_SESSION['nama'];
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <title>SB Admin 2 - Tables</title>
+    <title>Tambah Data Pendaftaran</title>
 
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -48,9 +48,10 @@ $nama = $_SESSION['nama'];
 
                 <!-- Begin Form Pendaftaran -->
                 <div class="container-fluid">
-                    <h1 class="h3 mb-4 text-gray-800">Form Pendaftaran Murid</h1>
+                    <h1 class="h3 mb-4 text-gray-800">Formulir Pendaftaran Murid</h1>
 
                     <form id="pendaftaranForm" action="create-store.php" method="POST" enctype="multipart/form-data">
+                        
                         <!-- Step 1: Data Murid -->
                         <div id="step1">
                             <h5 class="mt-4">Data Murid</h5>
@@ -97,7 +98,7 @@ $nama = $_SESSION['nama'];
                                 <label for="riwayat_kesehatan_murid">Riwayat Kesehatan</label>
                                 <textarea class="form-control" id="riwayat_kesehatan_murid" name="riwayat_kesehatan_murid" rows="3" placeholder="Masukkan Riwayat Kesehatan" required></textarea>
                             </div>
-                            <button type="button" class="btn btn-primary float-right mt-4" id="nextStep1">Next</button>
+                            <button type="button" class="btn btn-primary float-right mt-4" id="nextStep1">Lanjut</button>
                         </div>
 
                         <!-- Step 2: Data Ibu -->
@@ -146,8 +147,8 @@ $nama = $_SESSION['nama'];
                                 <label for="telepon_ibu">Nomor Telepon Ibu</label>
                                 <input type="text" class="form-control" id="telepon_ibu" name="telepon_ibu" placeholder="Masukkan Nomor Telepon Ibu" required>
                             </div>
-                            <button type="button" class="btn btn-secondary float-left mt-4" id="prevStep2">Previous</button>
-                            <button type="button" class="btn btn-primary float-right mt-4" id="nextStep2">Next</button>
+                            <button type="button" class="btn btn-secondary float-left mt-4" id="prevStep2">Kembali</button>
+                            <button type="button" class="btn btn-primary float-right mt-4" id="nextStep2">Lanjut</button>
                         </div>
 
                         <!-- Step 3: Data Ayah -->
@@ -196,8 +197,8 @@ $nama = $_SESSION['nama'];
                                 <label for="telepon_ayah">Nomor Telepon ayah</label>
                                 <input type="text" class="form-control" id="telepon_ayah" name="telepon_ayah" placeholder="Masukkan Nomor Telepon ayah" required>
                             </div>
-                            <button type="button" class="btn btn-secondary float-left mt-4" id="prevStep3">Previous</button>
-                            <button type="button" class="btn btn-primary float-right mt-4" id="nextStep3">Next</button>
+                            <button type="button" class="btn btn-secondary float-left mt-4" id="prevStep3">Kembali</button>
+                            <button type="button" class="btn btn-primary float-right mt-4" id="nextStep3">Lanjut</button>
                         </div>
 
                         <!-- Step 4: Upload Berkas -->
@@ -211,12 +212,12 @@ $nama = $_SESSION['nama'];
 
                             <!-- Preview PDF -->
                             <div id="pdfPreview" style="display:none;">
-                                <h6>Preview PDF</h6>
+                                <h6>Pratinjau PDF</h6>
                                 <embed id="pdfPreviewEmbed" src="" type="application/pdf" width="100%" height="400px">
                             </div>
 
-                            <button type="button" class="btn btn-secondary float-left mt-4" id="prevStep4">Previous</button>
-                            <button type="submit" class="btn btn-primary float-right mt-4" id="submitBtn">Submit</button>
+                            <button type="button" class="btn btn-secondary float-left mt-4" id="prevStep4">Kembali</button>
+                            <button type="submit" class="btn btn-primary float-right mt-4" id="submitBtn">Kirim</button>
                         </div>
 
                     </form>
@@ -226,13 +227,13 @@ $nama = $_SESSION['nama'];
             <!-- End of Main Content -->
 
             <!-- Footer -->
-            <!-- <footer class="sticky-footer bg-white">
+            <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2020</span>
+                        <span>&copy; <?= date('Y'); ?> TK Islam Robbaniy</span>
                     </div>
                 </div>
-            </footer> -->
+            </footer>
             <!-- End of Footer -->
         </div>
         <!-- End of Content Wrapper -->

@@ -131,7 +131,7 @@ $conn->close();
   </section>
 
   <footer class="text-center py-4 text-white bg-dark mt-0">
-    © 2025 TK Islam Robbaniy. All rights reserved.
+    © 2025 TK Islam Robbani. Mendidik dengan Akhlak Qurani Sejak Dini.
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

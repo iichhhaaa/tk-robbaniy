@@ -69,7 +69,7 @@ $conn->close();
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Update Data Pendaftaran</title>
+    <title>Ubah Data Pendaftaran</title>
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -86,7 +86,7 @@ $conn->close();
                 <?php include '../inc/dashboard-header.php' ?>
 
                 <div class="container-fluid">
-                    <h1 class="h3 mb-4 text-gray-800">Update Pendaftaran Murid</h1>
+                    <h1 class="h3 mb-4 text-gray-800">Ubah Data Pendaftaran</h1>
 
                     <form id="pendaftaranForm" action="update-store.php" method="POST" enctype="multipart/form-data">
                         <input type="text" name="id" id="id" hidden value="<?php echo $row['id']; ?>">
@@ -138,7 +138,7 @@ $conn->close();
                                 <label for="riwayat_kesehatan_murid">Riwayat Kesehatan</label>
                                 <textarea class="form-control" id="riwayat_kesehatan_murid" name="riwayat_kesehatan_murid" rows="3" placeholder="Masukkan Riwayat Kesehatan" required><?php echo $row['riwayat_kesehatan_murid']; ?></textarea>
                             </div>
-                            <button type="button" class="btn btn-primary float-right mt-4" id="nextStep1">Next</button>
+                            <button type="button" class="btn btn-primary float-right mt-4" id="nextStep1">Lanjut</button>
                         </div>
 
                         <!-- Step 2: Data Ibu -->
@@ -181,8 +181,8 @@ $conn->close();
                                 <label for="telepon_ibu">Nomor Telepon Ibu</label>
                                 <input value="<?php echo $row['telepon_ibu']; ?>" type="text" class="form-control" id="telepon_ibu" name="telepon_ibu" placeholder="Masukkan Nomor Telepon Ibu" required>
                             </div>
-                            <button type="button" class="btn btn-secondary float-left mt-4" id="prevStep2">Previous</button>
-                            <button type="button" class="btn btn-primary float-right mt-4" id="nextStep2">Next</button>
+                            <button type="button" class="btn btn-secondary float-left mt-4" id="prevStep2">Kembali</button>
+                            <button type="button" class="btn btn-primary float-right mt-4" id="nextStep2">Lanjut</button>
                         </div>
 
                         <!-- Step 3: Data Ayah -->
@@ -225,8 +225,8 @@ $conn->close();
                                 <label for="telepon_ayah">Nomor Telepon ayah</label>
                                 <input value="<?php echo $row['telepon_ayah']; ?>" type="text" class="form-control" id="telepon_ayah" name="telepon_ayah" placeholder="Masukkan Nomor Telepon ayah" required>
                             </div>
-                            <button type="button" class="btn btn-secondary float-left mt-4" id="prevStep3">Previous</button>
-                            <button type="button" class="btn btn-primary float-right mt-4" id="nextStep3">Next</button>
+                            <button type="button" class="btn btn-secondary float-left mt-4" id="prevStep3">Kembali</button>
+                            <button type="button" class="btn btn-primary float-right mt-4" id="nextStep3">Lanjut</button>
                         </div>
 
                         <!-- Step 4: Upload Berkas -->
@@ -251,8 +251,8 @@ $conn->close();
                                 <?php endif; ?>
                             <?php endif; ?>
 
-                            <button type="button" class="btn btn-secondary float-left mt-4" id="prevStep4">Previous</button>
-                            <button type="submit" class="btn btn-primary float-right mt-4">Submit</button>
+                            <button type="button" class="btn btn-secondary float-left mt-4" id="prevStep4">Kembali</button>
+                            <button type="submit" class="btn btn-primary float-right mt-4">Kirim</button>
                         </div>
 
 
@@ -260,6 +260,15 @@ $conn->close();
                     </form>
                 </div>
             </div>
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>&copy; <?= date('Y'); ?> TK Islam Robbaniy</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
         </div>
     </div>
 

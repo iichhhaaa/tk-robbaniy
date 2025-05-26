@@ -20,9 +20,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $update_stmt->bind_param("ss", $hashed_password, $token);
         $update_stmt->execute();
 
-        echo "Your password has been reset. You can now <a href='login.php'>login</a>.";
+        echo "Kata sandi Anda berhasil diatur ulang. Silakan <a href='login.php'>login</a>.";
     } else {
-        echo "Invalid or expired token.";
+        echo "Token tidak valid atau telah kedaluwarsa.";
     }
 }
 ?>
@@ -37,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Reset Password</title>
+    <title>Atur Ulang Kata Sandi</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -53,4 +53,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <div class="col-lg-12">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">Reset Your Password</h1>
+                                        <h1 class="h4 text-gray-900 mb-4">Atur Ulang Kata Sandi</h1>

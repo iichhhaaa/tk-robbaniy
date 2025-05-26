@@ -39,7 +39,7 @@ $conn->close();
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>SB Admin 2 - Toggle Switch Example</title>
+    <title>Pendaftaran - TK Islam Robbaniy</title>
 
     <!-- Custom fonts for this template -->
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css" />
@@ -156,9 +156,9 @@ $conn->close();
                                                             Aksi
                                                         </button>
                                                         <ul class='dropdown-menu' aria-labelledby='dropdownMenuButton'>
-                                                            <li><a class='dropdown-item' href='view.php?id=" . $pendaftaran["id"] . "'>View</a></li>
-                                                            <li><a class='dropdown-item' href='update.php?id=" . $pendaftaran["id"] . "'>Edit</a></li>
-                                                            <li><a class='dropdown-item' href='bukti-pendaftaran.php?id=" . $pendaftaran["id"] . "'>Export</a></li>
+                                                            <li><a class='dropdown-item' href='view.php?id=" . $pendaftaran["id"] . "'>Lihat</a></li>
+                                                            <li><a class='dropdown-item' href='update.php?id=" . $pendaftaran["id"] . "'>Ubah</a></li>
+                                                            <li><a class='dropdown-item' href='bukti-pendaftaran.php?id=" . $pendaftaran["id"] . "'>Ekspor</a></li>
                                                             <li><a class='dropdown-item text-danger' href='delete.php?id=" . $pendaftaran["id"] . "' onclick='confirmDelete(" . $pendaftaran["id"] . ")'>Hapus</a></li>
                                                         </ul>
                                                     </div>
@@ -186,13 +186,15 @@ $conn->close();
                 </div>
             </div>
 
-            <!-- <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2020</span>
+                <!-- Footer -->
+                <footer class="sticky-footer bg-white">
+                    <div class="container my-auto">
+                        <div class="copyright text-center my-auto">
+                            <span>&copy; <?= date('Y'); ?> TK Islam Robbaniy</span>
+                        </div>
                     </div>
-                </div>
-            </footer> -->
+                </footer>
+                <!-- End of Footer -->
         </div>
 
     </div>

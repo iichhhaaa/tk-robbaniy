@@ -74,7 +74,7 @@ $conn->close();
     </div>
   </div>
   <?php } else {
-    echo "No berita found with that ID.";
+    echo "Berita dengan ID tersebut tidak ditemukan.";
   }?>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>

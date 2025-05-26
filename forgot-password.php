@@ -4,7 +4,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Validasi email
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        echo "<div class='alert alert-danger'>Invalid email address!</div>";
+        echo "<div class='alert alert-danger'>Alamat email tidak valid!</div>";
     } else {
         // Cek apakah email ada di database
         include 'koneksi.php';
@@ -16,10 +16,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($result->num_rows > 0) {
             // Email ditemukan, informasikan ke pengguna bahwa email reset dikirim
-            echo "<div class='alert alert-success'>An email with reset instructions has been sent to your email address.</div>";
+            echo "<div class='alert alert-success'>Tautan untuk mengatur ulang kata sandi telah dikirim ke alamat email Anda.</div>";
         } else {
             // Jika email tidak ditemukan, beri tahu pengguna untuk menghubungi admin
-            echo "<div class='alert alert-warning'>Email not found. Please contact support at <a href='mailto:admin@robbaniy.com'>admin@robbaniy.com</a> for assistance.</div>";
+            echo "<div class='alert alert-warning'>Email tidak ditemukan. Silakan hubungi admin melalui <a href='mailto:admin@robbaniy.com'>admin@robbaniy.com</a> untuk bantuan lebih lanjut.</div>";
         }
 
         // Menutup koneksi
@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Forgot Password</title>
+    <title>Lupa Kata Sandi</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -54,7 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <div class="col-lg-12">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">Forgot Your Password?</h1>
+                                        <h1 class="h4 text-gray-900 mb-4">Lupa Kata Sandi Anda?</h1>
                                     </div>
                                     <form class="user" method="POST" action="forgot-password.php">
                                         <div class="form-group">

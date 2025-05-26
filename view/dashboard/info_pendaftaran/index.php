@@ -151,15 +151,15 @@ $conn->close();
             </div>
             <!-- End of Main Content -->
 
-            <!-- Footer -->
-            <!-- <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2020</span>
+                <!-- Footer -->
+                <footer class="sticky-footer bg-white">
+                    <div class="container my-auto">
+                        <div class="copyright text-center my-auto">
+                            <span>&copy; <?= date('Y'); ?> TK Islam Robbaniy</span>
+                        </div>
                     </div>
-                </div>
-            </footer> -->
-            <!-- End of Footer -->
+                </footer>
+                <!-- End of Footer -->
 
         </div>
         <!-- End of Content Wrapper -->

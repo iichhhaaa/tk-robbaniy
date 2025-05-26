@@ -37,7 +37,7 @@ $conn->close();
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Tables</title>
+    <title>Berita - TK Islam Robbaniy</title>
 
     <!-- Custom fonts for this template -->
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -65,86 +65,86 @@ $conn->close();
             <!-- Main Content -->
             <div id="content">
 
-            <?php include '../inc/dashboard-header.php' ?>
+                <?php include '../inc/dashboard-header.php' ?>
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-                
-                <!-- Create Button -->
-                <a href="create.php" class="btn btn-primary mb-3">
-                    <i class="fas fa-plus"></i> Tambah Data Berita
-                </a>
 
-                <!-- Success/Error Message -->
-                <?php
-                if (isset($_GET['status'])) {
-                    $status = $_GET['status'];
+                    <!-- Create Button -->
+                    <a href="create.php" class="btn btn-primary mb-3">
+                        <i class="fas fa-plus"></i> Tambah Data Berita
+                    </a>
 
-                    // If deletion was successful, show success message
-                    if ($status == 'success') {
-                        echo "<div class='alert alert-success' role='alert'>
+                    <!-- Success/Error Message -->
+                    <?php
+                    if (isset($_GET['status'])) {
+                        $status = $_GET['status'];
+
+                        // If deletion was successful, show success message
+                        if ($status == 'success') {
+                            echo "<div class='alert alert-success' role='alert'>
                                 Data berhasil dihapus!
                             </div>";
-                    } elseif ($status == 'error') {
-                        // If deletion failed, show error message
-                        echo "<div class='alert alert-danger' role='alert'>
+                        } elseif ($status == 'error') {
+                            // If deletion failed, show error message
+                            echo "<div class='alert alert-danger' role='alert'>
                                 Terjadi kesalahan saat menghapus data.
                             </div>";
+                        }
                     }
-                }
-                ?>
+                    ?>
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-body">
                             <div class="table-responsive">
-                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Judul</th>
-                                        <th>Konten</th>
-                                        <th>Foto</th>
-                                        <th>Waktu Dibuat</th>
-                                        <th>Tindakan</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    include '../../../koneksi.php';
-                                    $sql_berita = "SELECT * FROM berita"; // Query to select data from the 'berita' table
-                                    $result_berita = $conn->query($sql_berita);
-                                    $no = 1;
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Judul</th>
+                                            <th>Konten</th>
+                                            <th>Foto</th>
+                                            <th>Waktu Dibuat</th>
+                                            <th>Tindakan</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        include '../../../koneksi.php';
+                                        $sql_berita = "SELECT * FROM berita"; // Query to select data from the 'berita' table
+                                        $result_berita = $conn->query($sql_berita);
+                                        $no = 1;
 
-                                    if ($result_berita->num_rows > 0) {
-                                        while ($berita = $result_berita->fetch_assoc()) {
-                                            echo "<tr>";
-                                            echo "<td>" . $no++ . "</td>";
-                                            echo "<td>" . $berita['judul'] . "</td>"; // Display 'judul' for the title of the news
-                                            echo "<td>" . $berita['content'] . "</td>"; // Display 'content' for the news content
-                                            echo "<td><img src='../../../storage/berita/" . $berita['foto'] . "' width='100'></td>"; // Display 'foto'
-                                            echo "<td>" . $berita['created_at'] . "</td>"; // Display 'created_at' for the creation date
-                                            echo "<td>
+                                        if ($result_berita->num_rows > 0) {
+                                            while ($berita = $result_berita->fetch_assoc()) {
+                                                echo "<tr>";
+                                                echo "<td>" . $no++ . "</td>";
+                                                echo "<td>" . $berita['judul'] . "</td>"; // Display 'judul' for the title of the news
+                                                echo "<td>" . $berita['content'] . "</td>"; // Display 'content' for the news content
+                                                echo "<td><img src='../../../storage/berita/" . $berita['foto'] . "' width='100'></td>"; // Display 'foto'
+                                                echo "<td>" . $berita['created_at'] . "</td>"; // Display 'created_at' for the creation date
+                                                echo "<td>
                                                     <div class='dropdown'>
                                                         <button class='btn btn-secondary btn-sm dropdown-toggle' type='button' id='dropdownMenuButton' data-bs-toggle='dropdown' aria-expanded='false'>
                                                             Aksi
                                                         </button>
                                                         <ul class='dropdown-menu' aria-labelledby='dropdownMenuButton'>
                                                             <li><a class='dropdown-item' href='update.php?id=" . $berita["id"] . "'>Ubah</a></li>
-                                                            <li><a class='dropdown-item text-danger' href='delete.php?id=" . $berita["id"]."' onclick='confirmDelete(" . $berita["id"] . ")'>Hapus</a></li>
+                                                            <li><a class='dropdown-item text-danger' href='delete.php?id=" . $berita["id"] . "' onclick='confirmDelete(" . $berita["id"] . ")'>Hapus</a></li>
                                                         </ul>
                                                     </div>
                                                 </td>";
-                                            echo "</tr>";
+                                                echo "</tr>";
+                                            }
+                                        } else {
+                                            echo "<tr><td colspan='6'>Data berita tidak ditemukan.</td></tr>";
                                         }
-                                    } else {
-                                        echo "<tr><td colspan='6'>Data berita tidak ditemukan.</td></tr>";
-                                    }
 
-                                    $conn->close();
-                                    ?>
-                                </tbody>
-                            </table>
+                                        $conn->close();
+                                        ?>
+                                    </tbody>
+                                </table>
 
 
 
@@ -161,13 +161,13 @@ $conn->close();
             <!-- End of Main Content -->
 
             <!-- Footer -->
-            <!-- <footer class="sticky-footer bg-white">
+            <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2020</span>
+                        <span>&copy; <?= date('Y'); ?> TK Islam Robbaniy</span>
                     </div>
                 </div>
-            </footer> -->
+            </footer>
             <!-- End of Footer -->
 
         </div>

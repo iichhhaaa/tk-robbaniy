@@ -47,7 +47,7 @@ $conn->close();
         <?php include '../inc/sidebar.php'; ?>
 
         <div id="content-wrapper" class="d-flex flex-column">
-            
+
             <div id="content">
                 <?php include '../inc/dashboard-header.php'; ?>
 
@@ -88,6 +88,15 @@ $conn->close();
                     </div>
                 </div>
             </div>
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>&copy; <?= date('Y'); ?> TK Islam Robbaniy</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
         </div>
     </div>
 

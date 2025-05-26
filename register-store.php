@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     if (empty($username)) {
-        $errors[] = "Username wajib diisi.";
+        $errors[] = "Nama pengguna wajib diisi.";
     }
 
     if (empty($email)) {
@@ -67,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $result = $stmt->get_result();
 
         if ($result->num_rows > 0) {
-            $errors[] = "Email atau username ini sudah terdaftar.";
+            $errors[] = "Alamat email atau nama pengguna ini sudah terdaftar.";
         } else {
             // Insert user baru
             $insert_query = "INSERT INTO users (username, password, role, nama, email) VALUES (?, ?, ?, ?, ?)";
@@ -75,7 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $stmt->bind_param("sssss", $username, $hashed_password, $role, $nama, $email);
 
             if ($stmt->execute()) {
-                $_SESSION['message'] = "Daftar Akun Berhasil. Silahkan Login!";
+                $_SESSION['message'] = "Daftar Akun Berhasil. Silahkan Masuk!";
                 header("Location: register.php");
                 exit();
             } else {

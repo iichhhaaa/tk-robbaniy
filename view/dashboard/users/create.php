@@ -29,7 +29,7 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Tambah Data User</title>
+    <title>Tambah Data Pengguna</title>
 
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -62,7 +62,7 @@ $conn->close();
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Tambah Data User</h1>
+                    <h1 class="h3 mb-2 text-gray-800">Tambah Data Pengguna</h1>
 
                     <!-- Create Button -->
                     <a href="index.php" class="btn btn-primary mb-3">
@@ -83,17 +83,17 @@ $conn->close();
                         <div class="card-body">
                             <form action="create-store.php" method="POST">
                                 <div class="mb-3">
-                                    <label for="username" class="form-label">Username</label>
+                                    <label for="username" class="form-label">Nama Pengguna</label>
                                     <input type="text" class="form-control" id="username" name="username" required>
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="password" class="form-label">Password</label>
+                                    <label for="password" class="form-label">Kata Sandi</label>
                                     <input type="password" class="form-control" id="password" name="password" required>
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="role" class="form-label">Role</label>
+                                    <label for="role" class="form-label">Peran</label>
                                     <select class="form-control" id="role" name="role" required>
                                         <option value="admin">Admin</option>
                                         <option value="capen">Capen</option>
@@ -106,7 +106,7 @@ $conn->close();
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="email" class="form-label">Email</label>
+                                    <label for="email" class="form-label">Alamat Email</label>
                                     <input type="email" class="form-control" id="email" name="email" required>
                                 </div>
 

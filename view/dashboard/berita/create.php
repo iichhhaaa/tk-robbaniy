@@ -44,7 +44,7 @@ $conn->close();
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
-        
+
     <!-- Custom styles for this template -->
     <link href="../css/sb-admin-2.min.css" rel="stylesheet">
 </head>
@@ -73,7 +73,7 @@ $conn->close();
                     <!-- Create Button -->
                     <a href="index.php" class="btn btn-primary mb-3">
                         <i class="fas fa-arrow-left"></i> Kembali
-                    </a> 
+                    </a>
 
                     <!-- Display success message if the data is created successfully -->
                     <?php
@@ -95,7 +95,7 @@ $conn->close();
 
                                 <div class="mb-3">
                                     <label for="content" class="form-label">Konten</label>
-                                    <textarea class="form-control" id="content" name="content" rows="3" required></textarea>
+                                    <textarea class="form-control" id="content" name="content" rows="5" required></textarea>
                                 </div>
 
                                 <div class="mb-3">
@@ -120,13 +120,13 @@ $conn->close();
             <!-- End of Main Content -->
 
             <!-- Footer -->
-            <!-- <footer class="sticky-footer bg-white">
+            <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <p>© 2025 TK Islam Robbaniy. All rights reserved.</p>
+                        <span>&copy; <?= date('Y'); ?> TK Islam Robbaniy</span>
                     </div>
                 </div>
-            </footer> -->
+            </footer>
             <!-- End of Footer -->
 
         </div>

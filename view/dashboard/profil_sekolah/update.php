@@ -79,7 +79,7 @@ if (isset($_GET['id'])) {
                 <?php include '../inc/dashboard-header.php'; ?>
 
                 <div class="container-fluid">
-                    <h1 class="h3 mb-2 text-gray-800">Edit Data Profil Sekolah</h1>
+                    <h1 class="h3 mb-2 text-gray-800">Ubah Data Profil Sekolah</h1>
 
                     <a href="index.php" class="btn btn-primary mb-3">
                         <i class="fas fa-arrow-left"></i> Kembali
@@ -139,6 +139,15 @@ if (isset($_GET['id'])) {
                     </div>
                 </div>
             </div>
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>&copy; <?= date('Y'); ?> TK Islam Robbaniy</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
         </div>
     </div>
 
@@ -163,4 +172,3 @@ if (isset($_GET['id'])) {
 </body>
 
 </html>
-

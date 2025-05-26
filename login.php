@@ -104,7 +104,7 @@ $conn->close();
 
     <script>
         function showMessage() {
-            alert("Silakan kirim email ke admin@tk-robbaniy.com untuk pemulihan kata sandi. Pastikan untuk melampirkan username Anda dalam email.");
+            alert("Silakan kirim email ke admin@tk-robbaniy.com untuk pemulihan kata sandi. Pastikan untuk melampirkan nama pengguna Anda dalam email.");
         }
 
         function checkRegistrationStatus() {

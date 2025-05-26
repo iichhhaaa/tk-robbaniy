@@ -37,7 +37,7 @@ $conn->close();
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Galeri - TK Islam RObbaniy</title>
+    <title>Galeri - TK Islam Robbaniy</title>
 
     <!-- Custom fonts for this template -->
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -150,13 +150,13 @@ $conn->close();
             <!-- End of Main Content -->
 
             <!-- Footer -->
-            <!-- <footer class="sticky-footer bg-white">
+            <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2020</span>
+                        <span>&copy; <?= date('Y'); ?> TK Islam Robbaniy</span>
                     </div>
                 </div>
-            </footer> -->
+            </footer>
             <!-- End of Footer -->
 
         </div>

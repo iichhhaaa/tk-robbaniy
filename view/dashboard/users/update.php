@@ -60,7 +60,7 @@ if (isset($_GET['id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Edit User</title>
+    <title>Ubah Data Pengguna</title>
 
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -91,7 +91,7 @@ if (isset($_GET['id'])) {
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-                    <h1 class="h3 mb-2 text-gray-800">Edit User</h1>
+                    <h1 class="h3 mb-2 text-gray-800">Ubah Data Pengguna</h1>
                 
                     <!-- Create Button -->
                     <a href="index.php" class="btn btn-primary mb-3">
@@ -115,17 +115,17 @@ if (isset($_GET['id'])) {
                                 <input type="hidden" name="id" value="<?php echo $id; ?>">
 
                                 <div class="mb-3">
-                                    <label for="username" class="form-label">Username</label>
+                                    <label for="username" class="form-label">Nama Pengguna</label>
                                     <input type="text" class="form-control" id="username" name="username" value="<?php echo $username; ?>" required>
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="password" class="form-label">Password</label>
+                                    <label for="password" class="form-label">Kata Sandi</label>
                                     <input type="password" class="form-control" id="password" name="password" value="<?php echo $password; ?>" required>
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="role" class="form-label">Role</label>
+                                    <label for="role" class="form-label">Peran</label>
                                     <select class="form-control" id="role" name="role" required>
                                         <option value="admin" <?php echo $role == 'admin' ? 'selected' : ''; ?>>Admin</option>
                                         <option value="capen" <?php echo $role == 'capen' ? 'selected' : ''; ?>>Capen</option>
@@ -138,7 +138,7 @@ if (isset($_GET['id'])) {
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="email" class="form-label">Email</label>
+                                    <label for="email" class="form-label">Alamat Email</label>
                                     <input type="email" class="form-control" id="email" name="email" value="<?php echo $email; ?>" required>
                                 </div>
 

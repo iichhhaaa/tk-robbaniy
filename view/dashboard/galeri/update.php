@@ -85,11 +85,11 @@ if (isset($_GET['id'])) {
                 <div class="container-fluid">
                     <!-- Page Heading -->
                     <h1 class="h3 mb-2 text-gray-800">Ubah Data Galeri</h1>
-                
-                <!-- Create Button -->
-                <a href="index.php" class="btn btn-primary mb-3">
-                    <i class="fas fa-arrow-left"></i> Kembali
-                </a>
+
+                    <!-- Create Button -->
+                    <a href="index.php" class="btn btn-primary mb-3">
+                        <i class="fas fa-arrow-left"></i> Kembali
+                    </a>
 
                     <!-- Display success message if the data is updated successfully -->
                     <?php
@@ -133,13 +133,13 @@ if (isset($_GET['id'])) {
             <!-- End of Main Content -->
 
             <!-- Footer -->
-            <!-- <footer class="sticky-footer bg-white">
+            <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2020</span>
+                        <span>&copy; <?= date('Y'); ?> TK Islam Robbaniy</span>
                     </div>
                 </div>
-            </footer> -->
+            </footer>
             <!-- End of Footer -->
 
         </div>

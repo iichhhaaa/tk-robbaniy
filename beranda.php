@@ -8,10 +8,8 @@ $sql_profil = "SELECT * FROM profil_sekolah LIMIT 1";
 $result_profil = $conn->query($sql_profil);
 $row_profil = $result_profil->fetch_assoc();
 
-$sql_galeri = "SELECT * FROM galeri ORDER BY id DESC LIMIT 4";
+$sql_galeri = "SELECT * FROM galeri ORDER BY id DESC LIMIT 3";
 $result_galeri = $conn->query($sql_galeri);
-$row_galeri = $result_galeri->fetch_assoc();
-
 
 // $row = $result->fetch_assoc();
 // // Mengecek apakah ada data yang ditemukan
@@ -104,9 +102,9 @@ $conn->close();
     <h2 class="text-center text-success mb-5">Mini Galeri</h2>
     <div class="row g-3 justify-content-center mt-3">
       <?php
+      // Loop langsung tanpa fetch_assoc() awal agar tidak hilang data
       while ($row_galeri = $result_galeri->fetch_assoc()) { ?>
         <div class="col-12 col-md-4">
-          <!-- Menampilkan gambar dengan sudut bulat -->
           <img src="storage/galeri/<?php echo $row_galeri['foto']; ?>" alt="Gallery Image" class="img-fluid rounded">
           <p class="caption mt-4"><?php echo $row_galeri['judul']; ?></p>
         </div>

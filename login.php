@@ -3,7 +3,7 @@ session_start();
 
 include 'koneksi.php';
 
-// Ambil status pendaftaran dari database
+// Retrieve registration status from database
 $setting = "SELECT value FROM settings WHERE key_name = 'pendaftaran_status'";
 $result_setting = $conn->query($setting);
 $row_setting = $result_setting->fetch_assoc();
@@ -37,32 +37,35 @@ $conn->close();
                 <div class="card o-hidden border-0 shadow-lg my-5">
                     <div class="card-body p-0">
                         <div class="row">
+                            <!-- Left side image for login page -->
                             <img src="assets/login.svg" class="col-lg-6 d-none d-lg-block bg-login-image" alt="Image description" />
                             <div class="col-lg-6">
                                 <div class="p-5">
                                     <div class="text-center">
+                                        <!-- Greeting heading shown to user in Indonesian -->
                                         <h1 class="h4 text-gray-900 mb-4">Selamat Datang Kembali!</h1>
                                     </div>
 
-                                    <!-- Pesan error muncul di sini -->
+                                    <!-- Display error message if 'error' parameter is set in URL -->
                                     <?php if (isset($_GET['error'])): ?>
                                         <div id="errorMessage" class="alert alert-danger" role="alert">
                                             <?php echo htmlspecialchars($_GET['error']); ?>
                                         </div>
                                     <?php endif; ?>
 
-                                    <!-- Pesan pendaftaran -->
+                                    <!-- Display registration message stored in session -->
                                     <?php
                                     if (isset($_SESSION['msg_pendaftaran'])) {
                                         echo "<div class='alert alert-danger' role='alert'>
                                             {$_SESSION['msg_pendaftaran']}
                                         </div>";
-                                        unset($_SESSION['msg_pendaftaran']); // Unset pesan setelah tampil
+                                        unset($_SESSION['msg_pendaftaran']); // Remove message after displaying
                                     }
                                     ?>
 
                                     <div id="registrationMessage"></div>
 
+                                    <!-- Login form -->
                                     <form class="user" method="POST" action="login-check.php">
                                         <div class="form-group">
                                             <input type="text" class="form-control form-control-user" id="exampleInputusername" aria-describedby="usernameHelp" placeholder="Nama Pengguna" name="username" required />
@@ -77,9 +80,11 @@ $conn->close();
 
                                     <hr />
                                     <div class="text-center">
+                                        <!-- "Forgot Password?" link triggers JavaScript alert -->
                                         <a href="#" class="small" onclick="showMessage();">Lupa Kata Sandi?</a>
                                     </div>
                                     <div class="text-center">
+                                        <!-- "Create Account" link triggers registration status check -->
                                         <a class="small" href="#" onclick="checkRegistrationStatus();">Buat Akun!</a>
                                     </div>
                                 </div>
@@ -103,22 +108,26 @@ $conn->close();
     <script src="view/js/sb-admin-2.min.js"></script>
 
     <script>
+        // Show alert with password recovery instructions (message in Indonesian)
         function showMessage() {
             alert("Silakan kirim email ke admin@tk-robbaniy.com untuk pemulihan kata sandi. Pastikan untuk melampirkan nama pengguna Anda dalam email.");
         }
 
+        // Check if registration is open or closed before redirecting
         function checkRegistrationStatus() {
             <?php if ($status == 'closed'): ?>
+                // If registration is closed, show a message (in Indonesian)
                 document.getElementById("registrationMessage").innerHTML = `
                     <div class="alert alert-danger" role="alert">
                         Pendaftaran sudah ditutup! silahkan hubungi pihak tk
                     </div>`;
             <?php else: ?>
+                // If registration is open, redirect to registration page
                 window.location.href = 'register.php';
             <?php endif; ?>
         }
 
-        // Hapus pesan error otomatis setelah 5 detik
+        // Automatically remove error message after 5 seconds with fade out effect
         window.onload = function() {
             const errorMsg = document.getElementById('errorMessage');
             if (errorMsg) {

@@ -1,10 +1,10 @@
 <?php
 session_start();
-include 'koneksi.php'; // Pastikan koneksi ke database sudah benar
+include 'koneksi.php'; // Make sure the database connection is correct
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 
 <head>
     <meta charset="utf-8">
@@ -22,6 +22,7 @@ include 'koneksi.php'; // Pastikan koneksi ke database sudah benar
 </head>
 
 <body class="bg-primary">
+    <!-- Container centered vertically and horizontally -->
     <div class="container-sm d-flex align-items-center justify-content-center" style="min-height: 100vh;">
         <div class="row justify-content-center w-100">
             <div class="col-xl-12 col-lg-12 col-md-9">
@@ -29,44 +30,48 @@ include 'koneksi.php'; // Pastikan koneksi ke database sudah benar
                     <div class="card-body p-0">
                         <!-- Nested Row within Card Body -->
                         <div class="row">
+                            <!-- Left image section, hidden on small screens -->
                             <img src="assets/login.svg" class="col-lg-6 d-none d-lg-block bg-login-image" alt="Image description">
                             <div class="col-lg-6">
                                 <div class="p-5">
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Buat Akun!</h1>
 
-                                        <!-- Pesan sukses -->
+                                        <!-- Success message -->
                                         <?php if (isset($_SESSION['message'])): ?>
                                             <div id="successMessage" class="alert alert-success" role="alert">
                                                 <?php
+                                                // Display success message safely and then remove from session
                                                 echo htmlspecialchars($_SESSION['message']);
                                                 unset($_SESSION['message']);
                                                 ?>
                                             </div>
                                         <?php endif; ?>
 
-                                        <!-- Pesan pendaftaran tutup -->
+                                        <!-- Registration closed message -->
                                         <?php if (isset($_SESSION['msg_pendaftaran'])): ?>
                                             <div id="registrationStatusMessage" class="alert alert-danger" role="alert">
                                                 <?php
+                                                // Display registration status message safely and then remove from session
                                                 echo htmlspecialchars($_SESSION['msg_pendaftaran']);
                                                 unset($_SESSION['msg_pendaftaran']);
                                                 ?>
                                             </div>
                                         <?php endif; ?>
 
-                                        <!-- Pesan error validasi -->
+                                        <!-- Validation error messages -->
                                         <?php
                                         if (isset($_SESSION['errors']) && count($_SESSION['errors']) > 0) {
                                             $errors = $_SESSION['errors'];
                                             echo '<div id="errorMessage" class="alert alert-danger" role="alert">';
+                                            // Output each error message safely
                                             echo implode('<br>', array_map('htmlspecialchars', $errors));
                                             echo '</div>';
                                             unset($_SESSION['errors']);
                                         }
                                         ?>
 
-                                        <!-- Form Registrasi -->
+                                        <!-- Registration form -->
                                         <form method="POST" action="register-store.php" class="user">
                                             <div class="form-group">
                                                 <input type="text" class="form-control form-control-user" id="username" name="username" placeholder="Nama Pengguna" required>
@@ -112,7 +117,7 @@ include 'koneksi.php'; // Pastikan koneksi ke database sudah benar
             <script src="view/js/sb-admin-2.min.js"></script>
 
             <script>
-                // Fungsi untuk menghilangkan pesan setelah 5 detik
+                // Function to hide messages after 5 seconds
                 window.onload = function() {
                     const errorMsg = document.getElementById('errorMessage');
                     const successMsg = document.getElementById('successMessage');

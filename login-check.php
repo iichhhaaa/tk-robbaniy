@@ -3,10 +3,11 @@ session_start();
 include 'koneksi.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Get username and password from POST request, set empty string if not provided
     $username = $_POST['username'] ?? '';
     $password = $_POST['password'] ?? '';
 
-    // Cari user berdasarkan username
+    // Prepare SQL query to find user by username
     $sql = "SELECT * FROM users WHERE username = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $username);
@@ -14,16 +15,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
+        // User found, fetch user data
         $row = $result->fetch_assoc();
 
-        // Verifikasi password
+        // Verify the password
         if (password_verify($password, $row['password'])) {
-            // Simpan data session
+            // Store user data in session
             $_SESSION['nama'] = $row['nama'];
             $_SESSION['id'] = $row['id'];
             $_SESSION['role'] = $row['role'];
 
-            // Redirect sesuai role
+            // Redirect user based on their role
             if ($_SESSION['role'] == 'admin') {
                 header("Location: view/dashboard/dashboard/index.php");
             } else {
@@ -31,18 +33,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
             exit();
         } else {
-            // Password salah
-            $error = "Kata sandi salah!";
+            // Incorrect password
+            $error = "Kata sandi salah!"; // Visible to user in Indonesian
             header("Location: login.php?error=" . urlencode($error));
             exit();
         }
     } else {
-        // Username tidak ditemukan
-        $error = "Nama pengguna tidak ditemukan!";
+        // Username not found
+        $error = "Nama pengguna tidak ditemukan!"; // Visible to user in Indonesian
         header("Location: login.php?error=" . urlencode($error));
         exit();
     }
 }
 
+// Close database connection
 $conn->close();
 ?>

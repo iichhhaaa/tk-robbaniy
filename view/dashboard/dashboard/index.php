@@ -8,19 +8,12 @@ if (!isset($_SESSION['nama'])) {
     exit();
 }
 
+// Check if the logged-in user is an admin
 if ($_SESSION['role'] !== 'admin') {
-    // If not logged in or role is not admin, redirect to dashboard
+    // If the role is not admin, redirect to dashboard
     header('Location: ../dashboard-capen/index.php');
     exit();
 }
-
-if ($_SESSION['role'] !== 'admin') {
-    // If not logged in or role is not admin, redirect to dashboard
-    header('Location: ../dashboard-capen/index.php');
-    exit();
-}
-
-
 
 $nama = $_SESSION['nama'];
 include '../../../koneksi.php'; // Include the database connection file
@@ -59,8 +52,10 @@ $conn->close();
 
     <title>Dashboard</title>
 
-    <!-- Custom fonts for this template -->
+    <!-- Font Awesome for icons -->
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    
+    <!-- Google Fonts: Nunito -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 
@@ -71,39 +66,37 @@ $conn->close();
 <body id="page-top">
 
     <div id="wrapper">
-        <?php include '../inc/sidebar.php' ?>
+        <?php include '../inc/sidebar.php' ?> <!-- Include sidebar -->
 
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
-                <?php include '../inc/dashboard-header.php' ?>
+                <?php include '../inc/dashboard-header.php' ?> <!-- Include dashboard header -->
 
                 <div class="container-fluid">
                     <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
 
-                    <div class="row mt-4"> <!-- Row for cards with a maximum of 4 per row -->
+                    <div class="row mt-4">
+                        <!-- Loop to generate cards dynamically -->
                         <?php
-                        // Loop to generate cards dynamically
                         foreach ($cards as $index => $card) {
-                            // Set a dynamic color class for the border
                             $colorClass = 'border-left-' . $card['color'];
-                            // Set a dynamic icon class for the card
                             $iconClass = 'fas ' . $card['icon'] . ' fa-2x text-gray-300';
-                            $count = $counts[$card['table']]; // Get the count from the fetched data
-                            ?>
+                            $count = $counts[$card['table']];
+                        ?>
                             <div class="col-xl-3 col-md-6 mb-4">
                                 <div class="card <?php echo $colorClass; ?> shadow h-100 py-2">
                                     <div class="card-body">
                                         <div class="row no-gutters align-items-center">
                                             <div class="col mr-2">
                                                 <div class="text-xs font-weight-bold text-<?php echo $card['color']; ?> text-uppercase mb-1">
-                                                    <?php echo $card['label']; ?>
+                                                    <?php echo $card['label']; ?> <!-- Display label in Bahasa Indonesia -->
                                                 </div>
                                                 <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                    <?php echo $count; ?>
+                                                    <?php echo $count; ?> <!-- Display total count -->
                                                 </div>
                                             </div>
                                             <div class="col-auto">
-                                                <i class="<?php echo $iconClass; ?>"></i>
+                                                <i class="<?php echo $iconClass; ?>"></i> <!-- Display icon -->
                                             </div>
                                         </div>
                                     </div>
@@ -113,6 +106,16 @@ $conn->close();
                     </div>
                 </div>
             </div>
+
+            <!-- Footer section -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>&copy; <?= date('Y'); ?> TK Islam Robbaniy</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
         </div>
     </div>
 
@@ -121,14 +124,13 @@ $conn->close();
         <i class="fas fa-angle-up"></i>
     </a>
 
-    <!-- Bootstrap core JavaScript-->
+    <!-- jQuery -->
     <script src="../vendor/jquery/jquery.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
     <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Core plugin JavaScript-->
+    <!-- jQuery easing plugin -->
     <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
-
-    <!-- Custom scripts for all pages-->
+    <!-- Custom scripts for all pages -->
     <script src="../js/sb-admin-2.min.js"></script>
 
 </body>

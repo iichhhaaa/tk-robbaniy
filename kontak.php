@@ -1,22 +1,27 @@
 <?php
 include 'koneksi.php';
-// Menjalankan query untuk mengambil satu data dari tabel profil_sekolah
+// Execute query to fetch one record from the 'profil_sekolah' table
 $sql = "SELECT * FROM profil_sekolah LIMIT 1";
 $result = $conn->query($sql);
 
+// Fetch the data as an associative array
 $row = $result->fetch_assoc();
 
+// Close the database connection
 $conn->close();
 ?>
 
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Kontak</title>
+  <!-- Bootstrap CSS & Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+  <!-- Google Fonts & Custom CSS -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/css/style.css">
 
@@ -26,11 +31,12 @@ $conn->close();
   <!-- Navbar -->
   <?php include 'inc/navbar.php' ?>
 
-  <!-- Kontak Section -->
+  <!-- Contact Section -->
   <section class="container my-5 py-5">
     <div class="row text-center mb-4">
       <div class="col-md-4 mb-4">
         <div class="contact-box">
+          <!-- Email Icon -->
           <i class="bi bi-envelope" style="font-size: 32px; color: #2e7d32;"></i>
           <h6>Alamat Email</h6>
           <?php echo isset($row["email"]) ? $row["email"] : ''; ?>
@@ -38,6 +44,7 @@ $conn->close();
       </div>
       <div class="col-md-4 mb-4">
         <div class="contact-box">
+          <!-- Telephone Icon -->
           <i class="bi bi-telephone" style="font-size: 32px; color: #2e7d32;"></i>
           <h6>Telepon</h6>
           <?php echo isset($row["no_telepon"]) ? $row["no_telepon"] : ''; ?>
@@ -45,6 +52,7 @@ $conn->close();
       </div>
       <div class="col-md-4 mb-4">
         <div class="contact-box">
+          <!-- Location Icon -->
           <i class="bi bi-geo-alt" style="font-size: 32px; color: #2e7d32;"></i>
           <h6>Alamat</h6>
           <?php echo isset($row["alamat"]) ? $row["alamat"] : ''; ?>
@@ -52,7 +60,7 @@ $conn->close();
       </div>
     </div>
 
-    <!-- Google Map -->
+    <!-- Google Map Embed -->
     <div class="row justify-content-center py-3 px-0">
       <div class="col-12">
         <div class="map-container mb-0">
@@ -67,7 +75,7 @@ $conn->close();
     © 2025 TK Islam Robbani. Mendidik dengan Akhlak Qurani Sejak Dini.
   </footer>
 
-  <!-- Bootstrap JS -->
+  <!-- Bootstrap JS Bundle -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

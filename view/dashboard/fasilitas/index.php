@@ -117,18 +117,18 @@ $conn->close();
                                             while ($fasilitas = $result_fasilitas->fetch_assoc()) {
                                                 echo "<tr>";
                                                 echo "<td>" . $no++ . "</td>";
-                                                echo "<td>" . $row["nama"] . "</td>";
+                                                echo "<td>" . $fasilitas["nama"] . "</td>";
                                                 // Menampilkan foto (jika ada)
-                                                echo "<td><img src='../../../storage/fasilitas/" . $row["foto"] . "' width='100'></td>";
+                                                echo "<td><img src='../../../storage/fasilitas/" . $fasilitas["foto"] . "' width='100'></td>";
                                                 // Kolom action dengan tombol edit dan delete
-                                                echo "<td class='text-nowrap'>
+                                                echo "<td>
                                                     <div class='dropdown'>
                                                         <button class='btn btn-secondary btn-sm dropdown-toggle' type='button' id='dropdownMenuButton' data-bs-toggle='dropdown' aria-expanded='false'>
                                                             Aksi
                                                         </button>
                                                         <ul class='dropdown-menu' aria-labelledby='dropdownMenuButton'>
-                                                            <li><a class='dropdown-item' href='update.php?id=" . $row["id"] . "'>Ubah</a></li>
-                                                            <li><a class='dropdown-item text-danger' href='delete.php?id=" . $row["id"] . "' onclick='confirmDelete(" . $row["id"] . ")'>Hapus</a></li>
+                                                            <li><a class='dropdown-item' href='update.php?id=" . $fasilitas["id"] . "'>Ubah</a></li>
+                                                            <li><a class='dropdown-item text-danger' href='delete.php?id=" . $fasilitas["id"] . "' onclick='confirmDelete(" . $fasilitas["id"] . ")'>Hapus</a></li>
                                                         </ul>
                                                     </div>
                                                 </td>";

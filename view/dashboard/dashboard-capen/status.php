@@ -12,18 +12,19 @@ include '../../../koneksi.php';
 
 $user_id = $_SESSION['id'];
 
-// Query untuk mengambil data pendaftaran yang relevan dengan pengguna yang login
- $sql = "SELECT p.id, p.kode_pendaftaran,p.status, m.nama AS nama_murid, a.nama AS nama_ayah, i.nama AS nama_ibu
-                                                FROM pendaftaran p
-                                                JOIN murid m ON p.murid_id = m.id
-                                                JOIN ayah a ON p.ayah_id = a.id
-                                                JOIN ibu i ON p.ibu_id = i.id
-                                                WHERE p.user_id = ?";
+// Query to retrieve registration data relevant to the logged-in user
+$sql = "SELECT p.id, p.kode_pendaftaran, p.status, m.nama AS nama_murid, a.nama AS nama_ayah, i.nama AS nama_ibu
+        FROM pendaftaran p
+        JOIN murid m ON p.murid_id = m.id
+        JOIN ayah a ON p.ayah_id = a.id
+        JOIN ibu i ON p.ibu_id = i.id
+        WHERE p.user_id = ?";
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $user_id);  // Mengikat user_id sebagai parameter
+$stmt->bind_param("i", $user_id); // Bind user_id as parameter
 $stmt->execute();
 $result = $stmt->get_result();
 
+// Retrieve registration status setting from settings table
 $setting = "SELECT value FROM settings WHERE key_name = 'pendaftaran_status'";
 $result_setting = $conn->query($setting);
 $row_setting = $result_setting->fetch_assoc();
@@ -42,14 +43,18 @@ $nama = $_SESSION['nama'];
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Dashboard User</title>
-
+    <title>Status</title>
     <!-- Custom fonts for this template -->
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="../css/sb-admin-2.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this page -->
+    <link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 </head>
 
 <body id="page-top">
@@ -62,7 +67,7 @@ $nama = $_SESSION['nama'];
                 <?php include '../inc/dashboard-header.php' ?>
 
                 <div class="container-fluid">
-                    <!-- murid card  -->
+                    <!-- Display cards for each registered student -->
                     <div class="row">
                         <?php
                         while ($row = $result->fetch_assoc()) {
@@ -73,15 +78,13 @@ $nama = $_SESSION['nama'];
                                         <h5 class="card-title"><?php echo htmlspecialchars($row['nama_murid']); ?></h5>
                                         <p class="card-text">Kode pendaftaran : <?php echo htmlspecialchars($row['kode_pendaftaran']); ?></p>
                                         <div class="mt-auto">
-                                            <a href="status-detail.php?id=<?php echo $row['id']; ?>" class="btn btn-primary btn-sm w-100">Check</a>
+                                            <a href="status-detail.php?id=<?php echo $row['id']; ?>" class="btn btn-primary btn-sm w-100">Cek</a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         <?php } ?>
                     </div>
-
-
 
                 </div>
                 <!-- /.container-fluid -->

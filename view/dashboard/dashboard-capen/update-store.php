@@ -10,12 +10,13 @@ if (!isset($_SESSION['nama'])) {
 
 $user_id = $_SESSION['id'];
 
-include '../../../koneksi.php';  // Koneksi ke database
+include '../../../koneksi.php';  // Connect to the database
 
-// Ambil data dari form POST
-$id = $_POST['id'];  // id pendaftaran yang akan diupdate
+// Retrieve data from POST form
+$id = $_POST['id'];  // Registration ID to be updated
 $kode_pendaftaran = $_POST['kode_pendaftaran'];
 
+// Student data
 $murid_id = $_POST['murid_id'];
 $nama_murid = $_POST['nama_murid'];
 $tempat_lahir_murid = $_POST['tempat_lahir_murid'];
@@ -28,6 +29,7 @@ $alamat_murid = $_POST['alamat_murid'];
 $telepon_murid = $_POST['telepon_murid'];
 $riwayat_kesehatan_murid = $_POST['riwayat_kesehatan_murid'];
 
+// Mother data
 $ibu_id = $_POST['ibu_id'];
 $nama_ibu = $_POST['nama_ibu'];
 $tempat_lahir_ibu = $_POST['tempat_lahir_ibu'];
@@ -39,6 +41,7 @@ $penghasilan_ibu = $_POST['penghasilan_ibu'];
 $alamat_ibu = $_POST['alamat_ibu'];
 $telepon_ibu = $_POST['telepon_ibu'];
 
+// Father data
 $ayah_id = $_POST['ayah_id'];
 $nama_ayah = $_POST['nama_ayah'];
 $tempat_lahir_ayah = $_POST['tempat_lahir_ayah'];
@@ -50,10 +53,10 @@ $penghasilan_ayah = $_POST['penghasilan_ayah'];
 $alamat_ayah = $_POST['alamat_ayah'];
 $telepon_ayah = $_POST['telepon_ayah'];
 
-// Folder penyimpanan file
+// File upload directory
 $uploadDir = '../../../storage/berkas/';
 
-// Ambil nama file lama dari database
+// Get the old file name from the database
 $existing_file = '';
 $sqlSelect = "SELECT berkas FROM tk_robbaniy.pendaftaran WHERE id = ?";
 if ($stmtSelect = $conn->prepare($sqlSelect)) {
@@ -64,27 +67,27 @@ if ($stmtSelect = $conn->prepare($sqlSelect)) {
     $stmtSelect->close();
 }
 
-// Siapkan nama file baru jika ada upload
-$unique_name = $existing_file;  // default pakai file lama
+// Set default file name to existing one
+$unique_name = $existing_file;
 
+// If a new file is uploaded, generate a new unique file name
 if (isset($_FILES["berkas"]) && $_FILES["berkas"]["error"] == 0) {
-    // Buat nama file unik untuk file baru
     $unique_name = uniqid('berkas_', true) . rand(1000, 9999) . '.' . strtolower(pathinfo($_FILES["berkas"]["name"], PATHINFO_EXTENSION));
     $targetFile = $uploadDir . $unique_name;
 
-    // Hapus file lama jika ada dan berbeda dengan file baru
+    // Delete the old file if it exists and is different from the new one
     if (!empty($existing_file) && file_exists($uploadDir . $existing_file)) {
         unlink($uploadDir . $existing_file);
     }
 
-    // Upload file baru
+    // Upload the new file
     if (!move_uploaded_file($_FILES["berkas"]["tmp_name"], $targetFile)) {
-        echo "Terjadi kesalahan saat mengupload file.";
+        echo "Terjadi kesalahan saat mengupload file."; // Error message for user
         exit();
     }
 }
 
-// Update data Murid
+// Update student (murid) data
 $sqlMurid = "UPDATE tk_robbaniy.murid SET nama = ?, tempat_lahir = ?, tanggal_lahir = ?, nik = ?, no_akte = ?, jenis_kelamin = ?, anak_ke = ?, alamat = ?, telepon = ?, riwayat_kesehatan = ? WHERE id = ?";
 if ($stmt = $conn->prepare($sqlMurid)) {
     $stmt->bind_param("ssssssisssi", $nama_murid, $tempat_lahir_murid, $tanggal_lahir_murid, $nik_murid, $no_akte_murid, $jenis_kelamin_murid, $anak_ke_murid, $alamat_murid, $telepon_murid, $riwayat_kesehatan_murid, $murid_id);
@@ -98,7 +101,7 @@ if ($stmt = $conn->prepare($sqlMurid)) {
     exit();
 }
 
-// Update data Ibu
+// Update mother (ibu) data
 $sqlIbu = "UPDATE tk_robbaniy.ibu SET nama = ?, tempat_lahir = ?, tanggal_lahir = ?, nik = ?, agama = ?, pekerjaan = ?, penghasilan = ?, alamat = ?, telepon = ? WHERE id = ?";
 if ($stmt = $conn->prepare($sqlIbu)) {
     $stmt->bind_param("ssssssissi", $nama_ibu, $tempat_lahir_ibu, $tanggal_lahir_ibu, $nik_ibu, $agama_ibu, $pekerjaan_ibu, $penghasilan_ibu, $alamat_ibu, $telepon_ibu, $ibu_id);
@@ -112,7 +115,7 @@ if ($stmt = $conn->prepare($sqlIbu)) {
     exit();
 }
 
-// Update data Ayah
+// Update father (ayah) data
 $sqlAyah = "UPDATE tk_robbaniy.ayah SET nama = ?, tempat_lahir = ?, tanggal_lahir = ?, nik = ?, agama = ?, pekerjaan = ?, penghasilan = ?, alamat = ?, telepon = ? WHERE id = ?";
 if ($stmt = $conn->prepare($sqlAyah)) {
     $stmt->bind_param("ssssssissi", $nama_ayah, $tempat_lahir_ayah, $tanggal_lahir_ayah, $nik_ayah, $agama_ayah, $pekerjaan_ayah, $penghasilan_ayah, $alamat_ayah, $telepon_ayah, $ayah_id);
@@ -126,7 +129,7 @@ if ($stmt = $conn->prepare($sqlAyah)) {
     exit();
 }
 
-// Update data Pendaftaran
+// Update registration (pendaftaran) data
 $sqlPendaftaran = "UPDATE tk_robbaniy.pendaftaran SET kode_pendaftaran = ?, murid_id = ?, ayah_id = ?, ibu_id = ?, berkas = ?, user_id = ? WHERE id = ?";
 if ($stmt = $conn->prepare($sqlPendaftaran)) {
     $stmt->bind_param("siiisii", $kode_pendaftaran, $murid_id, $ayah_id, $ibu_id, $unique_name, $user_id, $id);

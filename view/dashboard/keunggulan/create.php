@@ -1,33 +1,37 @@
 <?php
 session_start();
 
-// Check if the user is logged in
+// Check if user is logged in
 if (!isset($_SESSION['nama'])) {
-    // If not logged in, redirect to login page
+    // Redirect to login page if not logged in
     header('Location: ../../../login.php');
     exit();
 }
 
+// Check if user role is admin
 if ($_SESSION['role'] !== 'admin') {
-    // If not logged in or role is not admin, redirect to dashboard
+    // Redirect to dashboard if not admin
     header('Location: ../dashboard-capen/index.php');
     exit();
 }
 
-// Get the user's name from the session
+// Get the user's name from session
 $nama = $_SESSION['nama'];
 include '../../../koneksi.php';
-// Menjalankan query untuk mengambil satu data dari tabel keunggulan
+
+// Execute query to fetch one record from keunggulan table
 $sql = "SELECT * FROM keunggulan";
 $result = $conn->query($sql);
 
+// Fetch associative array of the first row
 $row = $result->fetch_assoc();
 
+// Close the database connection
 $conn->close();
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 
 <head>
     <meta charset="UTF-8">
@@ -40,12 +44,14 @@ $conn->close();
 
     <!-- Custom fonts for this template -->
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="../css/sb-admin-2.min.css" rel="stylesheet">
+
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
-        
-    <!-- Custom styles for this template -->
-    <link href="../css/sb-admin-2.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this page -->
+    <link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 </head>
 
 <body id="page-top">

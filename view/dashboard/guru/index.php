@@ -8,17 +8,18 @@ if (!isset($_SESSION['nama'])) {
     exit();
 }
 
+// Check if the user's role is admin
 if ($_SESSION['role'] !== 'admin') {
-    // If not logged in or role is not admin, redirect to dashboard
+    // If not admin, redirect to dashboard
     header('Location: ../dashboard-capen/index.php');
     exit();
 }
 
-// Get the user's name from the session
+// Get user's name from the session
 $nama = $_SESSION['nama'];
 
 include '../../../koneksi.php';
-// Menjalankan query untuk mengambil satu data dari tabel profil_sekolah
+// Run a query to retrieve data from guru table
 $sql = "SELECT * FROM guru";
 $result = $conn->query($sql);
 
@@ -28,15 +29,13 @@ $conn->close();
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 
 <head>
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
 
     <title>Guru - TK Islam Robbaniy</title>
 
@@ -65,36 +64,36 @@ $conn->close();
             <!-- Main Content -->
             <div id="content">
                 
-            <?php include '../inc/dashboard-header.php' ?>
+                <?php include '../inc/dashboard-header.php' ?>
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
-                <!-- Create Button -->
-                <a href="create.php" class="btn btn-primary mb-3">
-                    <i class="fas fa-plus"></i> Tambah Data Guru
-                </a>
+                    <!-- Button to create new data -->
+                    <a href="create.php" class="btn btn-primary mb-3">
+                        <i class="fas fa-plus"></i> Tambah Data Guru
+                    </a>
 
-                <!-- Success/Error Message -->
-                <?php
-                if (isset($_GET['status'])) {
-                    $status = $_GET['status'];
+                    <!-- Status alert -->
+                    <?php
+                    if (isset($_GET['status'])) {
+                        $status = $_GET['status'];
 
-                    // If deletion was successful, show success message
-                    if ($status == 'success') {
-                        echo "<div class='alert alert-success' role='alert'>
-                                Data berhasil dihapus!
-                            </div>";
-                    } elseif ($status == 'error') {
-                        // If deletion failed, show error message
-                        echo "<div class='alert alert-danger' role='alert'>
-                                Terjadi kesalahan saat menghapus data.
-                            </div>";
+                        // If deletion was successful
+                        if ($status == 'success') {
+                            echo "<div class='alert alert-success' role='alert'>
+                                    Data berhasil dihapus!
+                                </div>";
+                        } elseif ($status == 'error') {
+                            // If deletion failed
+                            echo "<div class='alert alert-danger' role='alert'>
+                                    Terjadi kesalahan saat menghapus data.
+                                </div>";
+                        }
                     }
-                }
-                ?>
+                    ?>
 
-                    <!-- DataTales Example -->
+                    <!-- Table to show data -->
                     <div class="card shadow mb-4">
                         <div class="card-body">
                             <div class="table-responsive">
@@ -129,7 +128,7 @@ $conn->close();
                                                         </button>
                                                         <ul class='dropdown-menu' aria-labelledby='dropdownMenuButton'>
                                                             <li><a class='dropdown-item' href='update.php?id=" . $guru["id"] . "'>Ubah</a></li>
-                                                            <li><a class='dropdown-item text-danger' href='delete.php?id=" . $guru["id"] . "' onclick='confirmDelete(" . $guru["id"] . ")'>Hapus</a></li>
+                                                            <li><a class='dropdown-item text-danger' href='delete.php?id=" . $guru["id"] . "' onclick='return confirm(\"Yakin ingin menghapus data ini?\")'>Hapus</a></li>
                                                         </ul>
                                                     </div>
                                                 </td>";
@@ -138,17 +137,15 @@ $conn->close();
                                     } else {
                                         echo "<tr><td colspan='5'>Data guru tidak ditemukan.</td></tr>";
                                     }
-                                    
                                     ?>
                                 </tbody>
                             </table>
-
                             </div>
                         </div>
                     </div>
 
                 </div>
-                <!-- /.container-fluid -->
+                <!-- End Page Content -->
 
             </div>
             <!-- End of Main Content -->
@@ -175,42 +172,33 @@ $conn->close();
     </a>
 
     <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <h5 class="modal-title" id="logoutModalLabel">Keluar dari Sistem</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Tutup">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-body">Klik "Keluar" jika Anda ingin mengakhiri sesi ini.</div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+                    <a class="btn btn-primary" href="../../../logout.php">Keluar</a>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Bootstrap core JavaScript-->
+    <!-- Scripts -->
     <script src="../vendor/jquery/jquery.min.js"></script>
     <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Core plugin JavaScript-->
     <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
-
-    <!-- Custom scripts for all pages-->
     <script src="../js/sb-admin-2.min.js"></script>
-
-    <!-- Page level plugins -->
     <script src="../vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="../vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
-    <!-- Page level custom scripts -->
     <script src="../js/demo/datatables-demo.js"></script>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>

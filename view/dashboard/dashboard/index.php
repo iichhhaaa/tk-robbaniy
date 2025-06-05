@@ -26,7 +26,7 @@ $cards = [
     ['table' => 'galeri', 'label' => 'Galeri', 'icon' => 'fa-images', 'color' => 'warning'],
     ['table' => 'berita', 'label' => 'Berita', 'icon' => 'fa-newspaper', 'color' => 'danger'],
     ['table' => 'pendaftaran', 'label' => 'Pendaftaran', 'icon' => 'fa-pen', 'color' => 'secondary'],
-    ['table' => 'users', 'label' => 'Users', 'icon' => 'fa-users', 'color' => 'primary']
+    ['table' => 'users', 'label' => 'Pengguna', 'icon' => 'fa-users', 'color' => 'primary'] // Changed "Users" label to Indonesian
 ];
 
 // Fetch counts for each section dynamically
@@ -41,7 +41,7 @@ $conn->close();
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 
 <head>
     <meta charset="utf-8">
@@ -52,15 +52,17 @@ $conn->close();
 
     <title>Dashboard</title>
 
-    <!-- Font Awesome for icons -->
+    <!-- Custom fonts for this template -->
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    
-    <!-- Google Fonts: Nunito -->
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="../css/sb-admin-2.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this page -->
+    <link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 </head>
 
 <body id="page-top">
@@ -73,7 +75,7 @@ $conn->close();
                 <?php include '../inc/dashboard-header.php' ?> <!-- Include dashboard header -->
 
                 <div class="container-fluid">
-                    <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+                    <h1 class="h3 mb-0 text-gray-800">Dasbor</h1> <!-- Changed "Dashboard" to Indonesian -->
 
                     <div class="row mt-4">
                         <!-- Loop to generate cards dynamically -->
@@ -89,7 +91,7 @@ $conn->close();
                                         <div class="row no-gutters align-items-center">
                                             <div class="col mr-2">
                                                 <div class="text-xs font-weight-bold text-<?php echo $card['color']; ?> text-uppercase mb-1">
-                                                    <?php echo $card['label']; ?> <!-- Display label in Bahasa Indonesia -->
+                                                    <?php echo $card['label']; ?> <!-- Label in Indonesian -->
                                                 </div>
                                                 <div class="h5 mb-0 font-weight-bold text-gray-800">
                                                     <?php echo $count; ?> <!-- Display total count -->

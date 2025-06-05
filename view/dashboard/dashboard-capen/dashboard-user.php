@@ -65,58 +65,50 @@ $nama = $_SESSION['nama'];
                 <div class="container-fluid">
                     <h1 class="h3 mb-4 text-gray-800">Selamat Datang, <?php echo $nama; ?>!</h1>
 
-                            <div class="card shadow mb-4">
-                                <div class="card-body">
-                                    <h4 class="card-title">Langkah-langkah Pendaftaran</h4>
-                                    <p>Untuk melanjutkan proses pendaftaran, Anda perlu mengikuti langkah-langkah berikut:</p>
-                                    <ol>
-                                        <li>Siapkan berkas yang diperlukan
-                                            <ul>
-                                                <li>KK (Kartu Keluarga)</li>
-                                                <li>Akte Kelahiran</li>
-                                                <li>KTP</li>
-                                            </ul>
-                                        </li>
-                                        <li>Gabungkan semua berkas - berkas KK, Akte Kelahiran, dan KTP dalam satu PDF</li>
-                                        <li>Setelah semua berkas siap, klik bagian <strong>"Pendaftaran"</strong> untuk memulai pengisian formulir pendaftaran.</li>
-                                        <li>Setelah Anda mengklik bagian pendaftaran, lengkapi formulir yang tersedia dengan informasi yang benar dan lengkap.</li>
-                                    </ol>
-                                    <p>Setelah mengisi formulir dan mengirimkan berkas, tunggu pengumuman hasil Anda pada bagian <strong>"Status"</strong> akan diperbarui setelah proses verifikasi selesai.</p>
-                                </div>
-                            </div>
-
-                            <!-- <div class="row mt-4">
-    <div class="col-12">
-        <div class="alert alert-info" role="alert">
-            Pastikan semua berkas telah digabungkan menjadi satu file PDF sebelum melanjutkan.
-        </div>
-    </div>
-</div> -->
-
+                    <div class="card shadow mb-4">
+                        <div class="card-body">
+                            <h4 class="card-title">Langkah-langkah Pendaftaran</h4>
+                            <p>Untuk melanjutkan proses pendaftaran, Anda perlu mengikuti langkah-langkah berikut:</p>
+                            <ol>
+                                <li>Siapkan berkas yang diperlukan
+                                    <ul>
+                                        <li>KK (Kartu Keluarga)</li>
+                                        <li>Akte Kelahiran</li>
+                                        <li>KTP</li>
+                                    </ul>
+                                </li>
+                                <li>Gabungkan semua berkas - berkas KK, Akte Kelahiran, dan KTP dalam satu PDF</li>
+                                <li>Setelah semua berkas siap, klik bagian <strong>"Pendaftaran"</strong> untuk memulai pengisian formulir pendaftaran.</li>
+                                <li>Setelah Anda mengklik bagian pendaftaran, lengkapi formulir yang tersedia dengan informasi yang benar dan lengkap.</li>
+                            </ol>
+                            <p>Setelah mengisi formulir dan mengirimkan berkas, tunggu pengumuman hasil Anda pada bagian <strong>"Status"</strong> akan diperbarui setelah proses verifikasi selesai.</p>
                         </div>
-                        <!-- /.container-fluid -->
                     </div>
-                    <!-- End of Main Content -->
 
                 </div>
-                <!-- End of Content Wrapper -->
+                <!-- /.container-fluid -->
             </div>
-            <!-- End of Page Wrapper -->
+            <!-- End of Main Content -->
 
-            <!-- Scroll to Top Button-->
-            <a class="scroll-to-top rounded" href="#page-top">
-                <i class="fas fa-angle-up"></i>
-            </a>
+        </div>
+        <!-- End of Content Wrapper -->
+    </div>
+    <!-- End of Page Wrapper -->
 
-            <!-- Bootstrap core JavaScript-->
-            <script src="../vendor/jquery/jquery.min.js"></script>
-            <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
 
-            <!-- Core plugin JavaScript-->
-            <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+    <!-- Bootstrap core JavaScript-->
+    <script src="../vendor/jquery/jquery.min.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-            <!-- Custom scripts for all pages-->
-            <script src="../js/sb-admin-2.min.js"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="../js/sb-admin-2.min.js"></script>
 
 </body>
 

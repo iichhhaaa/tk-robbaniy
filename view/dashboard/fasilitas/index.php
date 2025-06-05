@@ -8,16 +8,18 @@ if (!isset($_SESSION['nama'])) {
     exit();
 }
 
+// Check if user role is admin
 if ($_SESSION['role'] !== 'admin') {
-    // If not logged in or role is not admin, redirect to dashboard
+    // If user is not admin, redirect to dashboard
     header('Location: ../dashboard-capen/index.php');
     exit();
 }
+
 // Get the user's name from the session
 $nama = $_SESSION['nama'];
 
 include '../../../koneksi.php';
-// Menjalankan query untuk mengambil satu data dari tabel profil_sekolah
+// Execute query to get data from fasilitas table
 $sql = "SELECT * FROM fasilitas";
 $result = $conn->query($sql);
 
@@ -78,13 +80,13 @@ $conn->close();
                     if (isset($_GET['status'])) {
                         $status = $_GET['status'];
 
-                        // If deletion was successful, show success message
+                        // Show success message if deletion was successful
                         if ($status == 'success') {
                             echo "<div class='alert alert-success' role='alert'>
                                 Data berhasil dihapus!
                             </div>";
                         } elseif ($status == 'error') {
-                            // If deletion failed, show error message
+                            // Show error message if deletion failed
                             echo "<div class='alert alert-danger' role='alert'>
                                 Terjadi kesalahan saat menghapus data.
                             </div>";
@@ -92,7 +94,7 @@ $conn->close();
                     }
                     ?>
 
-                    <!-- DataTales Example -->
+                    <!-- DataTable Example -->
                     <div class="card shadow mb-4">
                         <div class="card-body">
                             <div class="table-responsive">
@@ -107,20 +109,21 @@ $conn->close();
                                     </thead>
                                     <tbody>
                                         <?php
-                                        // Koneksi ke database
+                                        // Connect to database
                                         include '../../../koneksi.php';
                                         $sql_fasilitas = "SELECT * FROM fasilitas";
                                         $result_fasilitas = $conn->query($sql_fasilitas);
                                         $no = 1;
 
+                                        // Check if data exists
                                         if ($result_fasilitas->num_rows > 0) {
                                             while ($fasilitas = $result_fasilitas->fetch_assoc()) {
                                                 echo "<tr>";
                                                 echo "<td>" . $no++ . "</td>";
                                                 echo "<td>" . $fasilitas["nama"] . "</td>";
-                                                // Menampilkan foto (jika ada)
+                                                // Display photo if available
                                                 echo "<td><img src='../../../storage/fasilitas/" . $fasilitas["foto"] . "' width='100'></td>";
-                                                // Kolom action dengan tombol edit dan delete
+                                                // Action column with edit and delete buttons
                                                 echo "<td>
                                                     <div class='dropdown'>
                                                         <button class='btn btn-secondary btn-sm dropdown-toggle' type='button' id='dropdownMenuButton' data-bs-toggle='dropdown' aria-expanded='false'>
@@ -135,6 +138,7 @@ $conn->close();
                                                 echo "</tr>";
                                             }
                                         } else {
+                                            // Display message if no data found
                                             echo "<tr><td colspan='4'>Data fasilitas tidak ditemukan</td></tr>";
                                         }
                                         ?>

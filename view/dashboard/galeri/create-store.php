@@ -22,32 +22,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($check !== false) {
             $uploadOk = 1;
         } else {
-            echo "File is not an image.";
+            echo "File yang Anda unggah bukan gambar.";
             $uploadOk = 0;
         }
     }
 
     // Check if the file already exists (though the unique name should prevent this)
     if (file_exists($target_file)) {
-        echo "Sorry, file already exists.";
+        echo "Maaf, file sudah ada.";
         $uploadOk = 0;
     }
 
     // Check file size (limit to 5MB)
     if ($_FILES["foto"]["size"] > 5000000) {
-        echo "Sorry, your file is too large.";
+        echo "Maaf, ukuran file terlalu besar.";
         $uploadOk = 0;
     }
 
     // Allow only certain file formats
-    if ($file_extension != "jpg" && $file_extension != "png" && $file_extension != "jpeg" && $file_extension != "gif") {
-        echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+    if ($file_extension != "jpg" && $file_extension != "png" && $file_extension != "jpeg") {
+        echo "Maaf, hanya file JPG, JPEG & PNG yang diperbolehkan.";
         $uploadOk = 0;
     }
 
     // Check if $uploadOk is set to 0 by an error
     if ($uploadOk == 0) {
-        echo "Sorry, your file was not uploaded.";
+        echo "Maaf, file Anda gagal diunggah.";
     } else {
         // If everything is fine, try to upload the file
         if (move_uploaded_file($_FILES["foto"]["tmp_name"], $target_file)) {
@@ -64,14 +64,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     header("Location: create.php?status=success");
                     exit();
                 } else {
-                    echo "Error: " . $stmt->error;
+                    echo "Terjadi kesalahan: " . $stmt->error;
                 }
 
                 // Close the statement
                 $stmt->close();
             }
         } else {
-            echo "Sorry, there was an error uploading your file.";
+            echo "Maaf, terjadi kesalahan saat mengunggah file Anda.";
         }
     }
 }

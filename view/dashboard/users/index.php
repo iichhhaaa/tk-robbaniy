@@ -8,16 +8,17 @@ if (!isset($_SESSION['nama'])) {
     exit();
 }
 
+// Check if the user role is admin
 if ($_SESSION['role'] !== 'admin') {
-    // If not logged in or role is not admin, redirect to dashboard
+    // If not admin, redirect to dashboard page
     header('Location: ../dashboard-capen/index.php');
     exit();
 }
 
-// Get the user's name from the session
+// Get the user's name from session
 $nama = $_SESSION['nama'];
 include '../../../koneksi.php';
-// Menjalankan query untuk mengambil satu data dari tabel profil_sekolah
+// Execute query to get all users
 $sql = "SELECT * FROM users";
 $result = $conn->query($sql);
 
@@ -27,7 +28,7 @@ $conn->close();
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 
 <head>
 
@@ -42,7 +43,7 @@ $conn->close();
     <!-- Custom fonts for this template -->
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
-        href="../https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 
     <!-- Custom styles for this template -->
@@ -50,7 +51,6 @@ $conn->close();
 
     <!-- Custom styles for this page -->
     <link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-
 </head>
 
 <body id="page-top">
@@ -80,13 +80,13 @@ $conn->close();
                 if (isset($_GET['status'])) {
                     $status = $_GET['status'];
 
-                    // If deletion was successful, show success message
+                    // Show success alert if delete successful
                     if ($status == 'success') {
                         echo "<div class='alert alert-success' role='alert'>
                                 Data berhasil dihapus!
                             </div>";
                     } elseif ($status == 'error') {
-                        // If deletion failed, show error message
+                        // Show error alert if delete failed
                         echo "<div class='alert alert-danger' role='alert'>
                                 Terjadi kesalahan saat menghapus data.
                             </div>";
@@ -94,7 +94,7 @@ $conn->close();
                 }
                 ?>
 
-                    <!-- DataTales Example -->
+                    <!-- DataTable Example -->
                     <div class="card shadow mb-4">
                         <div class="card-body">
                             <div class="table-responsive">
@@ -138,7 +138,8 @@ $conn->close();
                                             echo "</tr>";
                                         }
                                     } else {
-                                        echo "<tr><td colspan='5'>Data guru tidak ditemukan.</td></tr>";
+                                        // Show message in Indonesian if no data found
+                                        echo "<tr><td colspan='6'>Data pengguna tidak ditemukan.</td></tr>";
                                     }
                                     
                                     ?>
@@ -182,15 +183,17 @@ $conn->close();
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <!-- Modal title in Indonesian -->
+                    <h5 class="modal-title" id="exampleModalLabel">Siap untuk keluar?</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <!-- Modal body message in Indonesian -->
+                <div class="modal-body">Pilih "Keluar" jika Anda siap mengakhiri sesi Anda saat ini.</div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+                    <a class="btn btn-primary" href="login.html">Keluar</a>
                 </div>
             </div>
         </div>

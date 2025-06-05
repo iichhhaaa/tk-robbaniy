@@ -1,6 +1,7 @@
 <?php
 session_start();
 
+// Redirect to login if user session not set
 if (!isset($_SESSION['nama'])) {
     header('Location: login.php');
     exit();
@@ -8,9 +9,9 @@ if (!isset($_SESSION['nama'])) {
 
 $user_id = $_SESSION['id'];
 
-include '../../../koneksi.php';  // Koneksi ke database
+include '../../../koneksi.php';  // Include database connection
 
-// Mendapatkan data dari form
+// Retrieve data from submitted form
 $nama_murid = $_POST['nama_murid'];
 $tempat_lahir_murid = $_POST['tempat_lahir_murid'];
 $tanggal_lahir_murid = $_POST['tanggal_lahir_murid'];
@@ -42,134 +43,121 @@ $penghasilan_ayah = $_POST['penghasilan_ayah'];
 $alamat_ayah = $_POST['alamat_ayah'];
 $telepon_ayah = $_POST['telepon_ayah'];
 
-$uploadDir = '../../../storage/berkas/';  // Tentukan folder penyimpanan berkas
+$uploadDir = '../../../storage/berkas/';  // Define the upload path
 
-// Menghasilkan nama file unik menggunakan uniqid() dan rand()
+// Generate unique file name
 $unique_name = uniqid('berkas_', true) . rand(1000, 9999) . '.' . strtolower(pathinfo($_FILES["berkas"]["name"], PATHINFO_EXTENSION));
 
-// Tentukan target file dengan nama file unik
+// Define full target path
 $targetFile = $uploadDir . $unique_name;
 
-// Variabel untuk menentukan status upload
+// Flag to check upload validity
 $uploadOk = 1;
 
-// Dapatkan ekstensi file
+// Determine the file extension
 $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
 
-// Cek apakah file gambar atau bukan
+// Check if file is an actual image
 if (isset($_POST["submit"])) {
-    $check = getimagesize($_FILES["berkas"]["tmp_name"]);  // Periksa file apakah gambar
+    $check = getimagesize($_FILES["berkas"]["tmp_name"]);
     if ($check !== false) {
-        // Jika file adalah gambar
         $uploadOk = 1;
     } else {
-        // Jika file bukan gambar
         echo "File bukan gambar.";
         $uploadOk = 0;
     }
 }
 
-// Cek jika file sudah ada
+// Prevent overwriting existing file
 if (file_exists($targetFile)) {
     echo "File sudah ada.";
     $uploadOk = 0;
 }
 
-// Cek ukuran file (Maksimum 5MB)
+// Limit file size to 5MB
 if ($_FILES["berkas"]["size"] > 5000000) {
-    echo "File terlalu besar.";
+    echo "Ukuran file terlalu besar. Maksimal 5MB.";
     $uploadOk = 0;
 }
 
-// Validasi jenis file yang diterima (Hanya PDF yang diperbolehkan)
+// Allow only PDF file types
 if ($imageFileType != "pdf") {
-    echo "Hanya file PDF yang diperbolehkan.";
+    echo "Hanya file dengan format PDF yang diperbolehkan.";
     $uploadOk = 0;
 }
 
-// Jika uploadOk == 0, maka file tidak akan diupload
+// Upload process
 if ($uploadOk == 0) {
-    echo "Maaf, file Anda tidak bisa diupload.";
+    echo "Maaf, file Anda tidak dapat diunggah.";
 } else {
-    // Jika semuanya valid, upload file
     if (move_uploaded_file($_FILES["berkas"]["tmp_name"], $targetFile)) {
-        echo "File ". htmlspecialchars($unique_name) . " telah diupload.";
+        echo "File " . htmlspecialchars($unique_name) . " berhasil diunggah.";
     } else {
-        // Jika terjadi error saat mengupload file
-        echo "Terjadi kesalahan saat mengupload file.";
+        echo "Terjadi kesalahan saat mengunggah file.";
     }
 }
 
-// Menyimpan data Murid
+// Insert student (murid) data
 $sqlMurid = "INSERT INTO tk_robbaniy.murid (nama, tempat_lahir, tanggal_lahir, nik, no_akte, jenis_kelamin, anak_ke, alamat, telepon, riwayat_kesehatan)
 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 if ($stmt = $conn->prepare($sqlMurid)) {
-    // Bind parameters
     $stmt->bind_param("ssssssisss", $nama_murid, $tempat_lahir_murid, $tanggal_lahir_murid, $nik_murid, $no_akte_murid, $jenis_kelamin_murid, $anak_ke_murid, $alamat_murid, $telepon_murid, $riwayat_kesehatan_murid);
     
-    // Execute the query
     if ($stmt->execute()) {
-        $murid_id = $stmt->insert_id; // Ambil ID Murid yang baru disimpan
+        $murid_id = $stmt->insert_id; // Get the inserted student's ID
         $stmt->close();
     } else {
-        echo "Error: " . $stmt->error;
+        echo "Terjadi kesalahan saat menyimpan data murid: " . $stmt->error;
     }
 }
 
-// Menyimpan data Ibu
+// Insert mother's (ibu) data
 $sqlIbu = "INSERT INTO tk_robbaniy.ibu (nama, tempat_lahir, tanggal_lahir, nik, agama, pekerjaan, penghasilan, alamat, telepon) 
 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 if ($stmt = $conn->prepare($sqlIbu)) {
-    // Bind parameters
     $stmt->bind_param("ssssssiss", $nama_ibu, $tempat_lahir_ibu, $tanggal_lahir_ibu, $nik_ibu, $agama_ibu, $pekerjaan_ibu, $penghasilan_ibu, $alamat_ibu, $telepon_ibu);
     
-    // Execute the query
     if ($stmt->execute()) {
-        $ibu_id = $stmt->insert_id; // Ambil ID Ibu yang baru disimpan
+        $ibu_id = $stmt->insert_id; // Get the inserted mother's ID
         $stmt->close();
     } else {
-        echo "Error: " . $stmt->error;
+        echo "Terjadi kesalahan saat menyimpan data ibu: " . $stmt->error;
     }
 }
 
-// Menyimpan data Ayah
+// Insert father's (ayah) data
 $sqlAyah = "INSERT INTO tk_robbaniy.ayah (nama, tempat_lahir, tanggal_lahir, nik, agama, pekerjaan, penghasilan, alamat, telepon) 
 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 if ($stmt = $conn->prepare($sqlAyah)) {
-    // Bind parameters
     $stmt->bind_param("ssssssiss", $nama_ayah, $tempat_lahir_ayah, $tanggal_lahir_ayah, $nik_ayah, $agama_ayah, $pekerjaan_ayah, $penghasilan_ayah, $alamat_ayah, $telepon_ayah);
     
-    // Execute the query
     if ($stmt->execute()) {
-        $ayah_id = $stmt->insert_id; // Ambil ID Ayah yang baru disimpan
+        $ayah_id = $stmt->insert_id; // Get the inserted father's ID
         $stmt->close();
     } else {
-        echo "Error: " . $stmt->error;
+        echo "Terjadi kesalahan saat menyimpan data ayah: " . $stmt->error;
     }
 }
 
-// Menyimpan data Pendaftaran
-$kode_pendaftaran = "PSR-".date('Y').uniqid(); // Membuat kode pendaftaran unik
+// Generate registration code and save final registration data
+$kode_pendaftaran = "PSR-" . date('Y') . uniqid();
+
 $sqlPendaftaran = "INSERT INTO tk_robbaniy.pendaftaran (kode_pendaftaran, murid_id, ayah_id, ibu_id, berkas, user_id)
 VALUES (?, ?, ?, ?, ?, ?)";
 
 if ($stmt = $conn->prepare($sqlPendaftaran)) {
-    // Bind parameters
     $stmt->bind_param("siiisi", $kode_pendaftaran, $murid_id, $ayah_id, $ibu_id, $unique_name, $user_id);
     
-    // Execute the query
     if ($stmt->execute()) {
-        // Redirect to index.php with status=success
         header("Location: index.php?status=success");
-        exit();  // Ensure the script stops after redirection
+        exit();
     } else {
-        echo "Error: " . $stmt->error;
+        echo "Terjadi kesalahan saat menyimpan data pendaftaran: " . $stmt->error;
     }
 
-    // Close the statement
     $stmt->close();
 }
 

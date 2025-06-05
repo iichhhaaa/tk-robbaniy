@@ -21,7 +21,8 @@ if (isset($_GET['id'])) {
         // Bind the 'id' parameter
         $stmt->bind_param("i", $id);
         if (!$stmt->execute()) {
-            echo "Error executing query: " . $stmt->error;
+            // Display error message in Indonesian for user
+            echo "Terjadi kesalahan saat mengeksekusi query: " . $stmt->error;
             $stmt->close();
             $conn->close();
             exit();
@@ -46,7 +47,8 @@ if (isset($_GET['id'])) {
 
         $stmt->close();
     } else {
-        echo "Error preparing statement: " . $conn->error;
+        // Display error message in Indonesian for user
+        echo "Terjadi kesalahan saat menyiapkan perintah: " . $conn->error;
         $conn->close();
         exit();
     }
@@ -65,11 +67,11 @@ try {
     if ($stmt_murid = $conn->prepare($sql_delete_murid)) {
         $stmt_murid->bind_param("i", $murid_id);
         if (!$stmt_murid->execute()) {
-            throw new Exception("Error deleting murid: " . $stmt_murid->error);
+            throw new Exception("Gagal menghapus data murid: " . $stmt_murid->error);
         }
         $stmt_murid->close();
     } else {
-        throw new Exception("Error preparing murid delete statement: " . $conn->error);
+        throw new Exception("Gagal menyiapkan perintah hapus murid: " . $conn->error);
     }
 
     // Delete related ayah record
@@ -77,11 +79,11 @@ try {
     if ($stmt_ayah = $conn->prepare($sql_delete_ayah)) {
         $stmt_ayah->bind_param("i", $ayah_id);
         if (!$stmt_ayah->execute()) {
-            throw new Exception("Error deleting ayah: " . $stmt_ayah->error);
+            throw new Exception("Gagal menghapus data ayah: " . $stmt_ayah->error);
         }
         $stmt_ayah->close();
     } else {
-        throw new Exception("Error preparing ayah delete statement: " . $conn->error);
+        throw new Exception("Gagal menyiapkan perintah hapus ayah: " . $conn->error);
     }
 
     // Delete related ibu record
@@ -89,11 +91,11 @@ try {
     if ($stmt_ibu = $conn->prepare($sql_delete_ibu)) {
         $stmt_ibu->bind_param("i", $ibu_id);
         if (!$stmt_ibu->execute()) {
-            throw new Exception("Error deleting ibu: " . $stmt_ibu->error);
+            throw new Exception("Gagal menghapus data ibu: " . $stmt_ibu->error);
         }
         $stmt_ibu->close();
     } else {
-        throw new Exception("Error preparing ibu delete statement: " . $conn->error);
+        throw new Exception("Gagal menyiapkan perintah hapus ibu: " . $conn->error);
     }
 
     // Handle the deletion of the file (if exists)
@@ -101,7 +103,7 @@ try {
         $file_path = "../../../storage/berkas/" . $berkas;
         if (file_exists($file_path)) {
             if (!unlink($file_path)) {
-                throw new Exception("Failed to delete file: " . $file_path);
+                throw new Exception("Gagal menghapus file: " . $file_path);
             }
         }
     }
@@ -111,24 +113,24 @@ try {
     if ($stmt_pendaftaran = $conn->prepare($sql_delete_pendaftaran)) {
         $stmt_pendaftaran->bind_param("i", $id);
         if (!$stmt_pendaftaran->execute()) {
-            throw new Exception("Error deleting pendaftaran: " . $stmt_pendaftaran->error);
+            throw new Exception("Gagal menghapus data pendaftaran: " . $stmt_pendaftaran->error);
         }
         $stmt_pendaftaran->close();
     } else {
-        throw new Exception("Error preparing pendaftaran delete statement: " . $conn->error);
+        throw new Exception("Gagal menyiapkan perintah hapus pendaftaran: " . $conn->error);
     }
 
     // Commit transaction
     $conn->commit();
 
-    // Redirect with a success message
-    header("Location: index.php?status=success");
+    // Redirect with a success message in Indonesian
+    header("Location: index.php?status=sukses");
     exit();
 
 } catch (Exception $e) {
     // Rollback transaction on error
     $conn->rollback();
-    echo "Transaction failed: " . $e->getMessage();
+    echo "Transaksi gagal: " . $e->getMessage();
 }
 
 // Close the database connection

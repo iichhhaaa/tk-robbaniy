@@ -17,7 +17,7 @@ if ($_SESSION['role'] !== 'admin') {
 // Get the user's name from the session
 $nama = $_SESSION['nama'];
 include '../../../koneksi.php';
-// Menjalankan query untuk mengambil satu data dari tabel profil_sekolah
+// Run query to fetch one data from profile table
 $sql = "SELECT * FROM pendaftaran";
 $result = $conn->query($sql);
 $row = $result->fetch_assoc();
@@ -31,7 +31,7 @@ $conn->close();
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 
 <head>
     <meta charset="utf-8" />
@@ -42,16 +42,16 @@ $conn->close();
     <title>Pendaftaran - TK Islam Robbaniy</title>
 
     <!-- Custom fonts for this template -->
-    <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css" />
+    <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet" />
+        rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="../css/sb-admin-2.min.css" rel="stylesheet" />
+    <link href="../css/sb-admin-2.min.css" rel="stylesheet">
 
     <!-- Custom styles for this page -->
-    <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+    <link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 </head>
 
 <body id="page-top">
@@ -105,7 +105,7 @@ $conn->close();
                         <i class="fas fa-plus"></i> Tambah Data Pendaftaran
                     </a>
 
-                    <!-- DataTales Example -->
+                    <!-- DataTable Example -->
                     <div class="card shadow mb-4">
                         <div class="card-body">
                             <div class="table-responsive">
@@ -118,7 +118,7 @@ $conn->close();
                                             <th>Ayah</th>
                                             <th>Ibu</th>
                                             <th>Status</th>
-                                            <th>Tindakan</th> <!-- Kolom untuk aksi -->
+                                            <th>Tindakan</th> <!-- Column for actions -->
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -204,8 +204,7 @@ $conn->close();
         <i class="fas fa-angle-up"></i>
     </a>
 
-   --
-       <!-- Bootstrap core JavaScript-->
+   <!-- Bootstrap core JavaScript-->
     <script src="../vendor/jquery/jquery.min.js"></script>
     <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
@@ -227,7 +226,7 @@ $conn->close();
     <!-- Custom scripts -->
     <script>
         $(document).ready(function () {
-            // Send updated status using AJAX when the switch value changes
+            // Send updated registration status using AJAX when the switch value changes
             $('#pendaftaran_status').change(function () {
                 var new_status = $(this).prop('checked') ? 'open' : 'closed'; // Get the switch status
 
@@ -247,10 +246,10 @@ $conn->close();
                 });
             });
 
-            // Send updated status using AJAX when the dropdown value changes
+            // Send updated registration status using AJAX when the dropdown value changes
             $('.status-dropdown').change(function () {
                 var new_status = $(this).val(); // Get the new status value
-                var pendaftaran_id = $(this).data('id'); // Get the pendaftaran id
+                var pendaftaran_id = $(this).data('id'); // Get the registration id
 
                 // Make AJAX request to update status in the database
                 $.ajax({
@@ -270,7 +269,7 @@ $conn->close();
                 });
             });
 
-            // Initialize DataTables
+            // Initialize DataTables plugin
             $('#dataTable').DataTable();
 
             // Hide the success alert after 5 seconds

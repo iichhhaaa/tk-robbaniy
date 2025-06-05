@@ -8,16 +8,18 @@ if (!isset($_SESSION['nama'])) {
     exit();
 }
 
+// Check if user role is admin
 if ($_SESSION['role'] !== 'admin') {
-    // If not logged in or role is not admin, redirect to dashboard
+    // If user is not admin, redirect to dashboard
     header('Location: ../dashboard-capen/index.php');
     exit();
 }
 
-// Get the user's name from the session
+// Get user's name from session
 $nama = $_SESSION['nama'];
 include '../../../koneksi.php';
-// Menjalankan query untuk mengambil satu data dari tabel keunggulan
+
+// Run query to get all data from keunggulan table
 $sql = "SELECT * FROM keunggulan";
 $result = $conn->query($sql);
 
@@ -27,7 +29,7 @@ $conn->close();
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 
 <head>
     <meta charset="utf-8">
@@ -79,13 +81,13 @@ $conn->close();
                     if (isset($_GET['status'])) {
                         $status = $_GET['status'];
 
-                        // If deletion was successful, show success message
+                        // Show success message if delete was successful
                         if ($status == 'success') {
                             echo "<div class='alert alert-success' role='alert'>
                                 Data berhasil dihapus!
                             </div>";
                         } elseif ($status == 'error') {
-                            // If deletion failed, show error message
+                            // Show error message if delete failed
                             echo "<div class='alert alert-danger' role='alert'>
                                 Terjadi kesalahan saat menghapus data.
                             </div>";
@@ -94,7 +96,7 @@ $conn->close();
                     ?>
 
 
-                    <!-- DataTales Example -->
+                    <!-- DataTables Example -->
                     <div class="card shadow mb-4">
                         <div class="card-body">
                             <div class="table-responsive">
@@ -105,26 +107,26 @@ $conn->close();
                                             <th>Judul</th>
                                             <th>Deskripsi</th>
                                             <th>Foto</th>
-                                            <th>Tindakan</th> <!-- Kolom untuk aksi -->
+                                            <th>Tindakan</th> <!-- Column for actions -->
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php
                                         include '../../../koneksi.php';
 
-                                        // Query untuk mengambil data dari tabel keunggulan
-                                        $sql_keunggulan = "SELECT * FROM keunggulan"; // Tabel keunggulan
+                                        // Query to get all data from keunggulan table
+                                        $sql_keunggulan = "SELECT * FROM keunggulan"; // keunggulan table
                                         $result_keunggulan = $conn->query($sql_keunggulan);
                                         $no = 1;
 
                                         if ($result_keunggulan->num_rows > 0) {
-                                            // Ambil data dan tampilkan
+                                            // Fetch and display data
                                             while ($keunggulan = $result_keunggulan->fetch_assoc()) {
                                                 echo "<tr>";
                                                 echo "<td>" . $no++ . "</td>";
-                                                echo "<td>" . $keunggulan['judul'] . "</td>"; // 'judul' dari tabel keunggulan
-                                                echo "<td>" . $keunggulan['deskripsi'] . "</td>"; // 'deskripsi' dari tabel keunggulan
-                                                echo "<td><img src='../../../storage/keunggulan/" . $keunggulan['foto'] . "' width='100'></td>"; // 'foto' dari tabel keunggulan
+                                                echo "<td>" . $keunggulan['judul'] . "</td>"; // 'judul' from keunggulan table
+                                                echo "<td>" . $keunggulan['deskripsi'] . "</td>"; // 'deskripsi' from keunggulan table
+                                                echo "<td><img src='../../../storage/keunggulan/" . $keunggulan['foto'] . "' width='100'></td>"; // 'foto' from keunggulan table
                                                 echo "<td>
                                                     <div class='dropdown'>
                                                         <button class='btn btn-secondary btn-sm dropdown-toggle' type='button' id='dropdownMenuButton' data-bs-toggle='dropdown' aria-expanded='false'>

@@ -26,7 +26,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             header("Location: create.php?status=success");
             exit();
         } else {
-            echo "Error: " . $stmt->error;
+            // Display error message in Indonesian for users
+            echo "Terjadi kesalahan: " . $stmt->error;
         }
 
         // Close the statement

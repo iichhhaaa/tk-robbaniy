@@ -1,23 +1,25 @@
 <?php
 session_start();
 
-// Check if the user is logged in
+// Check if user is logged in
 if (!isset($_SESSION['nama'])) {
-    // If not logged in, redirect to login page
+    // Redirect to login page if not authenticated
     header('Location: ../../../login.php');
     exit();
 }
 
+// Check if user is an admin
 if ($_SESSION['role'] !== 'admin') {
-    // If not logged in or role is not admin, redirect to dashboard
+    // Redirect non-admin users to the dashboard
     header('Location: ../dashboard-capen/index.php');
     exit();
 }
 
+// Get the logged-in user's name
 $nama = $_SESSION['nama'];
 include '../../../koneksi.php';
 
-// Query untuk mengambil data dari tabel guru (jika diperlukan)
+// Query to fetch teacher data if needed
 $sql = "SELECT * FROM guru";
 $result = $conn->query($sql);
 
@@ -26,7 +28,7 @@ $conn->close();
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id"> <!-- Changed language to Indonesian -->
 
 <head>
     <meta charset="UTF-8">
@@ -40,12 +42,14 @@ $conn->close();
 
     <!-- Custom fonts for this template -->
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="../css/sb-admin-2.min.css" rel="stylesheet">
+
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
-        
-    <!-- Custom styles for this template -->
-    <link href="../css/sb-admin-2.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this page -->
+    <link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 </head>
 
 <body id="page-top">
@@ -66,6 +70,7 @@ $conn->close();
                     </a>
 
                     <?php
+                    // Show success alert if data was added successfully
                     if (isset($_GET['status']) && $_GET['status'] == 'success') {
                         echo "<div class='alert alert-success' role='alert'>Data berhasil ditambah!</div>";
                     }
@@ -95,6 +100,7 @@ $conn->close();
                     </div>
                 </div>
             </div>
+
             <!-- Footer -->
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
@@ -111,19 +117,20 @@ $conn->close();
     <script src="../vendor/jquery/jquery.min.js"></script>
     <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Core plugin JavaScript-->
+    <!-- jQuery Easing plugin -->
     <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
 
-    <!-- Custom scripts for all pages-->
+    <!-- Custom scripts for the admin template -->
     <script src="../js/sb-admin-2.min.js"></script>
 
-    <!-- Page level plugins -->
+    <!-- DataTables plugins -->
     <script src="../vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="../vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
-    <!-- Page level custom scripts -->
+    <!-- DataTables custom scripts -->
     <script src="../js/demo/datatables-demo.js"></script>
 
+    <!-- Bootstrap Bundle CDN (optional redundant, but left as-is) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>

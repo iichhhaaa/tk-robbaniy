@@ -1,35 +1,37 @@
 <?php
-// Include file koneksi
+// Include database connection file
 include '../../../koneksi.php'; 
 
-// Memastikan bahwa ID dikirimkan melalui URL
+// Ensure ID is passed via URL
 if (isset($_GET['id'])) {
-    // Mengambil ID dari URL
+    // Get ID from URL
     $id = $_GET['id'];
 
-    // Query untuk menghapus data berdasarkan ID
+    // SQL query to delete data by ID
     $sql = "DELETE FROM keunggulan WHERE id = ?";
 
-    // Persiapkan query
+    // Prepare statement
     if ($stmt = $conn->prepare($sql)) {
         // Bind parameter
         $stmt->bind_param("i", $id);
         
-        // Eksekusi query
+        // Execute query
         if ($stmt->execute()) {
-            // Jika berhasil menghapus, arahkan ke halaman yang sesuai dengan query string sukses
+            // Redirect to index with success status if delete is successful
             header("Location: index.php?status=success");
         } else {
+            // Redirect to index with error status if delete fails
             header("Location: index.php?status=error");
         }
 
-        // Tutup statement
+        // Close statement
         $stmt->close();
     }
 
-    // Tutup koneksi
+    // Close connection
     $conn->close();
 } else {
+    // Display message if ID is not found
     echo "ID tidak ditemukan!";
 }
 ?>

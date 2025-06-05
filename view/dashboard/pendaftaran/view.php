@@ -8,44 +8,48 @@ if (!isset($_SESSION['nama'])) {
     exit();
 }
 
+// Check if user role is admin
 if ($_SESSION['role'] !== 'admin') {
-    // If not logged in or role is not admin, redirect to dashboard
+    // If not admin, redirect to dashboard
     header('Location: ../dashboard-capen/index.php');
     exit();
 }
 
-// Get the user's name from the session
+// Get the user's name from session
 $nama = $_SESSION['nama'];
 include '../../../koneksi.php';
-// Menjalankan query untuk mengambil satu data dari tabel profil_sekolah
+
+// Execute query to get data from pendaftaran table
 $sql = "SELECT * FROM pendaftaran";
 $result = $conn->query($sql);
 $row = $result->fetch_assoc();
 
+// Get registration status from settings table
 $setting = "SELECT value FROM settings WHERE key_name = 'pendaftaran_status'";
 $result_setting = $conn->query($setting);
 $row_setting = $result_setting->fetch_assoc();
 $status = $row_setting['value'];
 
+// Close the database connection
 $conn->close();
 ?>
 <?php
 
-// Cek apakah pengguna sudah login dan memiliki role 'admin'
+// Verify user login and admin role again
 if (!isset($_SESSION['nama']) || $_SESSION['role'] !== 'admin') {
     header('Location: login.php');
     exit();
 }
 
-include '../../../koneksi.php';  // Koneksi ke database
+include '../../../koneksi.php';  // Connect to database
 
-// Ambil ID pendaftaran dari parameter URL (GET)
+// Get registration ID from URL parameter (GET)
 $id_pendaftaran = isset($_GET['id']) ? intval($_GET['id']) : 0;
 if ($id_pendaftaran <= 0) {
-    die('ID pendaftaran tidak valid.');
+    die('Invalid registration ID.');
 }
 
-// Query untuk mendapatkan data pendaftaran beserta data murid, ayah, ibu
+// Prepare SQL query to fetch registration data including student and parents info
 $sql = "SELECT 
             p.id AS id, p.kode_pendaftaran, p.berkas,
             m.nama AS nama_murid, m.nik AS nik_murid, m.tempat_lahir AS tempat_lahir_murid, m.tanggal_lahir AS tanggal_lahir_murid,
@@ -63,24 +67,24 @@ $sql = "SELECT
         WHERE p.id = ?";
 
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $id_pendaftaran); // Binding parameter ID
+$stmt->bind_param("i", $id_pendaftaran); // Bind registration ID parameter
 $stmt->execute();
 $result = $stmt->get_result();
 
-// Jika data ditemukan
+// If data found
 if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
 } else {
-    echo "Data tidak ditemukan.";
+    echo "Data tidak ditemukan."; // Message displayed to user in Indonesian
     exit();
 }
 
-// Tutup koneksi
+// Close connection
 $conn->close();
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 
 <head>
     <meta charset="UTF-8">
@@ -90,8 +94,17 @@ $conn->close();
     <title>Data Pendaftaran</title>
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="../css/sb-admin-2.min.css" rel="stylesheet">
+
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this page -->
+    <link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 </head>
 
 <body id="page-top">
@@ -106,13 +119,8 @@ $conn->close();
                 <div class="container-fluid">
                     <h1 class="h3 mb-4 text-gray-800">Informasi Data Pendaftaran</h1>
 
-
-
                     <div class="card shadow mb-4">
                         <div class="card-body">
-                            <a href="index.php" class="btn btn-primary mb-0">
-                                <i class="fas fa-arrow-left"></i> Kembali
-                            </a>
                             <h5 class="mt-4">Data Pendaftaran</h5>
                             <table class="table table-bordered" style="table-layout: fixed;">
                                 <tr>

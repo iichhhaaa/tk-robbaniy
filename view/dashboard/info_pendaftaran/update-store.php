@@ -20,7 +20,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $row = $result_fetch->fetch_assoc();
             // If you need to handle the existing photo or other fields, do so here
         } else {
-            echo "Record not found!";
+            // Data tidak ditemukan, hentikan proses
+            echo "Data tidak ditemukan!";
             exit();
         }
         $stmt_fetch->close();
@@ -38,7 +39,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Redirect to the success page or show a success message
             header("Location: update.php?id=$id&status=success");
         } else {
-            echo "Error: " . $stmt_update->error;
+            // Tampilkan pesan kesalahan jika gagal mengupdate
+            echo "Terjadi kesalahan: " . $stmt_update->error;
         }
 
         // Close the statement

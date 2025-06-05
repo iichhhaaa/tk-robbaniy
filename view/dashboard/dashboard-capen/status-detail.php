@@ -40,7 +40,7 @@ $status = $data['status'];
 $penjelasan = "";
 if ($status === "Lolos") {
     $penjelasan = "
-    <p><strong>Selamat, Anda dinyatakan <span class='text-success'>Lolos</span>!</strong></p>
+    <p><strong>Selamat, {$data['nama_murid']} dinyatakan <span class='text-success'>Lolos</span>!</strong></p>
     <p>Silakan lakukan pembayaran administrasi ke rekening berikut:</p>
     <ul>
         <li><strong>Bank:</strong> BCA</li>
@@ -51,9 +51,9 @@ if ($status === "Lolos") {
     <p>Jika pembayaran telah dikonfirmasi, Anda akan segera diundang ke grup informasi siswa baru.</p>
 ";
 } elseif ($status === "Tidak Lolos") {
-    $penjelasan = "<p>Mohon maaf, Anda <span class='text-danger'>Tidak Lolos</span> . Namun jangan menyerah, tetap semangat dan coba lagi di kesempatan berikutnya!</p>";
+    $penjelasan = "<p><strong>Mohon maaf, {$data['nama_murid']} <span class='text-danger'>Tidak Lolos</span> pada tahap pendaftaran.</strong> Terima kasih telah mendaftar.</p>";
 } else {
-    $penjelasan = "<p>Hasil pendaftaran Anda masih dalam proses. Mohon dicek saat pengumuman hasil</p>";
+    $penjelasan = "<p>Pendaftaran Anda sedang dalam proses verifikasi. Silakan cek kembali saat pengumuman hasil telah tersedia</p>";
 }
 
 $nama = $_SESSION['nama'];

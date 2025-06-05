@@ -1,29 +1,30 @@
 <?php
 session_start();
 
-// Check if the user is logged in
+// Check if user is logged in
 if (!isset($_SESSION['nama'])) {
-    // If not logged in, redirect to login page
+    // Redirect to login page if not logged in
     header('Location: ../../../login.php');
     exit();
 }
 
+// Check if user role is admin
 if ($_SESSION['role'] !== 'admin') {
-    // If not logged in or role is not admin, redirect to dashboard
+    // Redirect to dashboard if role is not admin
     header('Location: ../dashboard-capen/index.php');
     exit();
 }
 
-// Get the user's name from the session
+// Retrieve user name from session
 $nama = $_SESSION['nama'];
-include '../../../koneksi.php'; // Include the database connection file
+include '../../../koneksi.php'; // Include database connection
 
-// Close the connection
+// Close the database connection
 $conn->close();
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 
 <head>
     <meta charset="UTF-8">
@@ -36,12 +37,14 @@ $conn->close();
 
     <!-- Custom fonts for this template -->
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="../css/sb-admin-2.min.css" rel="stylesheet">
+
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
-        
-    <!-- Custom styles for this template -->
-    <link href="../css/sb-admin-2.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this page -->
+    <link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 </head>
 
 <body id="page-top">
@@ -69,7 +72,7 @@ $conn->close();
                         <i class="fas fa-arrow-left"></i> Kembali
                     </a>
 
-                    <!-- Display success message if the data is created successfully -->
+                    <!-- Display success message if data is created successfully -->
                     <?php
                     if (isset($_GET['status']) && $_GET['status'] == 'success') {
                         echo "<div class='alert alert-success' role='alert'>
@@ -121,7 +124,7 @@ $conn->close();
                             </form>
                         </div>
                     </div>
-                    <!-- End of Form -->
+                    <!-- Form End -->
 
                 </div>
             </div>
@@ -137,14 +140,14 @@ $conn->close();
         </div>
     </div>
 
-    <!-- Bootstrap core JavaScript-->
+    <!-- Bootstrap core JavaScript -->
     <script src="../vendor/jquery/jquery.min.js"></script>
     <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Core plugin JavaScript-->
+    <!-- Core plugin JavaScript -->
     <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
 
-    <!-- Custom scripts for all pages-->
+    <!-- Custom scripts for all pages -->
     <script src="../js/sb-admin-2.min.js"></script>
 
     <!-- Page level plugins -->

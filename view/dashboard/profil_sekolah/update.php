@@ -8,8 +8,9 @@ if (!isset($_SESSION['nama'])) {
     exit();
 }
 
+// Check if the user role is 'admin'
 if ($_SESSION['role'] !== 'admin') {
-    // If not logged in or role is not admin, redirect to dashboard
+    // If role is not admin, redirect to dashboard
     header('Location: ../dashboard-capen/index.php');
     exit();
 }
@@ -17,30 +18,31 @@ if ($_SESSION['role'] !== 'admin') {
 $nama = $_SESSION['nama'];
 include '../../../koneksi.php'; // Include the database connection file
 
-// Check if 'id' is passed in the URL
+// Check if 'id' parameter exists in the URL
 if (isset($_GET['id'])) {
     $id = $_GET['id']; // Get the 'id' parameter from the URL
 
-    // Query to fetch the existing data from the database based on the 'id'
+    // Prepare SQL query to select the record with the specified 'id'
     $sql = "SELECT * FROM profil_sekolah WHERE id = ?";
     if ($stmt = $conn->prepare($sql)) {
-        // Bind the 'id' parameter
+        // Bind 'id' parameter to the prepared statement
         $stmt->bind_param("i", $id);
         $stmt->execute();
         $result = $stmt->get_result();
 
-        // Check if record is found
+        // Check if a record is found
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
+            // Assign the retrieved data to variables
             $deskripsi = $row['deskripsi'];
             $visi = $row['visi'];
             $misi = $row['misi'];
             $alamat = $row['alamat'];
             $email = $row['email'];
             $no_telepon = $row['no_telepon'];
-            $foto = $row['foto']; // Store the existing file name of the photo
+            $foto = $row['foto']; // Store the current photo filename
         } else {
-            // Redirect to the index page if the record is not found
+            // Redirect to index if no matching record found
             header("Location: index.php");
             exit();
         }
@@ -48,19 +50,19 @@ if (isset($_GET['id'])) {
         $stmt->close();
     }
 } else {
-    // If 'id' is not passed, redirect to the index page
+    // Redirect to index if 'id' is not provided
     header("Location: index.php");
     exit();
 }
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Ubah Data Profil Sekolah</title>
 
     <!-- Bootstrap 5 CSS -->
@@ -68,16 +70,17 @@ if (isset($_GET['id'])) {
 
     <!-- Custom fonts for this template -->
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="../css/sb-admin-2.min.css" rel="stylesheet">
+
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
-        
-    <!-- Custom styles for this template -->
-    <link href="../css/sb-admin-2.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this page -->
+    <link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 </head>
 
 <body id="page-top">
-
     <div id="wrapper">
         <?php include '../inc/sidebar.php'; ?>
 
@@ -92,21 +95,24 @@ if (isset($_GET['id'])) {
                         <i class="fas fa-arrow-left"></i> Kembali
                     </a>
 
-                    <!-- Display success message if the data is updated successfully -->
+                    <!-- Show success alert if data updated successfully -->
                     <?php
                     if (isset($_GET['status']) && $_GET['status'] == 'success') {
+                        // User-facing success message in Indonesian
                         echo "<div class='alert alert-success' role='alert'>Data berhasil diperbarui!</div>";
                     }
                     ?>
 
                     <div class="card shadow mb-4">
                         <div class="card-body">
+                            <!-- Form for updating school profile -->
                             <form action="update-store.php" method="POST" enctype="multipart/form-data">
-                                <input type="hidden" name="id" value="<?php echo $id; ?>">
+                                <!-- Hidden input to hold the record ID -->
+                                <input type="hidden" name="id" value="<?php echo $id; ?>" />
 
                                 <div class="mb-3">
                                     <label for="deskripsi" class="form-label">Deskripsi</label>
-                                    <textarea class="form-control" id="deskripsi" name="deskripsi" required><?php echo $deskripsi; ?></textarea>
+                                    <textarea class="form-control" id="deskripsi" name="deskripsi" rows="6" required><?php echo $deskripsi; ?></textarea>
                                 </div>
 
                                 <div class="mb-3">
@@ -116,37 +122,39 @@ if (isset($_GET['id'])) {
 
                                 <div class="mb-3">
                                     <label for="misi" class="form-label">Misi</label>
-                                    <textarea class="form-control" id="misi" name="misi" required><?php echo $misi; ?></textarea>
+                                    <textarea class="form-control" id="misi" name="misi" rows="6" required><?php echo $misi; ?></textarea>
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="alamat" class="form-label">Alamat</label>
-                                    <input type="text" class="form-control" id="alamat" name="alamat" value="<?php echo $alamat; ?>" required>
+                                    <input type="text" class="form-control" id="alamat" name="alamat" value="<?php echo $alamat; ?>" required />
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="email" class="form-label">Email</label>
-                                    <input type="email" class="form-control" id="email" name="email" value="<?php echo $email; ?>" required>
+                                    <input type="email" class="form-control" id="email" name="email" value="<?php echo $email; ?>" required />
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="no_telepon" class="form-label">No Telepon</label>
-                                    <input type="text" class="form-control" id="no_telepon" name="no_telepon" value="<?php echo $no_telepon; ?>" required>
+                                    <input type="text" class="form-control" id="no_telepon" name="no_telepon" value="<?php echo $no_telepon; ?>" required />
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="foto" class="form-label">Foto</label>
-                                    <input type="file" class="form-control" id="foto" name="foto">
-                                    <p>Foto Saat Ini: <img src="../../../storage/profil_sekolah/<?php echo $foto; ?>" width="100"></p>
+                                    <input type="file" class="form-control" id="foto" name="foto" />
+                                    <!-- Show current photo -->
+                                    <p>Foto Saat Ini: <img src="../../../storage/profil_sekolah/<?php echo $foto; ?>" width="100" /></p>
                                 </div>
 
-                                <button type="submit" class="btn btn-primary">Kirim</button>
+                                <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- Footer -->
+
+            <!-- Footer section -->
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
@@ -158,14 +166,14 @@ if (isset($_GET['id'])) {
         </div>
     </div>
 
-    <!-- Bootstrap core JavaScript-->
+    <!-- Bootstrap core JavaScript -->
     <script src="../vendor/jquery/jquery.min.js"></script>
     <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Core plugin JavaScript-->
+    <!-- Core plugin JavaScript -->
     <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
 
-    <!-- Custom scripts for all pages-->
+    <!-- Custom scripts for all pages -->
     <script src="../js/sb-admin-2.min.js"></script>
 
     <!-- Page level plugins -->

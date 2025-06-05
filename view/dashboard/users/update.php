@@ -34,12 +34,12 @@ if (isset($_GET['id'])) {
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
             $username = $row['username'];
-            $password = $row['password']; // Ensure password exists
-            $role = $row['role']; // Ensure role exists
-            $nama_users = $row['nama']; // Ensure name exists
-            $email = $row['email']; // Ensure email exists
+            $password = $row['password']; // Pastikan password ada
+            $role = $row['role']; // Pastikan role ada
+            $nama_users = $row['nama']; // Pastikan nama ada
+            $email = $row['email']; // Pastikan email ada
         } else {
-            // Redirect to the index page if the record is not found
+            // Redirect ke halaman index jika data tidak ditemukan
             header("Location: index.php");
             exit();
         }
@@ -47,14 +47,14 @@ if (isset($_GET['id'])) {
         $stmt->close();
     }
 } else {
-    // If 'id' is not passed, redirect to the index page
+    // Jika 'id' tidak diberikan, redirect ke halaman index
     header("Location: index.php");
     exit();
 }
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 
 <head>
     <meta charset="UTF-8">
@@ -64,13 +64,17 @@ if (isset($_GET['id'])) {
 
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    
+
     <!-- Custom fonts for this template -->
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="../css/sb-admin-2.min.css" rel="stylesheet">
+
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
-    <link href="../css/sb-admin-2.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this page -->
+    <link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 </head>
 
 <body id="page-top">
@@ -142,7 +146,7 @@ if (isset($_GET['id'])) {
                                     <input type="email" class="form-control" id="email" name="email" value="<?php echo $email; ?>" required>
                                 </div>
 
-                                <button type="submit" class="btn btn-primary">Kirim</button>
+                                <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
                             </form>
                         </div>
                     </div>

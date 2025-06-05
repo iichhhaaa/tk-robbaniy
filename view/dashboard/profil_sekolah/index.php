@@ -17,7 +17,7 @@ if ($_SESSION['role'] !== 'admin') {
 // Get the user's name from the session
 $nama = $_SESSION['nama'];
 include '../../../koneksi.php';
-// Menjalankan query untuk mengambil satu data dari tabel profil_sekolah
+// Execute query to get one data from profil_sekolah table
 $sql = "SELECT * FROM profil_sekolah Limit 1";
 $result = $conn->query($sql);
 
@@ -25,7 +25,7 @@ $conn->close();
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 
 <head>
 
@@ -48,7 +48,6 @@ $conn->close();
 
     <!-- Custom styles for this page -->
     <link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-
 </head>
 
 <body id="page-top">
@@ -95,7 +94,7 @@ $conn->close();
                 ?>
 
 
-                    <!-- DataTales Example -->
+                    <!-- DataTables Example -->
                     <div class="card shadow mb-4">
                         <div class="card-body">
                             <div class="table-responsive">
@@ -110,7 +109,7 @@ $conn->close();
                                         <th>Email</th>
                                         <th>No Telepon</th>
                                         <th>Foto</th>
-                                        <th>Tindakan</th> <!-- Kolom baru untuk aksi -->
+                                        <th>Tindakan</th> <!-- New column for actions -->
                                     </tr>
                                 </thead>
 
@@ -122,7 +121,7 @@ $conn->close();
                                     $no = 1;                               
 
                                     if ($result_profil->num_rows > 0) {
-                                        // Ambil data dan tampilkan
+                                        // Fetch data and display
                                     while ($profil = $result_profil->fetch_assoc()) {
                                         echo "<tr>";
                                         echo "<td>" . $no++ . "</td>";
@@ -133,7 +132,7 @@ $conn->close();
                                         echo "<td>" . $profil["email"] . "</td>";
                                         echo "<td>" . $profil["no_telepon"] . "</td>";
                                         echo "<td><img src='../../../storage/profil_sekolah/" . $profil['foto'] . "' width='100'></td>";
-                                        // Kolom action dengan tombol edit dan delete
+                                        // Action column with edit and delete buttons
                                         echo "<td>
                                                 <div class='dropdown'>
                                                     <button class='btn btn-secondary btn-sm dropdown-toggle' type='button' id='dropdownMenuButton' data-bs-toggle='dropdown' aria-expanded='false'>
@@ -191,15 +190,15 @@ $conn->close();
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <h5 class="modal-title" id="exampleModalLabel">Siap untuk keluar?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Tutup">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-body">Pilih "Keluar" jika Anda siap untuk mengakhiri sesi Anda saat ini.</div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+                    <a class="btn btn-primary" href="../../../logout.php">Keluar</a>
                 </div>
             </div>
         </div>

@@ -9,13 +9,14 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 // Check if the user is logged in
 if (!isset($_SESSION['nama'])) {
-    // If not logged in, redirect to login page
+    // If not logged in, redirect to login page (user sees Indonesian)
     header('Location: ../../../login.php');
     exit();
 }
 
+// Check if user role is admin
 if ($_SESSION['role'] !== 'admin') {
-    // If not logged in or role is not admin, redirect to dashboard
+    // If not admin, redirect to dashboard (user sees Indonesian)
     header('Location: ../dashboard-capen/index.php');
     exit();
 }
@@ -23,7 +24,7 @@ if ($_SESSION['role'] !== 'admin') {
 // Include database connection
 include '../../../koneksi.php';
 
-// Query to get all the data including pendaftaran, murid, ayah, ibu
+// Query to get all registration data along with related child, father, and mother data
 $sql = "SELECT 
             p.id AS pendaftaran_id, p.kode_pendaftaran, 
             m.id AS murid_id, m.nama AS nama_murid, m.nik AS nik_murid, m.tempat_lahir AS tempat_lahir_murid, 
@@ -47,7 +48,7 @@ $result = $conn->query($sql);
 $spreadsheet = new Spreadsheet();
 $sheet = $spreadsheet->getActiveSheet();
 
-// Set column headings
+// Set column headings in the first row
 $sheet->setCellValue('A1', 'Pendaftaran ID')
       ->setCellValue('B1', 'Kode Pendaftaran')
       ->setCellValue('C1', 'Murid ID')
@@ -82,8 +83,8 @@ $sheet->setCellValue('A1', 'Pendaftaran ID')
       ->setCellValue('AF1', 'Telepon Ayah')
       ->setCellValue('AG1', 'Status Pendaftaran');
 
-// Output data rows for all pendaftaran
-$rowNum = 2;  // Start from the second row for data
+// Populate data rows starting from the second row
+$rowNum = 2;
 while ($row = $result->fetch_assoc()) {
     $sheet->setCellValue('A' . $rowNum, $row['pendaftaran_id'])
           ->setCellValue('B' . $rowNum, $row['kode_pendaftaran'])
@@ -124,7 +125,7 @@ while ($row = $result->fetch_assoc()) {
 // Create the Excel file and force download
 $writer = new Xlsx($spreadsheet);
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-header('Content-Disposition: attachment; filename="pendaftaran_complete.xlsx"');
+header('Content-Disposition: attachment; filename="laporan_data_pendaftaran.xlsx"');
 $writer->save('php://output');
 
 // Close the connection

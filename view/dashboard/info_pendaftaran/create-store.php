@@ -1,65 +1,65 @@
 <?php
-include '../../../koneksi.php'; // Include the database connection file
+include '../../../koneksi.php'; // Connect to the database
 
-// Check if the form is submitted
+// Check if the form was submitted
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Retrieve form data
+    // Get the form input
     $syarat_pendaftaran = $_POST['syarat_pendaftaran'];
     $biaya_ppdb = $_POST['biaya_ppdb'];
 
-    // Handle file upload for 'foto' (optional, if needed)
-    $target_dir = "../../../storage/info_pendaftaran/"; // Directory to store the uploaded image
-    
+    // Prepare the target directory for uploaded image
+    $target_dir = "../../../storage/info_pendaftaran/";
+
     if (isset($_FILES['foto']) && $_FILES['foto']['name'] != '') {
-        // Generate a unique file name using uniqid() and rand()
+        // Generate a unique file name using uniqid and random number
         $file_extension = strtolower(pathinfo($_FILES["foto"]["name"], PATHINFO_EXTENSION));
         $unique_name = uniqid('pendaftaran', true) . rand(1000, 9999) . '.' . $file_extension;
-        $target_file = $target_dir . $unique_name; // The full path where the file will be stored
+        $target_file = $target_dir . $unique_name;
 
         $uploadOk = 1;
 
-        // Check if image file is a valid image or not
+        // Check if the uploaded file is an actual image
         if (isset($_POST["submit"])) {
             $check = getimagesize($_FILES["foto"]["tmp_name"]);
             if ($check !== false) {
                 $uploadOk = 1;
             } else {
-                echo "File is not an image.";
+                echo "File bukan gambar yang valid.";
                 $uploadOk = 0;
             }
         }
 
-        // Check if the file already exists (though the unique name should prevent this)
+        // Check if the file already exists (though name is unique)
         if (file_exists($target_file)) {
-            echo "Sorry, file already exists.";
+            echo "Maaf, file sudah ada.";
             $uploadOk = 0;
         }
 
-        // Check file size (limit to 5MB)
+        // Limit the size to 5MB
         if ($_FILES["foto"]["size"] > 5000000) {
-            echo "Sorry, your file is too large.";
+            echo "Maaf, ukuran file terlalu besar (maksimal 5MB).";
             $uploadOk = 0;
         }
 
-        // Allow only certain file formats
-        if ($file_extension != "jpg" && $file_extension != "png" && $file_extension != "jpeg" && $file_extension != "gif") {
-            echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+        // Allow only specific file types
+        if ($file_extension != "jpg" && $file_extension != "png" && $file_extension != "jpeg") {
+            echo "Maaf, hanya file JPG, JPEG & PNG yang diperbolehkan.";
             $uploadOk = 0;
         }
 
-        // If the file is valid and everything is okay, upload it
+        // Try to upload if all checks pass
         if ($uploadOk == 1) {
             if (!move_uploaded_file($_FILES["foto"]["tmp_name"], $target_file)) {
-                echo "Sorry, there was an error uploading your file.";
-                $uploadOk = 0; // Set to 0 if upload fails
+                echo "Maaf, terjadi kesalahan saat mengunggah file.";
+                $uploadOk = 0;
             }
         }
     } else {
-        // If no file is uploaded, set the default value for the photo
-        $unique_name = ''; // No photo uploaded
+        // No photo uploaded
+        $unique_name = '';
     }
 
-    // Prepare an SQL query to insert the data into the database
+    // Insert data into the database
     $sql = "INSERT INTO info_pendaftaran (syarat_pendaftaran, biaya_ppdb) VALUES (?, ?)";
 
     if ($stmt = $conn->prepare($sql)) {
@@ -68,18 +68,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         // Execute the query
         if ($stmt->execute()) {
-            // Redirect to create.php with status=success
+            // Redirect to success message
             header("Location: create.php?status=success");
             exit();
         } else {
-            echo "Error: " . $stmt->error;
+            echo "Terjadi kesalahan: " . $stmt->error;
         }
 
-        // Close the statement
+        // Close statement
         $stmt->close();
     }
 }
 
-// Close the database connection
+// Close DB connection
 $conn->close();
 ?>

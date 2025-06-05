@@ -19,7 +19,7 @@ if ($id <= 0) {
 // Query registration data along with student, mother, and father data
 $sql = "SELECT 
             p.kode_pendaftaran, p.berkas,
-            m.nama AS nama_murid, m.nik AS nik_murid, m.tempat_lahir AS tempat_lahir_murid, m.tanggal_lahir AS tanggal_lahir_murid, m.jenis_kelamin AS jenis_kelamin_murid, m.alamat AS alamat_murid,
+            m.nama AS nama_murid, m.nik AS nik_murid, m.tempat_lahir AS tempat_lahir_murid, m.tanggal_lahir AS tanggal_lahir_murid, m.jenis_kelamin AS jenis_kelamin_murid, m.alamat AS alamat_murid, m.no_akte AS no_akte_murid, m.riwayat_kesehatan AS riwayat_kesehatan_murid,
             i.nama AS nama_ibu, i.telepon AS telepon_ibu,
             a.nama AS nama_ayah, a.telepon AS telepon_ayah
         FROM tk_robbaniy.pendaftaran p
@@ -64,6 +64,9 @@ $pdf->SetMargins(20, 10, 20);
 $pdf->AddPage();
 
 // ===== HEADER SECTION =====
+$img_file = '../../../assets/logo.png';
+$pdf->Image($img_file, 20, 10, 20);
+
 $pdf->SetFont('helvetica', 'B', 14);
 $pdf->Cell(0, 7, 'TK ISLAM ROBBANIY', 0, 1, 'C');
 
@@ -88,12 +91,13 @@ addRow($pdf, 'No Pendaftaran', $data['kode_pendaftaran']);
 addRow($pdf, 'Nama', $data['nama_murid']);
 addRow($pdf, 'Tempat, Tanggal Lahir', $data['tempat_lahir_murid'] . ', ' . date('d-m-Y', strtotime($data['tanggal_lahir_murid'])));
 addRow($pdf, 'NIK', $data['nik_murid']);
+addRow($pdf, 'No Akte', $data['no_akte_murid']);
 addRow($pdf, 'Jenis Kelamin', $data['jenis_kelamin_murid']);
 
 // Use MultiCell for long address text to ensure proper formatting
 $pdf->Cell(55, 8, 'Alamat', 0, 0);
 $pdf->MultiCell(0, 8, ': ' . $data['alamat_murid'], 0, 'L', 0, 1);
-
+addRow($pdf, 'Riwayat Kesehatan', $data['riwayat_kesehatan_murid']);
 $pdf->Ln(10);
 
 // ===== PARENT DATA =====

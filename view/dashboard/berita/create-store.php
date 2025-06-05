@@ -18,63 +18,62 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $uploadOk = 1;
 
-    // Check if image file is a valid image or not
+    // Validate uploaded file is an image
     if (isset($_POST["submit"])) {
         $check = getimagesize($_FILES["foto"]["tmp_name"]);
         if ($check !== false) {
             $uploadOk = 1;
         } else {
-            echo "File is not an image.";
+            echo "File bukan gambar yang valid.";
             $uploadOk = 0;
         }
     }
 
-    // Check if the file already exists (though the unique name should prevent this)
+    // Double-check if the file somehow already exists
     if (file_exists($target_file)) {
-        echo "Sorry, file already exists.";
+        echo "Maaf, file sudah ada.";
         $uploadOk = 0;
     }
 
-    // Check file size (limit to 5MB)
+    // Check maximum file size (5MB)
     if ($_FILES["foto"]["size"] > 5000000) {
-        echo "Sorry, your file is too large.";
+        echo "Maaf, ukuran file terlalu besar. Maksimal 5MB.";
         $uploadOk = 0;
     }
 
-    // Allow only certain file formats
+    // Allow only certain image file extensions
     if ($file_extension != "jpg" && $file_extension != "png" && $file_extension != "jpeg" && $file_extension != "gif") {
-        echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+        echo "Maaf, hanya file JPG, JPEG, PNG, dan GIF yang diperbolehkan.";
         $uploadOk = 0;
     }
 
-    // Check if $uploadOk is set to 0 by an error
+    // If any validation fails, cancel the upload
     if ($uploadOk == 0) {
-        echo "Sorry, your file was not uploaded.";
+        echo "Maaf, file tidak berhasil diunggah.";
     } else {
-        // If everything is fine, try to upload the file
+        // Attempt to upload the image
         if (move_uploaded_file($_FILES["foto"]["tmp_name"], $target_file)) {
-            // Prepare an SQL query to insert the data into the database
+            // Insert the form data and image name into the database
             $sql = "INSERT INTO berita (judul, content, foto, created_at) VALUES (?, ?, ?, ?)";
 
             if ($stmt = $conn->prepare($sql)) {
-                // Bind the parameters
-                // Only store the filename in the database (not the full path)
+                // Bind parameters to the prepared statement
                 $stmt->bind_param("ssss", $judul, $content, $unique_name, $created_at);
 
-                // Execute the query
+                // Execute the statement
                 if ($stmt->execute()) {
-                    // Redirect to create.php with status=success
+                    // Redirect to success page
                     header("Location: create.php?status=success");
                     exit();
                 } else {
-                    echo "Error: " . $stmt->error;
+                    echo "Terjadi kesalahan saat menyimpan data: " . $stmt->error;
                 }
 
-                // Close the statement
+                // Close the prepared statement
                 $stmt->close();
             }
         } else {
-            echo "Sorry, there was an error uploading your file.";
+            echo "Maaf, terjadi kesalahan saat mengunggah file.";
         }
     }
 }

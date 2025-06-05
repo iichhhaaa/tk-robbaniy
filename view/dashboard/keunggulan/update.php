@@ -8,8 +8,9 @@ if (!isset($_SESSION['nama'])) {
     exit();
 }
 
+// Check if user role is admin
 if ($_SESSION['role'] !== 'admin') {
-    // If not logged in or role is not admin, redirect to dashboard
+    // If not admin, redirect to dashboard page
     header('Location: ../dashboard-capen/index.php');
     exit();
 }
@@ -17,26 +18,26 @@ if ($_SESSION['role'] !== 'admin') {
 $nama = $_SESSION['nama'];
 include '../../../koneksi.php'; // Include the database connection file
 
-// Check if 'id' is passed in the URL
+// Check if 'id' parameter exists in the URL
 if (isset($_GET['id'])) {
-    $id = $_GET['id']; // Get the 'id' parameter from the URL
+    $id = $_GET['id']; // Get the 'id' from URL
 
-    // Query to fetch the existing data from the database based on the 'id'
+    // Prepare SQL query to fetch data by id
     $sql = "SELECT * FROM keunggulan WHERE id = ?";
     if ($stmt = $conn->prepare($sql)) {
-        // Bind the 'id' parameter
+        // Bind the parameter
         $stmt->bind_param("i", $id);
         $stmt->execute();
         $result = $stmt->get_result();
 
-        // Check if record is found
+        // Check if the record exists
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
             $judul = $row['judul'];
             $deskripsi = $row['deskripsi'];
-            $foto = $row['foto']; // Store the existing file name of the photo
+            $foto = $row['foto']; // Store existing photo filename
         } else {
-            // Redirect to the index page if the record is not found
+            // Redirect to index page if no record found
             header("Location: index.php");
             exit();
         }
@@ -44,14 +45,14 @@ if (isset($_GET['id'])) {
         $stmt->close();
     }
 } else {
-    // If 'id' is not passed, redirect to the index page
+    // Redirect to index if 'id' not set in URL
     header("Location: index.php");
     exit();
 }
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 
 <head>
     <meta charset="UTF-8">
@@ -64,12 +65,14 @@ if (isset($_GET['id'])) {
 
     <!-- Custom fonts for this template -->
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="../css/sb-admin-2.min.css" rel="stylesheet">
+
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
-        
-    <!-- Custom styles for this template -->
-    <link href="../css/sb-admin-2.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this page -->
+    <link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 </head>
 
 <body id="page-top">
@@ -88,7 +91,7 @@ if (isset($_GET['id'])) {
                         <i class="fas fa-arrow-left"></i> Kembali
                     </a>
 
-                    <!-- Display success message if the data is updated successfully -->
+                    <!-- Show success alert if update was successful -->
                     <?php
                     if (isset($_GET['status']) && $_GET['status'] == 'success') {
                         echo "<div class='alert alert-success' role='alert'>Data berhasil diperbarui!</div>";
@@ -114,7 +117,7 @@ if (isset($_GET['id'])) {
                                     <p>Foto Saat Ini: <img src="../../../storage/keunggulan/<?php echo $foto; ?>" width="100"></p>
                                 </div>
 
-                                <button type="submit" class="btn btn-primary">Kirim</button>
+                                <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
                             </form>
                         </div>
                     </div>

@@ -28,7 +28,7 @@ $conn->close();
   <!-- Include navbar -->
   <?php include 'inc/navbar.php' ?>
 
-  <div class="container my-5 py-5 flex-grow-1">
+  <div class="container my-5 flex-grow-1">
     <!-- News Section -->
     <section class="row g-4">
       <?php

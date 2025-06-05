@@ -8,8 +8,9 @@ if (!isset($_SESSION['nama'])) {
     exit();
 }
 
+// Check if user role is admin
 if ($_SESSION['role'] !== 'admin') {
-    // If not logged in or role is not admin, redirect to dashboard
+    // If role is not admin, redirect to dashboard page
     header('Location: ../dashboard-capen/index.php');
     exit();
 }
@@ -21,21 +22,21 @@ include '../../../koneksi.php'; // Include the database connection file
 if (isset($_GET['id'])) {
     $id = $_GET['id']; // Get the 'id' parameter from the URL
 
-    // Query to fetch the existing data from the database based on the 'id'
+    // Prepare SQL statement to fetch data from 'fasilitas' table based on id
     $sql = "SELECT * FROM fasilitas WHERE id = ?";
     if ($stmt = $conn->prepare($sql)) {
-        // Bind the 'id' parameter
+        // Bind 'id' parameter to the SQL query
         $stmt->bind_param("i", $id);
         $stmt->execute();
         $result = $stmt->get_result();
 
-        // Check if record is found
+        // Check if a record is found
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
             $nama_fasilitas = $row['nama'];
-            $foto_fasilitas = $row['foto']; // Store the existing file name of the photo
+            $foto_fasilitas = $row['foto']; // Store the current photo file name
         } else {
-            // Redirect to the index page if the record is not found
+            // Redirect to index page if record not found
             header("Location: index.php");
             exit();
         }
@@ -43,14 +44,14 @@ if (isset($_GET['id'])) {
         $stmt->close();
     }
 } else {
-    // If 'id' is not passed, redirect to the index page
+    // Redirect to index page if 'id' parameter not provided
     header("Location: index.php");
     exit();
 }
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 
 <head>
     <meta charset="UTF-8">
@@ -61,14 +62,19 @@ if (isset($_GET['id'])) {
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
+     <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
     <!-- Custom fonts for this template -->
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="../css/sb-admin-2.min.css" rel="stylesheet">
+
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
-        
-    <!-- Custom styles for this template -->
-    <link href="../css/sb-admin-2.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this page -->
+    <link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 </head>
 
 <body id="page-top">
@@ -81,13 +87,13 @@ if (isset($_GET['id'])) {
                 <?php include '../inc/dashboard-header.php'; ?>
 
                 <div class="container-fluid">
-                    <h1 class="h3 mb-2 text-gray-800">Edit Data Fasilitas</h1>
+                    <h1 class="h3 mb-2 text-gray-800">Ubah Data Fasilitas</h1>
 
                     <a href="index.php" class="btn btn-primary mb-3">
                         <i class="fas fa-arrow-left"></i> Kembali
                     </a>
 
-                    <!-- Display success message if the data is updated successfully -->
+                    <!-- Tampilkan pesan sukses jika data berhasil diperbarui -->
                     <?php
                     if (isset($_GET['status']) && $_GET['status'] == 'success') {
                         echo "<div class='alert alert-success' role='alert'>Data berhasil diperbarui!</div>";
@@ -100,17 +106,17 @@ if (isset($_GET['id'])) {
                                 <input type="hidden" name="id" value="<?php echo $id; ?>">
 
                                 <div class="mb-3">
-                                    <label for="nama" class="form-label">Nama</label>
+                                    <label for="nama" class="form-label">Nama Fasilitas</label>
                                     <input type="text" class="form-control" id="nama" name="nama" value="<?php echo $nama_fasilitas; ?>" required>
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="foto" class="form-label">Foto</label>
-                                    <input type="file" class="form-control" id="foto" name="foto">
-                                    <p>Foto Saat Ini: <img src="../../../storage/fasilitas/<?php echo $foto_fasilitas; ?>" width="100"></p>
+                                    <input type="file" class="form-control" id="foto" name="foto" accept="image/*">
+                                    <p>Foto Saat Ini: <img src="../../../storage/fasilitas/<?php echo $foto_fasilitas; ?>" width="100" alt="Foto Fasilitas"></p>
                                 </div>
 
-                                <button type="submit" class="btn btn-primary">Kirim</button>
+                                <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
                             </form>
                         </div>
                     </div>

@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $row = $result_fetch->fetch_assoc();
             $old_password = $row['password']; // The existing password
         } else {
-            echo "Record not found!";
+            echo "Data tidak ditemukan!";
             exit();
         }
         $stmt_fetch->close();
@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Redirect to the success page or show a success message
             header("Location: update.php?id=$id&status=success");
         } else {
-            echo "Error: " . $stmt_update->error;
+            echo "Terjadi kesalahan: " . $stmt_update->error;
         }
 
         // Close the statement

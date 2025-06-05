@@ -3,21 +3,23 @@ session_start();
 
 // Check if the user is logged in
 if (!isset($_SESSION['nama'])) {
-    // If not logged in, redirect to login page
+    // If user is not logged in, redirect to login page
     header('Location: ../../../login.php');
     exit();
 }
 
+// Check if user role is not admin
 if ($_SESSION['role'] !== 'admin') {
-    // If not logged in or role is not admin, redirect to dashboard
+    // If user role is not admin, redirect to dashboard page
     header('Location: ../dashboard-capen/index.php');
     exit();
 }
 
-// Get the user's name from the session
+// Get user's name from session
 $nama = $_SESSION['nama'];
 include '../../../koneksi.php';
-// Menjalankan query untuk mengambil satu data dari tabel profil_sekolah
+
+// Run query to get all data from guru table
 $sql = "SELECT * FROM guru";
 $result = $conn->query($sql);
 
@@ -27,7 +29,7 @@ $conn->close();
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 
 <head>
 
@@ -42,7 +44,7 @@ $conn->close();
     <!-- Custom fonts for this template -->
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
-        href="../https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 
     <!-- Custom styles for this template -->
@@ -50,7 +52,6 @@ $conn->close();
 
     <!-- Custom styles for this page -->
     <link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-
 </head>
 
 <body id="page-top">
@@ -80,13 +81,13 @@ $conn->close();
                     if (isset($_GET['status'])) {
                         $status = $_GET['status'];
 
-                        // If deletion was successful, show success message
+                        // If deletion was successful, display success message
                         if ($status == 'success') {
                             echo "<div class='alert alert-success' role='alert'>
                                 Data berhasil dihapus!
                             </div>";
                         } elseif ($status == 'error') {
-                            // If deletion failed, show error message
+                            // If deletion failed, display error message
                             echo "<div class='alert alert-danger' role='alert'>
                                 Terjadi kesalahan saat menghapus data.
                             </div>";
@@ -94,7 +95,7 @@ $conn->close();
                     }
                     ?>
 
-                    <!-- DataTales Example -->
+                    <!-- DataTables Example -->
                     <div class="card shadow mb-4">
                         <div class="card-body">
                             <div class="table-responsive">
@@ -110,16 +111,18 @@ $conn->close();
                                     <tbody>
                                         <?php
                                         include '../../../koneksi.php';
-                                        $sql_galeri = "SELECT * FROM galeri"; // Change table name to galeri
+                                        // Query to select all from galeri table
+                                        $sql_galeri = "SELECT * FROM galeri";
                                         $result_galeri = $conn->query($sql_galeri);
                                         $no = 1;
 
                                         if ($result_galeri->num_rows > 0) {
+                                            // Loop through each row in the galeri table
                                             while ($galeri = $result_galeri->fetch_assoc()) {
                                                 echo "<tr>";
                                                 echo "<td>" . $no++ . "</td>";
-                                                echo "<td>" . $galeri['judul'] . "</td>"; // 'judul' column from the galeri table
-                                                echo "<td><img src='../../../storage/galeri/" . $galeri['foto'] . "' width='100'></td>"; // Assuming 'foto' is used for the image
+                                                echo "<td>" . $galeri['judul'] . "</td>";
+                                                echo "<td><img src='../../../storage/galeri/" . $galeri['foto'] . "' width='100'></td>";
                                                 echo "<td>
                                                     <div class='dropdown'>
                                                         <button class='btn btn-secondary btn-sm dropdown-toggle' type='button' id='dropdownMenuButton' data-bs-toggle='dropdown' aria-expanded='false'>
@@ -134,6 +137,7 @@ $conn->close();
                                                 echo "</tr>";
                                             }
                                         } else {
+                                            // Display message if no gallery data is found
                                             echo "<tr><td colspan='4'>Data galeri tidak ditemukan.</td></tr>";
                                         }
                                         ?>
@@ -176,14 +180,14 @@ $conn->close();
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Siap untuk Keluar?</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-body">Pilih "Logout" di bawah jika Anda siap mengakhiri sesi saat ini.</div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
                     <a class="btn btn-primary" href="login.html">Logout</a>
                 </div>
             </div>
@@ -207,7 +211,6 @@ $conn->close();
     <script src="../js/demo/datatables-demo.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
 
 </body>
 

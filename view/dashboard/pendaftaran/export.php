@@ -8,16 +8,17 @@ if (!isset($_SESSION['nama'])) {
     exit();
 }
 
+// Check if user role is admin
 if ($_SESSION['role'] !== 'admin') {
-    // If not logged in or role is not admin, redirect to dashboard
+    // If user is not admin, redirect to dashboard page
     header('Location: ../dashboard-capen/index.php');
     exit();
 }
 
-// Include database connection
+// Include database connection file
 include '../../../koneksi.php';
 
-// Query to get all the data including pendaftaran, murid, ayah, ibu
+// SQL query to select all necessary data from pendaftaran, murid, ayah, and ibu tables
 $sql = "SELECT 
             p.id AS pendaftaran_id, p.kode_pendaftaran, 
             m.id AS murid_id, m.nama AS nama_murid, m.nik AS nik_murid, m.tempat_lahir AS tempat_lahir_murid, 
@@ -37,15 +38,16 @@ $sql = "SELECT
 
 $result = $conn->query($sql);
 
-// Check if there are any records
+// Check if there are any records to export
 if ($result->num_rows > 0) {
-    // Set headers for CSV download
+    // Set HTTP headers to initiate CSV file download
     header('Content-Type: text/csv');
-    header('Content-Disposition: attachment; filename="pendaftaran_complete.csv"');
+    header('Content-Disposition: attachment; filename="laporan_data_pendaftaran.csv"');
     
+    // Open output stream
     $output = fopen('php://output', 'w');
     
-    // Output column headings (the headers of all columns in the tables)
+    // Write CSV column headers matching database fields
     fputcsv($output, array(
         'Pendaftaran ID', 'Kode Pendaftaran', 'Murid ID', 'Nama Murid', 'NIK Murid', 'Tempat Lahir Murid', 
         'Tanggal Lahir Murid', 'Jenis Kelamin Murid', 'Alamat Murid', 'Telepon Murid', 'Riwayat Kesehatan Murid', 
@@ -55,7 +57,7 @@ if ($result->num_rows > 0) {
         'Penghasilan Ayah', 'Alamat Ayah', 'Telepon Ayah', 'Status Pendaftaran'
     ));
 
-    // Output data rows for all pendaftaran
+    // Loop through each record and output CSV rows
     while ($row = $result->fetch_assoc()) {
         fputcsv($output, array(
             $row['pendaftaran_id'], $row['kode_pendaftaran'], $row['murid_id'], $row['nama_murid'], $row['nik_murid'], 
@@ -69,11 +71,14 @@ if ($result->num_rows > 0) {
         ));
     }
 
+    // Close the output stream
     fclose($output);
 } else {
-    echo "No data found to export.";
+    // Show message in Indonesian if no data found to export
+    echo "Tidak ada data yang dapat diekspor.";
 }
 
+// Close database connection
 $conn->close();
 exit();
 ?>

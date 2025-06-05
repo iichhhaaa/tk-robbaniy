@@ -3,13 +3,14 @@ session_start();
 
 // Check if the user is logged in
 if (!isset($_SESSION['nama'])) {
-    // If not logged in, redirect to login page
+    // Redirect to login page if not logged in
     header('Location: ../../../login.php');
     exit();
 }
 
+// Check if user role is admin
 if ($_SESSION['role'] !== 'admin') {
-    // If not logged in or role is not admin, redirect to dashboard
+    // Redirect to dashboard if role is not admin
     header('Location: ../dashboard-capen/index.php');
     exit();
 }
@@ -17,7 +18,7 @@ if ($_SESSION['role'] !== 'admin') {
 $nama = $_SESSION['nama'];
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 
 <head>
     <meta charset="UTF-8">
@@ -29,8 +30,17 @@ $nama = $_SESSION['nama'];
 
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="../css/sb-admin-2.min.css" rel="stylesheet">
+
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this page -->
+    <link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 </head>
 
 <body id="page-top">
@@ -46,13 +56,13 @@ $nama = $_SESSION['nama'];
             <div id="content">
                 <?php include '../inc/dashboard-header.php' ?>
 
-                <!-- Begin Form Pendaftaran -->
+                <!-- Begin Registration Form -->
                 <div class="container-fluid">
                     <h1 class="h3 mb-4 text-gray-800">Formulir Pendaftaran Murid</h1>
 
                     <form id="pendaftaranForm" action="create-store.php" method="POST" enctype="multipart/form-data">
-                        
-                        <!-- Step 1: Data Murid -->
+
+                        <!-- Step 1: Student Data -->
                         <div id="step1">
                             <h5 class="mt-4">Data Murid</h5>
                             <div class="form-group">
@@ -101,7 +111,7 @@ $nama = $_SESSION['nama'];
                             <button type="button" class="btn btn-primary float-right mt-4" id="nextStep1">Lanjut</button>
                         </div>
 
-                        <!-- Step 2: Data Ibu -->
+                        <!-- Step 2: Mother's Data -->
                         <div id="step2" style="display:none;">
                             <h5 class="mt-4">Data Ibu</h5>
                             <div class="form-group">
@@ -151,7 +161,7 @@ $nama = $_SESSION['nama'];
                             <button type="button" class="btn btn-primary float-right mt-4" id="nextStep2">Lanjut</button>
                         </div>
 
-                        <!-- Step 3: Data Ayah -->
+                        <!-- Step 3: Father's Data -->
                         <div id="step3" style="display:none;">
                             <h5 class="mt-4">Data Ayah</h5>
                             <div class="form-group">
@@ -182,26 +192,26 @@ $nama = $_SESSION['nama'];
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="pekerjaan_ayah">Pekerjaan ayah</label>
-                                <input type="text" class="form-control" id="pekerjaan_ayah" name="pekerjaan_ayah" placeholder="Masukkan Pekerjaan ayah" required>
+                                <label for="pekerjaan_ayah">Pekerjaan Ayah</label>
+                                <input type="text" class="form-control" id="pekerjaan_ayah" name="pekerjaan_ayah" placeholder="Masukkan Pekerjaan Ayah" required>
                             </div>
                             <div class="form-group">
-                                <label for="penghasilan_ayah">Penghasilan ayah</label>
-                                <input type="number" class="form-control" id="penghasilan_ayah" name="penghasilan_ayah" placeholder="Masukkan Penghasilan ayah" required>
+                                <label for="penghasilan_ayah">Penghasilan Ayah</label>
+                                <input type="number" class="form-control" id="penghasilan_ayah" name="penghasilan_ayah" placeholder="Masukkan Penghasilan Ayah" required>
                             </div>
                             <div class="form-group">
-                                <label for="alamat_ayah">Alamat ayah</label>
-                                <textarea class="form-control" id="alamat_ayah" name="alamat_ayah" rows="3" placeholder="Masukkan Alamat ayah" required></textarea>
+                                <label for="alamat_ayah">Alamat Ayah</label>
+                                <textarea class="form-control" id="alamat_ayah" name="alamat_ayah" rows="3" placeholder="Masukkan Alamat Ayah" required></textarea>
                             </div>
                             <div class="form-group">
-                                <label for="telepon_ayah">Nomor Telepon ayah</label>
-                                <input type="text" class="form-control" id="telepon_ayah" name="telepon_ayah" placeholder="Masukkan Nomor Telepon ayah" required>
+                                <label for="telepon_ayah">Nomor Telepon Ayah</label>
+                                <input type="text" class="form-control" id="telepon_ayah" name="telepon_ayah" placeholder="Masukkan Nomor Telepon Ayah" required>
                             </div>
                             <button type="button" class="btn btn-secondary float-left mt-4" id="prevStep3">Kembali</button>
-                            <button type="button" class="btn btn-primary float-right mt-4" id="nextStep3">Lanjut</button>
+                            <button type="submit" class="btn btn-success float-right mt-4">Simpan Data</button>
                         </div>
 
-                        <!-- Step 4: Upload Berkas -->
+                        <!-- Step 4: Upload Documents -->
                         <div id="step4" style="display:none;">
                             <h5 class="mt-4">Upload Berkas</h5>
                             <div class="form-group">
@@ -209,8 +219,7 @@ $nama = $_SESSION['nama'];
                                 <input type="file" class="form-control" id="berkas" name="berkas" accept="application/pdf" onchange="previewFile(event)" required>
                             </div>
 
-
-                            <!-- Preview PDF -->
+                            <!-- PDF Preview -->
                             <div id="pdfPreview" style="display:none;">
                                 <h6>Pratinjau PDF</h6>
                                 <embed id="pdfPreviewEmbed" src="" type="application/pdf" width="100%" height="400px">
@@ -222,7 +231,7 @@ $nama = $_SESSION['nama'];
 
                     </form>
                 </div>
-                <!-- End Form Pendaftaran -->
+                <!-- End of Registration Form -->
             </div>
             <!-- End of Main Content -->
 
@@ -245,46 +254,46 @@ $nama = $_SESSION['nama'];
         <i class="fas fa-angle-up"></i>
     </a>
 
-    <!-- Javascript to handle steps, file preview and form submission -->
+    <!-- JavaScript to handle step navigation, file preview, and form submission -->
 
     <script>
-        // Next Step 1: Go to step 2
+        // Navigate from Step 1 to Step 2
         document.getElementById('nextStep1').addEventListener('click', function() {
             document.getElementById('step1').style.display = 'none';
             document.getElementById('step2').style.display = 'block';
         });
 
-        // Previous Step 2: Go back to step 1
+        // Navigate back from Step 2 to Step 1
         document.getElementById('prevStep2').addEventListener('click', function() {
             document.getElementById('step2').style.display = 'none';
             document.getElementById('step1').style.display = 'block';
         });
 
-        // Next Step 2: Go to step 3
+        // Navigate from Step 2 to Step 3
         document.getElementById('nextStep2').addEventListener('click', function() {
             document.getElementById('step2').style.display = 'none';
             document.getElementById('step3').style.display = 'block';
         });
 
-        // Previous Step 3: Go back to step 2
+        // Navigate back from Step 3 to Step 2
         document.getElementById('prevStep3').addEventListener('click', function() {
             document.getElementById('step3').style.display = 'none';
             document.getElementById('step2').style.display = 'block';
         });
 
-        // Next Step 3: Go to step 4 (Upload Berkas)
+        // Navigate from Step 3 to Step 4 (Upload Documents)
         document.getElementById('nextStep3').addEventListener('click', function() {
             document.getElementById('step3').style.display = 'none';
             document.getElementById('step4').style.display = 'block';
         });
 
-        // Previous Step 4: Go back to step 3
+        // Navigate back from Step 4 to Step 3
         document.getElementById('prevStep4').addEventListener('click', function() {
             document.getElementById('step4').style.display = 'none';
             document.getElementById('step3').style.display = 'block';
         });
 
-        // Function to preview file
+        // Function to preview uploaded file (PDF only)
         function previewFile(event) {
             const file = event.target.files[0];
             const fileType = file.type;
@@ -296,11 +305,12 @@ $nama = $_SESSION['nama'];
                 };
                 reader.readAsDataURL(file);
             } else {
-                alert("Please upload a valid image or PDF file.");
+                alert("Harap unggah file PDF yang valid."); // Alert message in Indonesian
                 document.getElementById('pdfPreview').style.display = 'none';
             }
         }
     </script>
+
     <!-- Bootstrap core JavaScript-->
     <script src="../vendor/jquery/jquery.min.js"></script>
     <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

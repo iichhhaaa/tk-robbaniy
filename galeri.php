@@ -30,7 +30,7 @@ $conn->close();
   <?php include 'inc/navbar.php' ?>
 
   <!-- Main Content Section -->
-  <section class="container mt-5 d-flex align-items-center justify-content-between flex-column flex-md-row py-5 <?php echo $row ? '' : 'min-vh-100'; ?>">
+  <section class="container mt-5 flex-grow-1 d-flex align-items-center justify-content-between flex-column flex-md-row py-5">
     <div class="row g-3">
       <?php
       // Loop through each gallery record and display image and title
